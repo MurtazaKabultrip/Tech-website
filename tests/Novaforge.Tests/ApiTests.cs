@@ -26,7 +26,8 @@ public sealed class SiteTests(AppFactory app)
         var html = await response.Content.ReadAsStringAsync();
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        Assert.Contains("Fix the old one.", html);
+        Assert.Contains("that people remember.", html);
+        Assert.DoesNotContain("/account/login", html); // no sign-in links for visitors
         Assert.Contains("<meta name=\"description\"", html);
         Assert.True(response.Headers.Contains("Content-Security-Policy"));
         Assert.Equal("nosniff", response.Headers.GetValues("X-Content-Type-Options").Single());

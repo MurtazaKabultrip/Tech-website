@@ -1,0 +1,113 @@
+@* Live-HTML mini websites (no images): an online shop, an analytics app, a restaurant site and a booking system.
+   Brands are fictional and only illustrate the kind of site. *@
+<div class="mock @Class" aria-hidden="true">
+    <div class="mock-bar">
+        <span class="mock-dots"><i></i><i></i><i></i></span>
+        <span class="mock-url">@Url</span>
+    </div>
+    <div class="mock-body mock-body--@Kind">
+        @switch (Kind)
+        {
+            case "shop":
+                <div class="m-nav"><b>LUMEN</b><span>Shop</span><span>New</span><span>Sale</span><em>Cart 2</em></div>
+                <div class="m-hero m-hero--shop">
+                    <div>
+                        <small>Autumn collection</small>
+                        <strong>Light that feels like home</strong>
+                        <span class="m-btn">Shop now</span>
+                    </div>
+                    <div class="m-orb"></div>
+                </div>
+                <div class="m-products">
+                    @foreach (var (name, price, hue) in Products)
+                    {
+                        <div class="m-product">
+                            <div class="m-img" style="--h:@hue"></div>
+                            <span>@name</span>
+                            <b>@price</b>
+                        </div>
+                    }
+                </div>
+                break;
+
+            case "dashboard":
+                <div class="m-app">
+                    <div class="m-side"><b>Pulse</b><span class="on">Overview</span><span>Orders</span><span>Customers</span><span>Reports</span></div>
+                    <div class="m-main">
+                        <div class="m-tiles">
+                            <div><small>Revenue</small><b>€48.2k</b><em>+12%</em></div>
+                            <div><small>Orders</small><b>1,284</b><em>+8%</em></div>
+                            <div><small>Visitors</small><b>32.9k</b><em>+21%</em></div>
+                        </div>
+                        <svg class="m-chart" viewBox="0 0 300 100" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="@gradientId" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0" stop-color="var(--brand-a)" stop-opacity=".45" />
+                                    <stop offset="1" stop-color="var(--brand-a)" stop-opacity="0" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M0 80 L30 70 L60 74 L90 55 L120 60 L150 38 L180 44 L210 26 L240 32 L270 14 L300 18 L300 100 L0 100Z" fill="url(#@gradientId)" />
+                            <path class="m-line" d="M0 80 L30 70 L60 74 L90 55 L120 60 L150 38 L180 44 L210 26 L240 32 L270 14 L300 18" fill="none" stroke="var(--brand-b)" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+                        </svg>
+                        <div class="m-rows"><span></span><span></span><span></span></div>
+                    </div>
+                </div>
+                break;
+
+            case "restaurant":
+                <div class="m-nav m-nav--light"><b>Nordlys</b><span>Menu</span><span>About</span><em>Book a table</em></div>
+                <div class="m-hero m-hero--food">
+                    <small>Seasonal Nordic kitchen</small>
+                    <strong>Taste the season</strong>
+                    <span class="m-btn">Reserve tonight</span>
+                </div>
+                <div class="m-menu">
+                    <div><span>Smoked trout, rye, dill</span><b>145</b></div>
+                    <div><span>Wild mushrooms, egg yolk</span><b>165</b></div>
+                    <div><span>Apple, brown butter, oats</span><b>95</b></div>
+                </div>
+                break;
+
+            case "booking":
+                <div class="m-nav"><b>Fjord Clinic</b><span>Treatments</span><em>Book</em></div>
+                <div class="m-booking">
+                    <div class="m-cal">
+                        <small>November</small>
+                        <div class="m-days">
+                            @for (var d = 1; d <= 21; d++)
+                            {
+                                <i class="@(d == 12 ? "sel" : d is 3 or 4 or 10 or 11 or 17 or 18 ? "off" : null)">@d</i>
+                            }
+                        </div>
+                    </div>
+                    <div class="m-slots">
+                        <small>Wed 12 Nov</small>
+                        <span>09:00</span><span class="sel">10:30</span><span>13:00</span><span>15:30</span>
+                        <b class="m-btn">Confirm booking</b>
+                    </div>
+                </div>
+                break;
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string Kind { get; set; } = "shop";
+    [Parameter] public string? Class { get; set; }
+
+    private readonly string gradientId = "mfill-" + Guid.NewGuid().ToString("N")[..8];
+
+    private string Url => Kind switch
+    {
+        "shop" => "lumen-store.com",
+        "dashboard" => "app.pulse.io/overview",
+        "restaurant" => "nordlys-bistro.dk",
+        "booking" => "fjordclinic.no/book",
+        _ => "yourbrand.com"
+    };
+
+    private static readonly (string Name, string Price, int Hue)[] Products =
+    [
+        ("Arc lamp", "€129", 250), ("Halo pendant", "€189", 190), ("Dune shade", "€79", 30)
+    ];
+}

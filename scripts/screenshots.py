@@ -13,12 +13,17 @@ BASE = sys.argv[1].rstrip("/") if len(sys.argv) > 1 else "http://localhost:5180"
 OUT = Path(sys.argv[2] if len(sys.argv) > 2 else "screenshots")
 OUT.mkdir(parents=True, exist_ok=True)
 
-PUBLIC = ["/", "/services", "/services/payments", "/process", "/contact?type=BugFix", "/account/login", "/not-a-page"]
+PUBLIC = ["/", "/services", "/services/payments", "/process", "/contact", "/not-a-page"]
 errors: list[str] = []
 
 
 def shoot(page, name: str) -> None:
-    page.wait_for_timeout(1500)  # let the one-off load animation finish
+    # Scroll through the page so scroll-triggered reveals and counters run, then back to the top.
+    page.evaluate("""async () => {
+        for (let y = 0; y < document.body.scrollHeight; y += 500) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 60)); }
+        window.scrollTo(0, 0);
+    }""")
+    page.wait_for_timeout(1600)
     page.screenshot(path=str(OUT / f"{name}.png"), full_page=True)
 
 

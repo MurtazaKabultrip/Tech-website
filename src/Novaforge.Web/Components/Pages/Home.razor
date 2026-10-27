@@ -1,177 +1,307 @@
 @page "/"
 @inject IOptions<SiteOptions> Site
 
-<Seo Title="" Description="@($"{Site.Value.Name} builds websites, web apps, mobile apps and SaaS products — and fixes, secures and upgrades the ones you already have.")" />
+<Seo Title="" Description="@($"{Site.Value.Name} designs and builds any kind of website — online shops, company sites, booking systems, web apps and mobile apps — and fixes the ones you already have.")" />
 
-<section class="hero">
-    <div class="container hero-grid">
-        <div>
-            <h1>
-                <span class="line">Build the new thing.</span>
-                <span class="line line--strong">Fix the old one.</span>
+@* ============ HERO ============ *@
+<section class="x-hero" data-spotlight>
+    <canvas class="x-hero-canvas" data-particles aria-hidden="true"></canvas>
+    <div class="container x-hero-grid">
+        <div class="x-hero-copy">
+            <p class="x-pill"><span class="x-pulse" aria-hidden="true"></span> Now booking new projects</p>
+            <h1 class="x-title">
+                <span class="x-title-line">We build</span>
+                <span class="x-title-line x-rotator" data-rotator>
+                    @foreach (var (word, i) in RotatingWords.Select((w, i) => (w, i)))
+                    {
+                        <span class="x-rotator-word @(i == 0 ? "is-on" : null)">@word</span>
+                    }
+                </span>
+                <span class="x-title-line">that people remember.</span>
             </h1>
-            <p class="lede">
-                We design, engineer and run websites, web apps and mobile apps — and we rescue the ones that
-                are slow, broken or out of date. One team, from first sketch to production.
+            <p class="x-lede">
+                Any kind of website — from a five-page company site to a full online shop or web app.
+                Designed to impress, engineered to be fast, and built to bring you customers.
             </p>
-            <div class="hero-actions">
-                <a class="btn btn--primary btn--lg" href="/contact">Start a project</a>
-                <a class="btn btn--ghost btn--lg" href="/contact?type=BugFix">Report a problem</a>
+            <div class="x-actions">
+                <a class="btn btn--glow btn--lg" href="/contact">Start your project</a>
+                <a class="btn btn--glass btn--lg" href="#showcase">See what we build</a>
             </div>
+            <ul class="x-trust">
+                <li><Icon Name="check" /> Free quote within 24 hours</li>
+                <li><Icon Name="check" /> Fixed price, no surprises</li>
+                <li><Icon Name="check" /> You own 100% of the code</li>
+            </ul>
         </div>
 
-        @* The signature element: a real project moving through our real process. *@
-        <div class="console glass" aria-label="Example project status">
-            <div class="console-head">
-                <div>
-                    <div class="console-title">Booking platform for a travel agency</div>
-                    <div class="console-sub">Example project: web app, iOS and Android</div>
-                </div>
-                <span class="console-live">Testing</span>
-            </div>
-            <ol class="stages">
-                @for (var i = 0; i < Stages.Length; i++)
-                {
-                    var stage = Stages[i];
-                    var state = i < ActiveStage ? "is-done" : i == ActiveStage ? "is-active" : "";
-                    <li class="stage @state" style="--i:@i" aria-current="@(i == ActiveStage ? "step" : null)">
-                        <span class="stage-dot" aria-hidden="true"></span>
-                        <span class="stage-name">@stage.Name</span>
-                        <span class="stage-note">@stage.Note</span>
-                    </li>
-                }
-            </ol>
-            <div class="console-meter" role="progressbar" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" aria-label="Overall progress">
-                <span style="--progress:78%"></span>
-            </div>
-            <div class="console-log">
-                <div><b>Payments</b> Stripe checkout and refunds passed 42 tests</div>
-                <div><b>Flights API</b> retries and timeouts verified under load</div>
-            </div>
+        <div class="x-stage" data-tilt-group>
+            <div class="x-float x-float--back"><SiteMockup Kind="dashboard" /></div>
+            <div class="x-float x-float--main"><SiteMockup Kind="shop" /></div>
+            <div class="x-float x-float--front"><SiteMockup Kind="booking" /></div>
+            <div class="x-chip x-chip--a" aria-hidden="true"><Icon Name="gauge" /> 98 performance</div>
+            <div class="x-chip x-chip--b" aria-hidden="true"><Icon Name="card" /> Payment received</div>
         </div>
     </div>
 </section>
 
-<section class="section" aria-labelledby="what-heading">
+@* ============ MARQUEE ============ *@
+<section class="x-marquee" aria-label="Kinds of websites we build">
+    <div class="x-marquee-track">
+        @for (var copy = 0; copy < 2; copy++)
+        {
+            <ul aria-hidden="@(copy == 1 ? "true" : null)">
+                @foreach (var kind in Kinds)
+                {
+                    <li>@kind</li>
+                }
+            </ul>
+        }
+    </div>
+</section>
+
+@* ============ SERVICES (BENTO) ============ *@
+<section class="section" aria-labelledby="svc-h">
     <div class="container">
-        <div class="section-head">
-            <h2 id="what-heading">Everything a digital product needs</h2>
-            <p>Pick one service or hand us the whole thing. Every piece is built to work with the others.</p>
+        <div class="x-head">
+            <h2 id="svc-h">One studio for <span class="x-grad">everything digital</span></h2>
+            <p>Design, development, payments, apps, hosting and rescue missions. Pick one, or hand us the whole thing.</p>
         </div>
 
-        <div class="capabilities">
-            @foreach (var group in Groups)
+        <div class="bento">
+            <a class="tile tile--xl spot" href="/services/websites" data-reveal>
+                <span class="tile-icon"><Icon Name="globe" /></span>
+                <h3>Websites & web apps</h3>
+                <p>Company sites, landing pages, portals, dashboards and SaaS — fast, responsive and built to rank on Google.</p>
+                <div class="tile-art"><SiteMockup Kind="restaurant" /></div>
+            </a>
+            <a class="tile spot" href="/services/ui-ux-design" data-reveal>
+                <span class="tile-icon"><Icon Name="sparkles" /></span>
+                <h3>Futuristic design</h3>
+                <p>Glass, motion, beautiful type and dark/light themes.</p>
+            </a>
+            <a class="tile spot" href="/services/payments" data-reveal>
+                <span class="tile-icon"><Icon Name="card" /></span>
+                <h3>Online shops & payments</h3>
+                <p>Stripe, PayPal, subscriptions, invoices and refunds.</p>
+            </a>
+            <a class="tile tile--wide spot" href="/services/mobile-apps" data-reveal>
+                <span class="tile-icon"><Icon Name="phone" /></span>
+                <h3>iOS & Android apps</h3>
+                <p>One codebase, both app stores — with login, push notifications and payments.</p>
+                <div class="tile-phones" aria-hidden="true"><span></span><span></span></div>
+            </a>
+            <a class="tile spot" href="/services/bug-fixing" data-reveal>
+                <span class="tile-icon"><Icon Name="wrench" /></span>
+                <h3>Fixes & upgrades</h3>
+                <p>Broken, slow or outdated? We repair and modernise it.</p>
+            </a>
+            <a class="tile spot" href="/services/ai-automation" data-reveal>
+                <span class="tile-icon"><Icon Name="cpu" /></span>
+                <h3>AI & automation</h3>
+                <p>Chat assistants, smart search and workflows that save hours.</p>
+            </a>
+            <a class="tile spot" href="/services/api-integrations" data-reveal>
+                <span class="tile-icon"><Icon Name="plug" /></span>
+                <h3>Integrations</h3>
+                <p>Booking, CRM, ERP, maps, shipping — connected reliably.</p>
+            </a>
+            <a class="tile spot" href="/services/devops" data-reveal>
+                <span class="tile-icon"><Icon Name="cloud" /></span>
+                <h3>Hosting & care</h3>
+                <p>Secure hosting, backups, monitoring and updates.</p>
+            </a>
+        </div>
+        <p class="x-center"><a class="x-link" href="/services">All 12 services <Icon Name="arrow-right" /></a></p>
+    </div>
+</section>
+
+@* ============ SHOWCASE (TABS) ============ *@
+<section class="section x-showcase" id="showcase" aria-labelledby="show-h">
+    <div class="container">
+        <div class="x-head">
+            <h2 id="show-h">Whatever your business, <span class="x-grad">we build it</span></h2>
+            <p>A few of the kinds of sites we design and develop. Each one is custom — no templates.</p>
+        </div>
+
+        <div class="x-tabs" data-tabs>
+            <div class="x-tablist" role="tablist" aria-label="Website types">
+                @foreach (var (tab, i) in Showcase.Select((t, i) => (t, i)))
+                {
+                    <button type="button" role="tab" id="tab-@tab.Kind" aria-controls="panel-@tab.Kind"
+                            aria-selected="@(i == 0 ? "true" : "false")" tabindex="@(i == 0 ? "0" : "-1")">
+                        <Icon Name="@tab.Icon" /> @tab.Label
+                    </button>
+                }
+            </div>
+            @foreach (var (tab, i) in Showcase.Select((t, i) => (t, i)))
             {
-                <div class="cap-group">
-                    <h3>@group.Name</h3>
-                    <div class="cap-list">
-                        @foreach (var service in group.Services)
-                        {
-                            <a class="cap" href="/services/@service.Slug">
-                                <span class="cap-icon"><Icon Name="@service.Icon" /></span>
-                                <span>
-                                    <span class="cap-title">@service.Title</span>
-                                    <span class="cap-text">@service.Summary</span>
-                                </span>
-                            </a>
-                        }
+                <div class="x-panel" role="tabpanel" id="panel-@tab.Kind" aria-labelledby="tab-@tab.Kind" hidden="@(i != 0)">
+                    <div class="x-panel-copy">
+                        <h3>@tab.Title</h3>
+                        <p>@tab.Text</p>
+                        <ul class="x-checks">
+                            @foreach (var f in tab.Features)
+                            {
+                                <li><Icon Name="check" /> @f</li>
+                            }
+                        </ul>
+                        <a class="btn btn--glow" href="/contact?type=@tab.Type">Get a quote</a>
                     </div>
+                    <div class="x-panel-art"><SiteMockup Kind="@tab.Kind" /></div>
                 </div>
             }
         </div>
     </div>
 </section>
 
-<section class="section section--tight" aria-labelledby="paths-heading">
+@* ============ PROCESS ============ *@
+<section class="section" aria-labelledby="proc-h">
     <div class="container">
-        <h2 id="paths-heading" class="visually-hidden">Two ways to start</h2>
-        <div class="paths">
-            <article class="path glass">
-                <h3>Starting from scratch</h3>
-                <p class="muted">Tell us the idea. We turn it into a clear plan, a design you can click through, and then working software.</p>
-                <ul>
-                    <li>Free first call and written proposal</li>
-                    <li>Fixed-scope phases with a price per phase</li>
-                    <li>Weekly demos in your client portal</li>
-                </ul>
-                <a class="btn btn--primary" href="/contact">Start a project</a>
-            </article>
-            <article class="path path--fix glass">
-                <h3>Something is broken</h3>
-                <p class="muted">Errors, crashes, slow pages, a hacked plugin or code nobody dares to touch. Send us the link.</p>
-                <ul>
-                    <li>Diagnosis with a written root-cause report</li>
-                    <li>Fix plus a test so it stays fixed</li>
-                    <li>Security and upgrade recommendations</li>
-                </ul>
-                <a class="btn btn--ghost" href="/contact?type=BugFix">Report a problem</a>
-            </article>
-        </div>
-    </div>
-</section>
-
-<section class="section" aria-labelledby="how-heading">
-    <div class="container">
-        <div class="section-head">
-            <h2 id="how-heading">How a project runs</h2>
-            <p>The same five steps for a landing page or a SaaS platform. You see each one live in your portal.</p>
+        <div class="x-head">
+            <h2 id="proc-h">From idea to launch in <span class="x-grad">four steps</span></h2>
+            <p>Clear phases, a fixed price for each, and a demo you can click every week.</p>
         </div>
         <ProcessSteps />
     </div>
 </section>
 
-<section class="section section--tight" aria-labelledby="principles-heading">
-    <div class="container">
-        <h2 id="principles-heading" class="visually-hidden">Our standards</h2>
-        <div class="principles">
-            <div>
-                <h3>Tested before it's done</h3>
-                <p>Automated tests run on every change. We fix, retest and only then call a task finished.</p>
-            </div>
-            <div>
-                <h3>Secure by default</h3>
-                <p>Hosted payment pages, signed webhooks, strict security headers and least-privilege access.</p>
-            </div>
-            <div>
-                <h3>Yours to keep</h3>
-                <p>You own the source code, the documentation and the accounts. No lock-in, ever.</p>
-            </div>
+@* ============ COMMITMENTS ============ *@
+<section class="section section--tight" aria-label="Our commitments">
+    <div class="container x-stats">
+        <div class="x-stat glass spot" data-reveal>
+            <b><span data-count="24">24</span>h</b>
+            <span>Reply and quote time</span>
+        </div>
+        <div class="x-stat glass spot" data-reveal>
+            <b><span data-count="100">100</span>%</b>
+            <span>Code and content you own</span>
+        </div>
+        <div class="x-stat glass spot" data-reveal>
+            <b><span data-count="95">95</span>+</b>
+            <span>Google PageSpeed target</span>
+        </div>
+        <div class="x-stat glass spot" data-reveal>
+            <b><span data-count="12">12</span></b>
+            <span>Services under one roof</span>
         </div>
     </div>
 </section>
 
-<section class="section" aria-labelledby="cta-heading">
+@* ============ PACKAGES ============ *@
+<section class="section" aria-labelledby="pkg-h">
     <div class="container">
-        <div class="cta-band glass">
-            <h2 id="cta-heading">Tell us what you're building.</h2>
-            <a class="btn btn--primary btn--lg" href="/contact">Get a quote</a>
+        <div class="x-head">
+            <h2 id="pkg-h">Choose your <span class="x-grad">starting point</span></h2>
+            <p>Every project gets a fixed price after a short call. These are the usual shapes.</p>
+        </div>
+        <div class="x-packages">
+            <article class="x-pkg glass spot" data-reveal>
+                <h3>Launch</h3>
+                <p class="x-pkg-for">For new businesses and personal brands</p>
+                <ul class="x-checks">
+                    <li><Icon Name="check" /> Up to 6 custom-designed pages</li>
+                    <li><Icon Name="check" /> Contact form and Google Maps</li>
+                    <li><Icon Name="check" /> SEO setup and analytics</li>
+                    <li><Icon Name="check" /> Live in about 2–3 weeks</li>
+                </ul>
+                <a class="btn btn--glass" href="/contact?type=Website">Get a quote</a>
+            </article>
+            <article class="x-pkg x-pkg--hot glass spot" data-reveal>
+                <span class="x-pkg-tag">Most chosen</span>
+                <h3>Grow</h3>
+                <p class="x-pkg-for">For shops and companies that sell online</p>
+                <ul class="x-checks">
+                    <li><Icon Name="check" /> Online shop or booking system</li>
+                    <li><Icon Name="check" /> Card payments and invoices</li>
+                    <li><Icon Name="check" /> Admin panel you can edit yourself</li>
+                    <li><Icon Name="check" /> Live in about 4–6 weeks</li>
+                </ul>
+                <a class="btn btn--glow" href="/contact?type=ECommerce">Get a quote</a>
+            </article>
+            <article class="x-pkg glass spot" data-reveal>
+                <h3>Custom</h3>
+                <p class="x-pkg-for">For platforms, web apps and mobile apps</p>
+                <ul class="x-checks">
+                    <li><Icon Name="check" /> Web app, SaaS or marketplace</li>
+                    <li><Icon Name="check" /> iOS and Android apps</li>
+                    <li><Icon Name="check" /> AI features and integrations</li>
+                    <li><Icon Name="check" /> Built in phases, priced per phase</li>
+                </ul>
+                <a class="btn btn--glass" href="/contact?type=WebApp">Get a quote</a>
+            </article>
+        </div>
+    </div>
+</section>
+
+@* ============ FAQ ============ *@
+<section class="section" aria-labelledby="faq-h">
+    <div class="container x-faq-grid">
+        <div class="x-head" style="margin:0">
+            <h2 id="faq-h">Questions, <span class="x-grad">answered</span></h2>
+            <p>Anything else? Write to us — we reply within a day.</p>
+        </div>
+        <div class="x-faq">
+            @foreach (var (q, a) in Faq)
+            {
+                <details class="glass">
+                    <summary>@q</summary>
+                    <p>@a</p>
+                </details>
+            }
+        </div>
+    </div>
+</section>
+
+@* ============ CTA ============ *@
+<section class="section" aria-labelledby="cta-h">
+    <div class="container">
+        <div class="x-cta spot">
+            <h2 id="cta-h">Have an idea? <span class="x-grad">Let's build it.</span></h2>
+            <p>Tell us what you need in a few lines. You'll get a plan and a fixed price — free, within 24 hours.</p>
+            <div class="x-actions" style="justify-content:center">
+                <a class="btn btn--glow btn--lg" href="/contact">Start your project</a>
+                <a class="btn btn--glass btn--lg" href="/contact?type=BugFix">Fix my website</a>
+            </div>
         </div>
     </div>
 </section>
 
 @code {
-    private sealed record Stage(string Name, string Note);
+    private static readonly string[] RotatingWords =
+        ["websites", "online shops", "booking systems", "web apps", "mobile apps"];
 
-    private static readonly Stage[] Stages =
+    private static readonly string[] Kinds =
     [
-        new("Brief & proposal", "Week 1"),
-        new("Design", "Weeks 2–3"),
-        new("Build", "Weeks 4–9"),
-        new("Testing", "Week 10"),
-        new("Launch & support", "Week 11")
+        "Company websites", "Online shops", "Restaurants & cafés", "Booking systems", "Clinics & salons",
+        "Real estate", "Portfolios", "Landing pages", "Web apps & SaaS", "Dashboards", "Membership sites",
+        "Marketplaces", "Event & ticket sites", "Mobile apps", "Blogs & magazines", "Non-profits"
     ];
 
-    private const int ActiveStage = 3;
+    private sealed record ShowcaseTab(string Kind, string Label, string Icon, string Title, string Text, string[] Features, ProjectType Type);
 
-    private sealed record Group(string Name, IReadOnlyList<ServiceInfo> Services);
-
-    private static readonly Group[] Groups =
+    private static readonly ShowcaseTab[] Showcase =
     [
-        new("Build", Pick("websites", "mobile-apps", "ui-ux-design", "backend")),
-        new("Fix & upgrade", Pick("bug-fixing", "upgrades", "security", "testing")),
-        new("Connect & automate", Pick("api-integrations", "payments", "ai-automation", "devops")),
+        new("shop", "Online shop", "card", "Online shops that sell",
+            "Beautiful product pages, a checkout that converts, and an admin where you manage stock and orders.",
+            ["Card, Apple Pay and Google Pay", "Discount codes and gift cards", "Stock, shipping and order e-mails"], ProjectType.ECommerce),
+        new("restaurant", "Business site", "globe", "Company and brand websites",
+            "A site that makes the right first impression and turns visitors into calls, bookings and enquiries.",
+            ["Custom design that matches your brand", "Fast on every phone", "SEO so customers find you"], ProjectType.Website),
+        new("booking", "Booking system", "home", "Booking and reservations",
+            "Let customers book tables, appointments or rooms 24/7 — with reminders and online payment.",
+            ["Live availability calendar", "Automatic confirmations and reminders", "Deposits and cancellations"], ProjectType.WebApp),
+        new("dashboard", "Web app", "server", "Web apps and dashboards",
+            "Customer portals, internal tools and SaaS products with accounts, roles and real-time data.",
+            ["Secure login and user roles", "Charts, reports and exports", "Integrations with your systems"], ProjectType.SaaS),
     ];
 
-    private static IReadOnlyList<ServiceInfo> Pick(params string[] slugs) =>
-        slugs.Select(s => ServiceCatalog.Find(s)!).ToList();
+    private static readonly (string Q, string A)[] Faq =
+    [
+        ("What kinds of websites do you build?", "Any kind: company sites, online shops, booking systems, portfolios, web apps, SaaS platforms and mobile apps. If it runs in a browser or on a phone, we can build it."),
+        ("How much does a website cost?", "It depends on the size and features. After a short call you get a fixed price per phase, in writing, so you always know the total before we start."),
+        ("How long does it take?", "A company website usually takes 2–3 weeks, an online shop 4–6 weeks. Larger web apps are built in phases with a working demo every week."),
+        ("Can you fix or improve my existing website?", "Yes. We fix errors, speed up slow sites, close security holes, redesign outdated pages and move old code to modern technology."),
+        ("Will I be able to update the content myself?", "Yes. You get an easy admin panel for texts, images, products and bookings — no coding needed."),
+        ("Who owns the website?", "You do. The design, the code and all accounts are yours from day one. No lock-in."),
+    ];
 }

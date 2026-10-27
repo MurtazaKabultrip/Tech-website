@@ -1,10 +1,10 @@
 @inject IOptions<SiteOptions> Site
 
 <a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header">
-    <div class="container">
+<header class="site-header @(ShowSiteNav ? null : "site-header--app")">
+    <div class="container header-inner">
         <a class="brand" href="/" aria-label="@Site.Value.Name home">
-            <img class="brand-mark" src="favicon.svg" alt="" width="28" height="28" />
+            <img class="brand-mark" src="favicon.svg" alt="" width="30" height="30" />
             <span>@Site.Value.Name</span>
         </a>
 
@@ -12,37 +12,32 @@
         {
             <nav class="nav" id="site-nav" aria-label="Main">
                 <NavLink href="/services">Services</NavLink>
-                <NavLink href="/process">How we work</NavLink>
+                <a href="/#showcase">Work</a>
+                <NavLink href="/process">Process</NavLink>
                 <NavLink href="/contact">Contact</NavLink>
+                <a class="btn btn--glow nav-cta" href="/contact">Start a project</a>
             </nav>
         }
 
-        <div class="header-actions" style="@(ShowSiteNav ? null : "margin-left:auto")">
+        <div class="header-actions">
             <button type="button" class="icon-btn" data-theme-toggle aria-label="Switch theme">
                 <Icon Name="moon" Class="theme-icon-dark" />
                 <Icon Name="sun" Class="theme-icon-light" />
             </button>
-            <AuthorizeView>
-                <Authorized>
-                    @if (ShowSiteNav)
-                    {
-                        <a class="btn btn--ghost btn--sm" href="/portal">Your projects</a>
-                    }
-                    else
-                    {
-                        <a class="btn btn--ghost btn--sm" href="/">Website</a>
-                    }
-                </Authorized>
-                <NotAuthorized>
-                    <a class="btn btn--ghost btn--sm hide-sm" href="/account/login">Sign in</a>
-                    <a class="btn btn--primary btn--sm" href="/contact">Get a quote</a>
-                </NotAuthorized>
-            </AuthorizeView>
             @if (ShowSiteNav)
             {
+                @* Signed-in staff get a shortcut back to the portal; visitors never see a sign-in link. *@
+                <AuthorizeView>
+                    <a class="btn btn--glass btn--sm" href="/portal">Portal</a>
+                </AuthorizeView>
+                <a class="btn btn--glow btn--sm header-cta" href="/contact">Get a quote</a>
                 <button type="button" class="icon-btn menu-toggle" data-menu-toggle aria-controls="site-nav" aria-expanded="false" aria-label="Menu">
                     <Icon Name="menu" />
                 </button>
+            }
+            else
+            {
+                <a class="btn btn--glass btn--sm" href="/">Website</a>
             }
         </div>
     </div>

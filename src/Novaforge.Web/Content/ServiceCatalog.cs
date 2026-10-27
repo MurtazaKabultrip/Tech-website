@@ -53,7 +53,7 @@ public static class ServiceCatalog
             "REST, GraphQL, webhooks, AI services and third-party platforms connected reliably.",
             "plug",
             "We connect your product to the services it depends on — with retries, idempotency, monitoring and clear error handling, so integrations keep working when partners hiccup.",
-            ["REST & GraphQL APIs", "Webhooks (inbound & outbound)", "CRM, ERP & marketing tools", "Booking, travel & logistics APIs", "Custom public APIs with docs", "Monitoring & alerting"],
+            ["REST & GraphQL APIs", "Webhooks (inbound & outbound)", "CRM, ERP & marketing tools", "Booking, shipping & logistics APIs", "Custom public APIs with docs", "Monitoring & alerting"],
             ["ASP.NET Core", "HttpClient resilience", "OpenAPI", "Background jobs"],
             ProjectType.ApiIntegration),
 

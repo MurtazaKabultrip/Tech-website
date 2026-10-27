@@ -26,7 +26,8 @@ def shoot(page, name: str) -> None:
     page.wait_for_timeout(1600)
     hidden = page.evaluate("[...document.querySelectorAll('[data-reveal]')].filter(e => getComputedStyle(e).opacity === '0').length")
     if hidden:
-        errors.append(f"{name}: {hidden} section(s) still invisible after scrolling")
+        info = page.evaluate("({y: scrollY, h: document.documentElement.scrollHeight, cls: document.documentElement.className, first: (document.querySelector('[data-reveal]:not(.is-in)')||{}).outerHTML?.slice(0,120)})")
+        errors.append(f"{name}: {hidden} section(s) still invisible after scrolling {info}")
     page.screenshot(path=str(OUT / f"{name}.png"), full_page=True)
 
 

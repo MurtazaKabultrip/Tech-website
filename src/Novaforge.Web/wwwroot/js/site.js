@@ -100,29 +100,24 @@
     cleanups.push(function () { clearInterval(timer); });
   }
 
-  // Scroll reveal. Uses positions, not just IntersectionObserver, so content a visitor skips past
-  // (fast scroll, anchor links, End key) is never left invisible.
-  function initReveal() {
-    var items = Array.prototype.slice.call(document.querySelectorAll("[data-reveal]"));
-    if (!items.length) return;
-    items.forEach(function (el, idx) { el.style.transitionDelay = (idx % 4) * 70 + "ms"; });
-    var pending = items.slice(), ticking = false;
-    function check() {
-      ticking = false;
-      var limit = window.innerHeight * 0.92;
-      pending = pending.filter(function (el) {
-        if (el.getBoundingClientRect().top < limit) { el.classList.add("is-in"); return false; }
-        return true;
-      });
-      if (!pending.length) detach();
-    }
-    function onScrollReveal() { if (!ticking) { ticking = true; requestAnimationFrame(check); } }
-    function detach() { window.removeEventListener("scroll", onScrollReveal); window.removeEventListener("resize", onScrollReveal); }
-    window.addEventListener("scroll", onScrollReveal, { passive: true });
-    window.addEventListener("resize", onScrollReveal, { passive: true });
-    check();
-    cleanups.push(detach);
+  // Scroll reveal. Checks positions (not only IntersectionObserver) and re-queries the live DOM on
+  // every pass: Blazor may patch/replace page elements after load, and content a visitor skips past
+  // (fast scroll, anchor links, End key) must never stay invisible.
+  var revealTicking = false;
+  function revealCheck() {
+    revealTicking = false;
+    var limit = window.innerHeight * 0.92;
+    document.querySelectorAll("[data-reveal]:not(.is-in)").forEach(function (el, idx) {
+      if (el.getBoundingClientRect().top < limit) {
+        el.style.transitionDelay = (idx % 4) * 70 + "ms";
+        el.classList.add("is-in");
+      }
+    });
   }
+  function scheduleReveal() { if (!revealTicking) { revealTicking = true; requestAnimationFrame(revealCheck); } }
+  window.addEventListener("scroll", scheduleReveal, { passive: true });
+  window.addEventListener("resize", scheduleReveal, { passive: true });
+  function initReveal() { revealCheck(); }
 
   function initCounters() {
     var els = document.querySelectorAll("[data-count]");
@@ -240,6 +235,11 @@
   }
 
   document.addEventListener("DOMContentLoaded", initPage);
+  window.addEventListener("load", revealCheck);
+  // Safety net: if the DOM is patched without an event we hear about, re-check shortly after.
+  if ("MutationObserver" in window) {
+    new MutationObserver(scheduleReveal).observe(document.documentElement, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+  }
   // Blazor enhanced navigation swaps page content without a reload.
   window.addEventListener("load", function () {
     if (window.Blazor && window.Blazor.addEventListener) window.Blazor.addEventListener("enhancedload", initPage);

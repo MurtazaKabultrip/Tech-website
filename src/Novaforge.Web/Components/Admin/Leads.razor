@@ -1,0 +1,37 @@
+@page "/admin/leads"
+@inherits PortalPageBase
+@inject LeadService LeadService
+
+<Seo Title="Enquiries" NoIndex="true" />
+
+<div class="portal-head"><h1>Enquiries</h1></div>
+
+@if (ErrorMessage is not null)
+{
+    <div class="alert alert--error" role="alert">@ErrorMessage</div>
+}
+
+<section class="panel glass">
+    @if (leads is null)
+    {
+        <p class="muted" role="status">Loading…</p>
+    }
+    else
+    {
+        <LeadTable Items="leads" Expanded="true" OnStatusChange="ChangeStatusAsync" />
+    }
+</section>
+
+@code {
+    private IReadOnlyList<Lead>? leads;
+
+    protected override async Task OnInitializedAsync() => leads = await LeadService.ListAsync(await GetUserAsync());
+
+    private async Task ChangeStatusAsync((Guid Id, LeadStatus Status) change)
+    {
+        if (await TryAsync(() => LeadService.SetStatusAsync(Me!, change.Id, change.Status)))
+        {
+            leads = await LeadService.ListAsync(Me!);
+        }
+    }
+}

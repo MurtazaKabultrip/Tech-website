@@ -1,0 +1,7 @@
+@* Dates are stored in UTC; the ISO value is in the datetime attribute for machines and assistive tech. *@
+<time datetime="@Utc.ToString("o")">@Utc.ToString(Format, System.Globalization.CultureInfo.InvariantCulture)</time>
+
+@code {
+    [Parameter, EditorRequired] public DateTime Utc { get; set; }
+    [Parameter] public string Format { get; set; } = "d MMM yyyy";
+}

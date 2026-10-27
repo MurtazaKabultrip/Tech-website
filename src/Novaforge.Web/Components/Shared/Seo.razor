@@ -1,0 +1,40 @@
+@inject IOptions<SiteOptions> Site
+@inject NavigationManager Navigation
+
+<PageTitle>@FullTitle</PageTitle>
+<HeadContent>
+    <meta name="description" content="@Description" />
+    @if (NoIndex)
+    {
+        <meta name="robots" content="noindex, nofollow" />
+    }
+    else
+    {
+        <link rel="canonical" href="@Canonical" />
+    }
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="@Site.Value.Name" />
+    <meta property="og:title" content="@FullTitle" />
+    <meta property="og:description" content="@Description" />
+    <meta property="og:url" content="@Canonical" />
+    <meta name="twitter:card" content="summary" />
+</HeadContent>
+
+@code {
+    [Parameter, EditorRequired] public string Title { get; set; } = "";
+    [Parameter] public string? Description { get; set; }
+    [Parameter] public bool NoIndex { get; set; }
+
+    private string FullTitle => string.IsNullOrEmpty(Title) ? Site.Value.Name : $"{Title} | {Site.Value.Name}";
+
+    private string Canonical
+    {
+        get
+        {
+            var path = new Uri(Navigation.Uri).AbsolutePath;
+            return Site.Value.BaseUrl.TrimEnd('/') + path;
+        }
+    }
+
+    protected override void OnParametersSet() => Description ??= Site.Value.Tagline;
+}

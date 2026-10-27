@@ -1,0 +1,53 @@
+@inject IOptions<SiteOptions> Site
+
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+    <div class="container">
+        <a class="brand" href="/" aria-label="@Site.Value.Name home">
+            <img class="brand-mark" src="favicon.svg" alt="" width="28" height="28" />
+            <span>@Site.Value.Name</span>
+        </a>
+
+        @if (ShowSiteNav)
+        {
+            <nav class="nav" id="site-nav" aria-label="Main">
+                <NavLink href="/services">Services</NavLink>
+                <NavLink href="/process">How we work</NavLink>
+                <NavLink href="/contact">Contact</NavLink>
+            </nav>
+        }
+
+        <div class="header-actions" style="@(ShowSiteNav ? null : "margin-left:auto")">
+            <button type="button" class="icon-btn" data-theme-toggle aria-label="Switch theme">
+                <Icon Name="moon" Class="theme-icon-dark" />
+                <Icon Name="sun" Class="theme-icon-light" />
+            </button>
+            <AuthorizeView>
+                <Authorized>
+                    @if (ShowSiteNav)
+                    {
+                        <a class="btn btn--ghost btn--sm" href="/portal">Your projects</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn--ghost btn--sm" href="/">Website</a>
+                    }
+                </Authorized>
+                <NotAuthorized>
+                    <a class="btn btn--ghost btn--sm hide-sm" href="/account/login">Sign in</a>
+                    <a class="btn btn--primary btn--sm" href="/contact">Get a quote</a>
+                </NotAuthorized>
+            </AuthorizeView>
+            @if (ShowSiteNav)
+            {
+                <button type="button" class="icon-btn menu-toggle" data-menu-toggle aria-controls="site-nav" aria-expanded="false" aria-label="Menu">
+                    <Icon Name="menu" />
+                </button>
+            }
+        </div>
+    </div>
+</header>
+
+@code {
+    [Parameter] public bool ShowSiteNav { get; set; } = true;
+}

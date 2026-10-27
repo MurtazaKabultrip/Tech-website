@@ -1,0 +1,198 @@
+@page "/portal/invoices/{Id:guid}"
+@inherits PortalPageBase
+@implements IDisposable
+@inject InvoiceService InvoiceService
+@inject IPaymentGateway Payments
+@inject ProjectNotifier Notifier
+@inject NavigationManager Navigation
+@inject IOptions<SiteOptions> Site
+
+<Seo Title="@(invoice?.Number ?? "Invoice")" NoIndex="true" />
+
+@if (IsNotFound)
+{
+    <div class="panel glass empty">
+        <h1 style="font-size:var(--step-2)">Invoice not found</h1>
+        <a class="btn btn--primary" href="/portal/invoices">Back to invoices</a>
+    </div>
+}
+else if (invoice is null)
+{
+    <p class="muted" role="status">Loading…</p>
+}
+else
+{
+    <div class="portal-head no-print">
+        <div>
+            <nav class="breadcrumbs" aria-label="Breadcrumb" style="margin-bottom:8px"><a href="/portal/invoices">Invoices</a></nav>
+            <h1>Invoice @invoice.Number</h1>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button type="button" class="btn btn--ghost" data-print>Print / PDF</button>
+            @if (invoice.Status == InvoiceStatus.Open && !Me!.IsAdmin)
+            {
+                <button type="button" class="btn btn--primary" @onclick="PayAsync" disabled="@paying">
+                    @if (paying) { <span class="spinner" aria-hidden="true"></span> } else { <Icon Name="card" /> }
+                    Pay @DisplayText.Money(invoice.TotalMinor, invoice.Currency)
+                </button>
+            }
+        </div>
+    </div>
+
+    @if (justPaid && invoice.Status == InvoiceStatus.Open)
+    {
+        <div class="alert alert--ok" role="status">Payment received by our provider — confirming… this page updates automatically.</div>
+    }
+    @if (cancelled && invoice.Status == InvoiceStatus.Open)
+    {
+        <div class="alert" role="status">Payment was cancelled. You can try again whenever you're ready.</div>
+    }
+    @if (ErrorMessage is not null)
+    {
+        <div class="alert alert--error" role="alert">@ErrorMessage</div>
+    }
+
+    <article class="invoice-doc glass">
+        <div class="invoice-top">
+            <div>
+                <strong>@Site.Value.Name</strong><br />
+                <span class="muted">@Site.Value.ContactEmail</span>
+            </div>
+            <div style="text-align:right">
+                <StatusBadge Invoice="invoice.Status" Overdue="invoice.IsOverdue" />
+                <dl class="meta-list" style="margin-top:12px">
+                    <dt>Invoice</dt><dd>@invoice.Number</dd>
+                    <dt>Issued</dt><dd><LocalTime Utc="invoice.IssuedAt" /></dd>
+                    <dt>Due</dt><dd><LocalTime Utc="invoice.DueDate" /></dd>
+                    @if (invoice.PaidAt is { } paidAt)
+                    {
+                        <dt>Paid</dt><dd><LocalTime Utc="paidAt" /></dd>
+                    }
+                </dl>
+            </div>
+        </div>
+
+        <p class="muted">Project: <a href="/portal/projects/@invoice.ProjectId">@invoice.ProjectTitle</a></p>
+
+        <div class="table-wrap">
+            <table class="table">
+                <thead>
+                    <tr><th scope="col">Description</th><th scope="col" class="num">Qty</th><th scope="col" class="num">Unit price</th><th scope="col" class="num">Amount</th></tr>
+                </thead>
+                <tbody>
+                    @foreach (var line in invoice.Lines)
+                    {
+                        <tr>
+                            <td>@line.Description</td>
+                            <td class="num">@line.Quantity</td>
+                            <td class="num">@DisplayText.Money(line.UnitAmountMinor, invoice.Currency)</td>
+                            <td class="num">@DisplayText.Money(line.UnitAmountMinor * line.Quantity, invoice.Currency)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;margin-top:24px">
+            <div style="text-align:right">
+                <div class="muted small">Total</div>
+                <div class="invoice-total">@DisplayText.Money(invoice.TotalMinor, invoice.Currency)</div>
+                @if (invoice.RefundedAmountMinor > 0)
+                {
+                    <div class="muted small">Refunded @DisplayText.Money(invoice.RefundedAmountMinor, invoice.Currency)</div>
+                }
+            </div>
+        </div>
+
+        @if (invoice.Status == InvoiceStatus.Open && !Payments.IsConfigured)
+        {
+            <p class="muted small" style="margin-top:24px">Online card payment isn't enabled yet. Please pay by bank transfer and use @invoice.Number as the reference.</p>
+        }
+    </article>
+
+    @if (Me!.IsAdmin)
+    {
+        <section class="panel glass no-print" aria-labelledby="adm-h">
+            <div class="panel-head"><h2 id="adm-h">Admin</h2></div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end">
+                @if (invoice.Status == InvoiceStatus.Paid)
+                {
+                    <div class="field" style="max-width:220px">
+                        <label for="refund">Refund amount <span class="muted">(blank = full)</span></label>
+                        <input id="refund" class="input" type="number" min="0" step="0.01" @bind="refundAmount" />
+                    </div>
+                    <button type="button" class="btn btn--danger" @onclick="RefundAsync">Issue refund</button>
+                }
+                @if (invoice.Status == InvoiceStatus.Open)
+                {
+                    <button type="button" class="btn btn--danger" @onclick="VoidAsync">Void invoice</button>
+                }
+                @if (invoice.Status is InvoiceStatus.Void or InvoiceStatus.Refunded)
+                {
+                    <p class="muted" style="margin:0">No actions available for a @DisplayText.Of(invoice.Status).ToLowerInvariant() invoice.</p>
+                }
+            </div>
+        </section>
+    }
+}
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    [SupplyParameterFromQuery(Name = "paid")] private int? PaidFlag { get; set; }
+    [SupplyParameterFromQuery(Name = "cancelled")] private int? CancelledFlag { get; set; }
+
+    private InvoiceDto? invoice;
+    private bool paying;
+    private decimal? refundAmount;
+    private bool justPaid => PaidFlag == 1;
+    private bool cancelled => CancelledFlag == 1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Notifier.ProjectChanged += OnProjectChanged;
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        var me = await GetUserAsync();
+        await TryAsync(async () => invoice = await InvoiceService.GetAsync(me, Id));
+    }
+
+    // The webhook marks the invoice paid moments after redirect; the notifier refreshes this page live.
+    private Task OnProjectChanged(Guid projectId) =>
+        invoice?.ProjectId == projectId ? InvokeAsync(async () => { await LoadAsync(); StateHasChanged(); }) : Task.CompletedTask;
+
+    private async Task PayAsync()
+    {
+        paying = true;
+        string? url = null;
+        await TryAsync(async () => url = await InvoiceService.StartCheckoutAsync(Me!, Id));
+        if (url is not null)
+        {
+            Navigation.NavigateTo(url, forceLoad: true);
+            return;
+        }
+        paying = false;
+    }
+
+    private async Task RefundAsync()
+    {
+        long? minor = refundAmount is { } a && a > 0 ? (long)Math.Round(a * 100m, MidpointRounding.AwayFromZero) : null;
+        if (await TryAsync(async () => invoice = await InvoiceService.RefundAsync(Me!, Id, new RefundRequest { AmountMinor = minor })))
+        {
+            refundAmount = null;
+        }
+    }
+
+    private async Task VoidAsync()
+    {
+        if (await TryAsync(() => InvoiceService.VoidAsync(Me!, Id)))
+        {
+            await LoadAsync();
+        }
+    }
+
+    public void Dispose() => Notifier.ProjectChanged -= OnProjectChanged;
+}

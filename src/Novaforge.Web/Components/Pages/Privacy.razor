@@ -1,0 +1,39 @@
+@page "/privacy"
+@inject IOptions<SiteOptions> Site
+
+<Seo Title="Privacy policy" Description="How we collect, use and protect your personal data." />
+
+<section class="page-head">
+    <div class="container">
+        <h1>Privacy policy</h1>
+        <p class="lede">Plain-language summary of how we handle your data.</p>
+    </div>
+</section>
+
+<section class="section section--tight">
+    <div class="container prose">
+        <div class="alert alert--warn" role="note">
+            Template text — have it reviewed for your company and jurisdiction (GDPR) before launch.
+        </div>
+
+        <h2>Who we are</h2>
+        <p>@Site.Value.Name is the data controller for personal data collected on this website. Contact: <a href="mailto:@Site.Value.ContactEmail">@Site.Value.ContactEmail</a>.</p>
+
+        <h2>What we collect</h2>
+        <ul>
+            <li><strong>Enquiries:</strong> name, e-mail, company and your message — to reply to you.</li>
+            <li><strong>Client accounts:</strong> name, e-mail, project details, messages and invoices — to deliver our services.</li>
+            <li><strong>Payments:</strong> processed by Stripe. We never see or store your card number.</li>
+            <li><strong>Technical data:</strong> server logs (IP address, browser) kept for security for up to 30 days.</li>
+        </ul>
+
+        <h2>Cookies</h2>
+        <p>We use only strictly necessary cookies: one to keep you signed in and one to protect forms against forgery. No tracking or advertising cookies. Your theme choice is stored in your own browser.</p>
+
+        <h2>Fonts and third parties</h2>
+        <p>All fonts and scripts are served from our own server. Your browser does not contact third parties when you visit this site, except Stripe when you choose to pay.</p>
+
+        <h2>Your rights</h2>
+        <p>You can ask for access to, correction of, or deletion of your data, and you can complain to your national data protection authority (in Denmark: Datatilsynet).</p>
+    </div>
+</section>

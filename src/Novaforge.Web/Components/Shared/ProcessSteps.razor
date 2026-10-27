@@ -1,0 +1,26 @@
+<ol class="process @(Vertical ? "process--vertical" : null)">
+    <li>
+        <h3>Brief</h3>
+        <p>A call and a written proposal: scope, phases, price and timeline.</p>
+    </li>
+    <li>
+        <h3>Design</h3>
+        <p>Clickable designs for every key screen, in light and dark.</p>
+    </li>
+    <li>
+        <h3>Build</h3>
+        <p>Short cycles with a demo every week in your portal.</p>
+    </li>
+    <li>
+        <h3>Test</h3>
+        <p>Automated tests, security checks and performance tuning.</p>
+    </li>
+    <li>
+        <h3>Launch & run</h3>
+        <p>Deployment, monitoring, backups and ongoing support.</p>
+    </li>
+</ol>
+
+@code {
+    [Parameter] public bool Vertical { get; set; }
+}

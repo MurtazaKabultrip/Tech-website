@@ -1,0 +1,73 @@
+@page "/admin"
+@inherits PortalPageBase
+@inject ProjectService ProjectService
+@inject LeadService LeadService
+@inject IPaymentGateway Payments
+@inject IAiAssistant Ai
+
+<Seo Title="Admin" NoIndex="true" />
+
+<div class="portal-head">
+    <h1>Admin</h1>
+</div>
+
+@if (!Payments.IsConfigured || !Ai.IsConfigured)
+{
+    <div class="alert alert--warn" role="note">
+        @if (!Payments.IsConfigured) { <div><strong>Card payments are off.</strong> Set <code>Stripe:SecretKey</code> and <code>Stripe:WebhookSecret</code> to enable them.</div> }
+        @if (!Ai.IsConfigured) { <div><strong>AI brief is off.</strong> Set <code>Ai:ApiKey</code> to enable it.</div> }
+    </div>
+}
+
+@if (dashboard is null || leads is null)
+{
+    <p class="muted" role="status">Loading…</p>
+}
+else
+{
+    <div class="stats">
+        <div class="stat glass"><div class="stat-value">@(leads.Count(l => l.Status == LeadStatus.New))</div><div class="stat-label">New enquiries</div></div>
+        <div class="stat glass"><div class="stat-value">@waiting</div><div class="stat-label">Requests to review</div></div>
+        <div class="stat glass"><div class="stat-value">@dashboard.ActiveProjects</div><div class="stat-label">Active projects</div></div>
+        <div class="stat glass"><div class="stat-value">@DisplayText.Money(dashboard.OutstandingMinor, dashboard.Currency)</div><div class="stat-label">Outstanding</div></div>
+    </div>
+
+    <section class="panel glass" aria-labelledby="review-h">
+        <div class="panel-head">
+            <h2 id="review-h">Waiting for review</h2>
+            <a href="/portal/projects">All projects</a>
+        </div>
+        @if (toReview is { Count: > 0 })
+        {
+            <ProjectTable Items="toReview" ShowOwner="true" />
+        }
+        else
+        {
+            <p class="muted" style="margin:0">Nothing waiting. New client requests appear here.</p>
+        }
+    </section>
+
+    <section class="panel glass" aria-labelledby="leads-h">
+        <div class="panel-head">
+            <h2 id="leads-h">Latest enquiries</h2>
+            <a href="/admin/leads">All enquiries</a>
+        </div>
+        <LeadTable Items="leads.Take(5).ToList()" />
+    </section>
+}
+
+@code {
+    private DashboardDto? dashboard;
+    private IReadOnlyList<Lead>? leads;
+    private IReadOnlyList<ProjectSummaryDto>? toReview;
+    private int waiting;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var me = await GetUserAsync();
+        dashboard = await ProjectService.GetDashboardAsync(me);
+        leads = await LeadService.ListAsync(me);
+        toReview = await ProjectService.ListAsync(me, ProjectStatus.Submitted);
+        waiting = toReview.Count;
+    }
+}

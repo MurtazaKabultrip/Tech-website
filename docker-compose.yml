@@ -1,0 +1,54 @@
+# Production-like local stack: the app + PostgreSQL.
+#   cp .env.example .env   # then edit the values
+#   docker compose up --build
+# Open http://localhost:8080
+services:
+  web:
+    build: .
+    image: novaforge-web:latest
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      Database__Provider: Postgres
+      ConnectionStrings__Default: "Host=db;Database=novaforge;Username=novaforge;Password=${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}"
+      Site__Name: ${SITE_NAME:-Novaforge}
+      Site__BaseUrl: ${SITE_BASE_URL:-http://localhost:8080}
+      Site__ContactEmail: ${CONTACT_EMAIL:-hello@example.com}
+      Site__NotificationEmail: ${NOTIFICATION_EMAIL:-hello@example.com}
+      Admin__Email: ${ADMIN_EMAIL:?set ADMIN_EMAIL in .env}
+      Admin__Password: ${ADMIN_PASSWORD:?set ADMIN_PASSWORD in .env}
+      Stripe__SecretKey: ${STRIPE_SECRET_KEY:-}
+      Stripe__WebhookSecret: ${STRIPE_WEBHOOK_SECRET:-}
+      Ai__ApiKey: ${ANTHROPIC_API_KEY:-}
+      Smtp__Host: ${SMTP_HOST:-}
+      Smtp__Port: ${SMTP_PORT:-587}
+      Smtp__Username: ${SMTP_USERNAME:-}
+      Smtp__Password: ${SMTP_PASSWORD:-}
+      Smtp__From: ${SMTP_FROM:-no-reply@example.com}
+      DataProtection__KeysPath: /app/data/keys
+    volumes:
+      - app-keys:/app/data/keys
+
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: novaforge
+      POSTGRES_USER: novaforge
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U novaforge -d novaforge"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  db-data:
+  app-keys:

@@ -1,0 +1,61 @@
+@if (Items.Count == 0)
+{
+    <p class="muted" style="margin:0">No enquiries yet. Messages from the contact form appear here.</p>
+}
+else
+{
+    <div class="table-wrap">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">From</th>
+                    <th scope="col">Need</th>
+                    <th scope="col">Budget</th>
+                    <th scope="col">Received</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var lead in Items)
+                {
+                    <tr>
+                        <td>
+                            <strong>@lead.Name</strong>@(lead.Company is null ? "" : $", {lead.Company}")<br />
+                            <a href="mailto:@lead.Email">@lead.Email</a>
+                            @if (Expanded)
+                            {
+                                <div class="pre muted" style="margin-top:8px;max-width:60ch">@lead.Message</div>
+                            }
+                        </td>
+                        <td class="muted">@DisplayText.Of(lead.ProjectType)</td>
+                        <td class="muted">@DisplayText.Of(lead.Budget)</td>
+                        <td class="muted"><LocalTime Utc="lead.CreatedAt" /></td>
+                        <td>
+                            @if (OnStatusChange.HasDelegate)
+                            {
+                                <label class="visually-hidden" for="ls-@lead.Id">Status for @lead.Name</label>
+                                <select id="ls-@lead.Id" class="input" style="min-height:36px;padding:6px 36px 6px 10px"
+                                        value="@lead.Status" @onchange="e => OnStatusChange.InvokeAsync((lead.Id, Enum.Parse<LeadStatus>(e.Value!.ToString()!)))">
+                                    @foreach (var s in Enum.GetValues<LeadStatus>())
+                                    {
+                                        <option value="@s">@s</option>
+                                    }
+                                </select>
+                            }
+                            else
+                            {
+                                <span class="badge @(lead.Status == LeadStatus.New ? "badge--live" : "badge--muted")">@lead.Status</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    [Parameter, EditorRequired] public IReadOnlyList<Lead> Items { get; set; } = [];
+    [Parameter] public bool Expanded { get; set; }
+    [Parameter] public EventCallback<(Guid Id, LeadStatus Status)> OnStatusChange { get; set; }
+}

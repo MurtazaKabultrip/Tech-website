@@ -1,0 +1,28 @@
+@page "/portal/invoices"
+@inherits PortalPageBase
+@inject InvoiceService InvoiceService
+
+<Seo Title="Invoices" NoIndex="true" />
+
+<div class="portal-head"><h1>Invoices</h1></div>
+
+<section class="panel glass">
+    @if (items is null)
+    {
+        <p class="muted" role="status">Loading…</p>
+    }
+    else if (items.Count == 0)
+    {
+        <div class="empty"><p style="margin:0">No invoices yet. They appear here as soon as a phase is billed.</p></div>
+    }
+    else
+    {
+        <InvoiceTable Items="items" />
+    }
+</section>
+
+@code {
+    private IReadOnlyList<InvoiceDto>? items;
+
+    protected override async Task OnInitializedAsync() => items = await InvoiceService.ListAsync(await GetUserAsync());
+}

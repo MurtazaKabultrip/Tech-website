@@ -1,0 +1,7 @@
+@inject NavigationManager Navigation
+
+@code {
+    [Parameter, EditorRequired] public string Url { get; set; } = "/";
+
+    protected override void OnInitialized() => Navigation.NavigateTo(Url, forceLoad: true);
+}

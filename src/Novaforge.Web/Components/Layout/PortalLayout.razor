@@ -1,0 +1,27 @@
+@inherits LayoutComponentBase
+
+<SiteHeader ShowSiteNav="false" />
+
+<div class="container portal">
+    <nav class="portal-nav glass" aria-label="Portal">
+        <NavLink href="/portal" Match="NavLinkMatch.All"><Icon Name="home" /> Overview</NavLink>
+        <NavLink href="/portal/projects"><Icon Name="folder" /> Projects</NavLink>
+        <NavLink href="/portal/projects/new"><Icon Name="plus" /> New request</NavLink>
+        <NavLink href="/portal/invoices"><Icon Name="file" /> Invoices</NavLink>
+        <AuthorizeView Roles="@Roles.Admin">
+            <div class="nav-sep" role="separator"></div>
+            <NavLink href="/admin" Match="NavLinkMatch.All"><Icon Name="shield-admin" /> Admin</NavLink>
+            <NavLink href="/admin/leads"><Icon Name="inbox" /> Enquiries</NavLink>
+        </AuthorizeView>
+        <div class="nav-sep" role="separator"></div>
+        <form action="/account/logout" method="post">
+            <AntiforgeryToken />
+            <input type="hidden" name="returnUrl" value="/" />
+            <button type="submit" class="linklike"><Icon Name="logout" /> Sign out</button>
+        </form>
+    </nav>
+
+    <main id="main" class="portal-main" tabindex="-1">
+        @Body
+    </main>
+</div>

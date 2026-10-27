@@ -1,0 +1,112 @@
+@page "/account/register"
+@using System.ComponentModel.DataAnnotations
+@inject UserManager<AppUser> UserManager
+@inject SignInManager<AppUser> SignInManager
+@inject NavigationManager Navigation
+
+<Seo Title="Create account" NoIndex="true" />
+
+<div class="container auth-wrap">
+    <div class="auth-pane glass">
+        <h1>Create your account</h1>
+        <p class="muted">Start a project or report a problem, and follow it live.</p>
+
+        <EditForm Model="Input" FormName="register" OnValidSubmit="RegisterAsync" method="post" class="form">
+            <DataAnnotationsValidator />
+            @if (errors.Count > 0)
+            {
+                <ul class="validation-errors" role="alert">
+                    @foreach (var e in errors)
+                    {
+                        <li>@e</li>
+                    }
+                </ul>
+            }
+            <div class="field">
+                <label for="fullName">Full name</label>
+                <InputText id="fullName" @bind-Value="Input!.FullName" autocomplete="name" />
+                <ValidationMessage For="() => Input!.FullName" />
+            </div>
+            <div class="field">
+                <label for="company">Company <span class="muted">(optional)</span></label>
+                <InputText id="company" @bind-Value="Input!.Company" autocomplete="organization" />
+            </div>
+            <div class="field">
+                <label for="email">E-mail</label>
+                <InputText id="email" type="email" @bind-Value="Input!.Email" autocomplete="username" />
+                <ValidationMessage For="() => Input!.Email" />
+            </div>
+            <div class="field">
+                <label for="password">Password</label>
+                <InputText id="password" type="password" @bind-Value="Input!.Password" autocomplete="new-password" aria-describedby="pw-hint" />
+                <span class="hint" id="pw-hint">At least 10 characters, with upper- and lower-case letters and a number.</span>
+                <ValidationMessage For="() => Input!.Password" />
+            </div>
+            <label class="checkbox">
+                <InputCheckbox @bind-Value="Input!.AcceptTerms" />
+                <span>I accept the <a href="/terms">terms</a> and <a href="/privacy">privacy policy</a></span>
+            </label>
+            <ValidationMessage For="() => Input!.AcceptTerms" />
+            <button type="submit" class="btn btn--primary btn--lg">Create account</button>
+        </EditForm>
+
+        <p class="auth-switch">Already have an account? <a href="/account/login">Sign in</a></p>
+    </div>
+</div>
+
+@code {
+    [SupplyParameterFromForm(FormName = "register")]
+    private RegisterModel? Input { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? ReturnUrl { get; set; }
+
+    private readonly List<string> errors = [];
+
+    protected override void OnInitialized() => Input ??= new();
+
+    private async Task RegisterAsync()
+    {
+        var user = new AppUser
+        {
+            UserName = Input!.Email.Trim(),
+            Email = Input.Email.Trim(),
+            FullName = Input.FullName.Trim(),
+            Company = string.IsNullOrWhiteSpace(Input.Company) ? null : Input.Company.Trim()
+        };
+
+        var result = await UserManager.CreateAsync(user, Input.Password);
+        if (!result.Succeeded)
+        {
+            // Identity reports "username taken" and "email taken" separately; show one friendly line.
+            errors.AddRange(result.Errors
+                .Select(e => e.Code is "DuplicateUserName" or "DuplicateEmail"
+                    ? "An account with this e-mail already exists. Try signing in."
+                    : e.Description)
+                .Distinct());
+            return;
+        }
+
+        await UserManager.AddToRoleAsync(user, Roles.Client);
+        await SignInManager.SignInAsync(user, isPersistent: false);
+        Navigation.NavigateTo(Login.SafeReturnUrl(ReturnUrl), forceLoad: true);
+    }
+
+    private sealed class RegisterModel
+    {
+        [Required(ErrorMessage = "Enter your name."), StringLength(120, MinimumLength = 2)]
+        public string FullName { get; set; } = "";
+
+        [StringLength(160)]
+        public string? Company { get; set; }
+
+        [Required(ErrorMessage = "Enter your e-mail."), EmailAddress, StringLength(254)]
+        public string Email { get; set; } = "";
+
+        [Required(ErrorMessage = "Choose a password."), StringLength(128, MinimumLength = 10, ErrorMessage = "Use at least 10 characters.")]
+        public string Password { get; set; } = "";
+
+        [Range(typeof(bool), "true", "true", ErrorMessage = "Please accept the terms to continue.")]
+        public bool AcceptTerms { get; set; }
+    }
+}

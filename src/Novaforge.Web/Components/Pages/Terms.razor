@@ -1,0 +1,30 @@
+@page "/terms"
+@inject IOptions<SiteOptions> Site
+
+<Seo Title="Terms" Description="Terms of service for projects and the client portal." />
+
+<section class="page-head">
+    <div class="container">
+        <h1>Terms of service</h1>
+    </div>
+</section>
+
+<section class="section section--tight">
+    <div class="container prose">
+        <div class="alert alert--warn" role="note">
+            Template text — replace with terms reviewed by a lawyer before launch.
+        </div>
+
+        <h2>Proposals and scope</h2>
+        <p>Each project starts with a written proposal. Work outside the agreed scope is quoted separately before it starts.</p>
+
+        <h2>Payment</h2>
+        <p>Invoices are payable within the period stated on the invoice, by card in the client portal or by bank transfer.</p>
+
+        <h2>Ownership</h2>
+        <p>When an invoice for a phase is paid in full, you own the source code and deliverables produced in that phase.</p>
+
+        <h2>Contact</h2>
+        <p><a href="mailto:@Site.Value.ContactEmail">@Site.Value.ContactEmail</a></p>
+    </div>
+</section>

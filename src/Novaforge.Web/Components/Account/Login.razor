@@ -1,0 +1,86 @@
+@page "/account/login"
+@using System.ComponentModel.DataAnnotations
+@inject SignInManager<AppUser> SignInManager
+@inject NavigationManager Navigation
+@inject ILogger<Login> Logger
+
+<Seo Title="Sign in" NoIndex="true" />
+
+<div class="container auth-wrap">
+    <div class="auth-pane glass">
+        <h1>Sign in</h1>
+        <p class="muted">Follow your projects, message the team and pay invoices.</p>
+
+        <EditForm Model="Input" FormName="login" OnValidSubmit="LoginAsync" method="post" class="form">
+            <DataAnnotationsValidator />
+            @if (error is not null)
+            {
+                <div class="alert alert--error" role="alert">@error</div>
+            }
+            <div class="field">
+                <label for="email">E-mail</label>
+                <InputText id="email" type="email" @bind-Value="Input!.Email" autocomplete="username" />
+                <ValidationMessage For="() => Input!.Email" />
+            </div>
+            <div class="field">
+                <label for="password">Password</label>
+                <InputText id="password" type="password" @bind-Value="Input!.Password" autocomplete="current-password" />
+                <ValidationMessage For="() => Input!.Password" />
+            </div>
+            <label class="checkbox"><InputCheckbox @bind-Value="Input!.RememberMe" /> Keep me signed in</label>
+            <button type="submit" class="btn btn--primary btn--lg">Sign in</button>
+        </EditForm>
+
+        <p class="auth-switch">New client? <a href="/account/register@(ReturnQuery)">Create an account</a></p>
+    </div>
+</div>
+
+@code {
+    [SupplyParameterFromForm(FormName = "login")]
+    private LoginModel? Input { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? ReturnUrl { get; set; }
+
+    private string? error;
+
+    private string ReturnQuery => string.IsNullOrEmpty(ReturnUrl) ? "" : $"?returnUrl={Uri.EscapeDataString(ReturnUrl)}";
+
+    protected override void OnInitialized() => Input ??= new();
+
+    private async Task LoginAsync()
+    {
+        var result = await SignInManager.PasswordSignInAsync(Input!.Email.Trim(), Input.Password, Input.RememberMe, lockoutOnFailure: true);
+        if (result.Succeeded)
+        {
+            Navigation.NavigateTo(SafeReturnUrl(ReturnUrl), forceLoad: true);
+            return;
+        }
+
+        if (result.IsLockedOut)
+        {
+            Logger.LogWarning("Account locked out after failed sign-ins");
+            error = "Too many attempts. Your account is locked for 15 minutes.";
+        }
+        else
+        {
+            error = "E-mail or password is incorrect.";
+        }
+    }
+
+    internal static string SafeReturnUrl(string? url) =>
+        !string.IsNullOrEmpty(url) && url.StartsWith('/') && !url.StartsWith("//") && !url.StartsWith("/\\")
+            ? url
+            : "/portal";
+
+    private sealed class LoginModel
+    {
+        [Required(ErrorMessage = "Enter your e-mail."), EmailAddress]
+        public string Email { get; set; } = "";
+
+        [Required(ErrorMessage = "Enter your password."), DataType(DataType.Password)]
+        public string Password { get; set; } = "";
+
+        public bool RememberMe { get; set; }
+    }
+}

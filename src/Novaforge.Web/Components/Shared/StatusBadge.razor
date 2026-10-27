@@ -1,0 +1,14 @@
+@if (Project is { } p)
+{
+    <span class="badge @DisplayText.StatusCss(p)">@DisplayText.Of(p)</span>
+}
+else if (Invoice is { } i)
+{
+    <span class="badge @(Overdue ? "badge--warn" : DisplayText.StatusCss(i))">@(Overdue ? "Overdue" : DisplayText.Of(i))</span>
+}
+
+@code {
+    [Parameter] public ProjectStatus? Project { get; set; }
+    [Parameter] public InvoiceStatus? Invoice { get; set; }
+    [Parameter] public bool Overdue { get; set; }
+}

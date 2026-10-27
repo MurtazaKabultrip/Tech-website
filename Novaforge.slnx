@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Novaforge.Web/Novaforge.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Novaforge.Tests/Novaforge.Tests.csproj" />
+  </Folder>
+</Solution>

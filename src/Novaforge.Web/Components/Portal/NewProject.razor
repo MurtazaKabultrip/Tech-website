@@ -1,0 +1,137 @@
+@page "/portal/projects/new"
+@inherits PortalPageBase
+@inject ProjectService ProjectService
+@inject IAiAssistant Ai
+@inject NavigationManager Navigation
+
+<Seo Title="New request" NoIndex="true" />
+
+<div class="portal-head">
+    <div>
+        <h1>New request</h1>
+        <p class="muted" style="margin:0">A new build, a fix or an upgrade — describe it and we'll reply with next steps.</p>
+    </div>
+</div>
+
+<section class="panel glass">
+    <EditForm Model="model" OnValidSubmit="SubmitAsync" class="form" FormName="new-project">
+        <DataAnnotationsValidator />
+        @if (ErrorMessage is not null)
+        {
+            <div class="alert alert--error" role="alert">@ErrorMessage</div>
+        }
+
+        <fieldset style="border:0;padding:0;margin:0">
+            <legend class="label" style="margin-bottom:10px">What do you need?</legend>
+            <div class="type-picker">
+                @foreach (var type in Enum.GetValues<ProjectType>())
+                {
+                    var id = $"type-{type}";
+                    <div class="type-option">
+                        <input type="radio" id="@id" name="project-type" checked="@(model.Type == type)"
+                               @onchange="() => model.Type = type" />
+                        <label for="@id">@DisplayText.Of(type)</label>
+                    </div>
+                }
+            </div>
+        </fieldset>
+
+        <div class="field">
+            <label for="title">Project name</label>
+            <InputText id="title" @bind-Value="model.Title" placeholder="@(IsFix ? "Checkout page crashes on mobile" : "New booking website")" />
+            <ValidationMessage For="() => model.Title" />
+        </div>
+
+        <div class="field">
+            <label for="desc">@(IsFix ? "What's going wrong?" : "Describe the project")</label>
+            <InputTextArea id="desc" @bind-Value="model.Description" rows="8" />
+            <span class="hint">@(IsFix
+                ? "Steps to reproduce, what you expected, what happened instead, and any error messages."
+                : "Who it's for, the main features, any sites you like, and integrations (payments, APIs…).")</span>
+            <ValidationMessage For="() => model.Description" />
+        </div>
+
+        @if (Ai.IsConfigured)
+        {
+            <div class="alert">
+                <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+                    <span><strong>Turn this into a brief.</strong> <span class="muted">Our AI assistant structures your description into goals, features and open questions.</span></span>
+                    <button type="button" class="btn btn--ghost btn--sm" @onclick="GenerateBriefAsync" disabled="@(briefBusy || (model.Description?.Length ?? 0) < 20)">
+                        @if (briefBusy) { <span class="spinner" aria-hidden="true"></span> <span>Writing brief…</span> } else { <Icon Name="sparkles" /> <span>Generate brief</span> }
+                    </button>
+                </div>
+                @if (!string.IsNullOrEmpty(model.AiBrief))
+                {
+                    <div class="field" style="margin-top:14px">
+                        <label for="brief">AI brief <span class="muted">(edit freely — it's sent with your request)</span></label>
+                        <InputTextArea id="brief" @bind-Value="model.AiBrief" rows="12" />
+                    </div>
+                }
+            </div>
+        }
+
+        <div class="form-row">
+            <div class="field">
+                <label for="url">@(IsFix ? "Website URL" : "Current website") <span class="muted">(optional)</span></label>
+                <InputText id="url" type="url" @bind-Value="model.ExistingUrl" placeholder="https://" />
+                <ValidationMessage For="() => model.ExistingUrl" />
+            </div>
+            <div class="field">
+                <label for="repo">Code repository <span class="muted">(optional)</span></label>
+                <InputText id="repo" type="url" @bind-Value="model.RepositoryUrl" placeholder="https://github.com/…" />
+                <ValidationMessage For="() => model.RepositoryUrl" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="field">
+                <label for="budget">Budget</label>
+                <InputSelect id="budget" @bind-Value="model.Budget">
+                    @foreach (var b in Enum.GetValues<BudgetRange>())
+                    {
+                        <option value="@b">@DisplayText.Of(b)</option>
+                    }
+                </InputSelect>
+            </div>
+            <div class="field">
+                <label for="deadline">Deadline <span class="muted">(optional)</span></label>
+                <InputDate id="deadline" @bind-Value="model.Deadline" />
+            </div>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn--primary btn--lg" disabled="@saving">
+                @(saving ? "Sending…" : IsFix ? "Send problem report" : "Send request")
+            </button>
+        </div>
+    </EditForm>
+</section>
+
+@code {
+    private readonly CreateProjectRequest model = new();
+    private bool saving;
+    private bool briefBusy;
+
+    private bool IsFix => model.Type is ProjectType.BugFix or ProjectType.Upgrade;
+
+    protected override async Task OnInitializedAsync() => await GetUserAsync();
+
+    private async Task GenerateBriefAsync()
+    {
+        briefBusy = true;
+        await TryAsync(async () => model.AiBrief = await Ai.GenerateBriefAsync(model.Type, model.Description));
+        briefBusy = false;
+    }
+
+    private async Task SubmitAsync()
+    {
+        saving = true;
+        Guid id = default;
+        var ok = await TryAsync(async () => id = await ProjectService.CreateAsync(Me!, model));
+        saving = false;
+        if (ok)
+        {
+            Navigation.NavigateTo($"/portal/projects/{id}");
+        }
+    }
+}

@@ -1,0 +1,322 @@
+@page "/portal/projects/{Id:guid}"
+@inherits PortalPageBase
+@implements IDisposable
+@inject ProjectService ProjectService
+@inject InvoiceService InvoiceService
+@inject ProjectNotifier Notifier
+@inject IOptions<StripeOptions> Stripe
+@inject IJSRuntime JS
+
+<Seo Title="@(project?.Title ?? "Project")" NoIndex="true" />
+
+@if (IsNotFound)
+{
+    <div class="panel glass empty">
+        <h1 style="font-size:var(--step-2)">Project not found</h1>
+        <p style="margin:0">It may have been removed, or it belongs to another account.</p>
+        <a class="btn btn--primary" href="/portal/projects">Back to projects</a>
+    </div>
+}
+else if (project is null)
+{
+    <p class="muted" role="status">Loading…</p>
+}
+else
+{
+    <div class="portal-head">
+        <div>
+            <nav class="breadcrumbs" aria-label="Breadcrumb" style="margin-bottom:8px"><a href="/portal/projects">Projects</a> / @DisplayText.Of(project.Type)</nav>
+            <h1>@project.Title</h1>
+        </div>
+        <StatusBadge Project="project.Status" />
+    </div>
+
+    @if (ErrorMessage is not null)
+    {
+        <div class="alert alert--error" role="alert">@ErrorMessage</div>
+    }
+
+    <div class="project-layout">
+        <div class="portal-main">
+            <section class="panel glass" aria-labelledby="brief-h">
+                <div class="panel-head"><h2 id="brief-h">Request</h2></div>
+                <div class="pre">@project.Description</div>
+                @if (!string.IsNullOrEmpty(project.AiBrief))
+                {
+                    <details style="margin-top:18px">
+                        <summary style="cursor:pointer;font-weight:500">AI brief</summary>
+                        <div class="pre muted" style="margin-top:10px">@project.AiBrief</div>
+                    </details>
+                }
+            </section>
+
+            <section class="panel glass" aria-labelledby="msg-h">
+                <div class="panel-head"><h2 id="msg-h">Messages</h2></div>
+                @if (project.Messages.Count == 0)
+                {
+                    <p class="muted">No messages yet. Ask a question or add details — the team is notified right away.</p>
+                }
+                else
+                {
+                    <div class="thread" data-autoscroll aria-live="polite">
+                        @foreach (var m in project.Messages)
+                        {
+                            var mine = m.IsFromStaff == Me!.IsAdmin;
+                            <div class="msg @(mine ? "msg--mine" : null)">
+                                <div class="msg-meta">@m.AuthorName@(m.IsFromStaff ? " (team)" : ""), <LocalTime Utc="m.CreatedAt" Format="d MMM, HH:mm 'UTC'" /></div>
+                                <div class="msg-body">@m.Body</div>
+                            </div>
+                        }
+                    </div>
+                }
+                <form class="composer" @onsubmit="SendAsync" @onsubmit:preventDefault>
+                    <label for="composer" class="visually-hidden">Message</label>
+                    <textarea id="composer" class="input" rows="2" maxlength="4000" placeholder="Write a message…" @bind="draft" @bind:event="oninput"></textarea>
+                    <button type="submit" class="btn btn--primary" disabled="@(sending || string.IsNullOrWhiteSpace(draft))">
+                        <Icon Name="send" /> Send
+                    </button>
+                </form>
+            </section>
+        </div>
+
+        <div class="portal-main">
+            <section class="panel glass" aria-labelledby="det-h">
+                <div class="panel-head"><h2 id="det-h">Details</h2></div>
+                <dl class="meta-list">
+                    @if (Me!.IsAdmin)
+                    {
+                        <dt>Client</dt><dd>@project.OwnerName<br /><a href="mailto:@project.OwnerEmail">@project.OwnerEmail</a></dd>
+                    }
+                    <dt>Type</dt><dd>@DisplayText.Of(project.Type)</dd>
+                    <dt>Budget</dt><dd>@DisplayText.Of(project.Budget)</dd>
+                    @if (project.Deadline is { } deadline)
+                    {
+                        <dt>Deadline</dt><dd><LocalTime Utc="deadline" /></dd>
+                    }
+                    @if (project.ExistingUrl is not null)
+                    {
+                        <dt>Website</dt><dd><a href="@project.ExistingUrl" rel="noopener noreferrer nofollow" target="_blank">@project.ExistingUrl</a></dd>
+                    }
+                    @if (project.RepositoryUrl is not null)
+                    {
+                        <dt>Code</dt><dd><a href="@project.RepositoryUrl" rel="noopener noreferrer nofollow" target="_blank">@project.RepositoryUrl</a></dd>
+                    }
+                    <dt>Created</dt><dd><LocalTime Utc="project.CreatedAt" /></dd>
+                </dl>
+            </section>
+
+            @if (Me.IsAdmin)
+            {
+                <section class="panel glass" aria-labelledby="adm-h">
+                    <div class="panel-head"><h2 id="adm-h">Update status</h2></div>
+                    <div class="form">
+                        <div class="field">
+                            <label for="new-status">Status</label>
+                            <select id="new-status" @bind="newStatus">
+                                @foreach (var s in Enum.GetValues<ProjectStatus>())
+                                {
+                                    <option value="@s">@DisplayText.Of(s)</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="status-note">Note for the client <span class="muted">(optional)</span></label>
+                            <input id="status-note" maxlength="300" @bind="statusNote" />
+                        </div>
+                        <button type="button" class="btn btn--primary" @onclick="UpdateStatusAsync" disabled="@(newStatus == project.Status)">Update status</button>
+                    </div>
+                </section>
+            }
+
+            <section class="panel glass" aria-labelledby="inv-h">
+                <div class="panel-head">
+                    <h2 id="inv-h">Invoices</h2>
+                    @if (Me.IsAdmin && !showInvoiceForm)
+                    {
+                        <button type="button" class="btn btn--ghost btn--sm" @onclick="() => showInvoiceForm = true"><Icon Name="plus" /> New invoice</button>
+                    }
+                </div>
+
+                @if (showInvoiceForm)
+                {
+                    <div class="form" style="margin-bottom:20px">
+                        <div class="lines-editor">
+                            @foreach (var line in invoiceDraft.Lines)
+                            {
+                                var l = line;
+                                <div class="line-row">
+                                    <input class="input" aria-label="Description" placeholder="Description" @bind="l.Description" />
+                                    <input class="input" aria-label="Quantity" type="number" min="1" @bind="l.Quantity" />
+                                    <input class="input" aria-label="Unit price" type="number" min="0" step="0.01" placeholder="Price" @bind="Price(l).Value" />
+                                    <button type="button" class="icon-btn" aria-label="Remove line" @onclick="() => invoiceDraft.Lines.Remove(l)">✕</button>
+                                </div>
+                            }
+                            <button type="button" class="btn btn--ghost btn--sm" style="justify-self:start" @onclick="() => invoiceDraft.Lines.Add(new InvoiceLineRequest())"><Icon Name="plus" /> Add line</button>
+                        </div>
+                        <div class="form-row">
+                            <div class="field">
+                                <label for="inv-cur">Currency</label>
+                                <select id="inv-cur" @bind="invoiceDraft.Currency">
+                                    <option value="eur">EUR</option>
+                                    <option value="dkk">DKK</option>
+                                    <option value="usd">USD</option>
+                                    <option value="gbp">GBP</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="inv-due">Due in (days)</label>
+                                <input id="inv-due" type="number" min="0" max="120" @bind="invoiceDraft.DueInDays" />
+                            </div>
+                        </div>
+                        <p style="margin:0">Total: <strong>@DisplayText.Money(invoiceDraft.Lines.Sum(x => x.UnitAmountMinor * x.Quantity), invoiceDraft.Currency ?? "eur")</strong></p>
+                        <div style="display:flex;gap:10px">
+                            <button type="button" class="btn btn--primary" @onclick="CreateInvoiceAsync">Issue invoice</button>
+                            <button type="button" class="btn btn--ghost" @onclick="() => showInvoiceForm = false">Cancel</button>
+                        </div>
+                    </div>
+                }
+
+                @if (project.Invoices.Count == 0)
+                {
+                    <p class="muted" style="margin:0">No invoices yet.</p>
+                }
+                else
+                {
+                    <ul class="timeline">
+                        @foreach (var i in project.Invoices)
+                        {
+                            <li>
+                                <div>
+                                    <a href="/portal/invoices/@i.Id">@i.Number</a> — @DisplayText.Money(i.TotalMinor, i.Currency)
+                                    <StatusBadge Invoice="i.Status" Overdue="i.IsOverdue" />
+                                    <span class="small muted" style="display:block">Due <LocalTime Utc="i.DueDate" /></span>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                }
+            </section>
+
+            <section class="panel glass" aria-labelledby="tl-h">
+                <div class="panel-head"><h2 id="tl-h">Activity</h2></div>
+                <ul class="timeline">
+                    @foreach (var e in project.Events)
+                    {
+                        <li><div>@e.Text<LocalTime Utc="e.CreatedAt" Format="d MMM yyyy, HH:mm 'UTC'" /></div></li>
+                    }
+                </ul>
+            </section>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+
+    private ProjectDetailDto? project;
+    private string draft = "";
+    private bool sending;
+    private ProjectStatus newStatus;
+    private string? statusNote;
+    private bool showInvoiceForm;
+    private CreateInvoiceRequest invoiceDraft = NewDraft();
+    private int lastMessageCount = -1;
+    private readonly Dictionary<InvoiceLineRequest, PriceBox> prices = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        Notifier.ProjectChanged += OnProjectChanged;
+        await LoadAsync();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (project is not null && project.Id != Id)
+        {
+            await LoadAsync();
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var count = project?.Messages.Count ?? 0;
+        if (count != lastMessageCount)
+        {
+            lastMessageCount = count;
+            await JS.InvokeVoidAsync("novaforge.scrollThreads");
+        }
+    }
+
+    private async Task LoadAsync()
+    {
+        var me = await GetUserAsync();
+        await TryAsync(async () =>
+        {
+            project = await ProjectService.GetAsync(me, Id);
+            newStatus = project.Status;
+        });
+    }
+
+    private Task OnProjectChanged(Guid projectId) =>
+        projectId == Id ? InvokeAsync(async () => { await LoadAsync(); StateHasChanged(); }) : Task.CompletedTask;
+
+    private async Task SendAsync()
+    {
+        if (string.IsNullOrWhiteSpace(draft) || sending)
+        {
+            return;
+        }
+        sending = true;
+        var body = draft;
+        if (await TryAsync(() => ProjectService.AddMessageAsync(Me!, Id, new AddMessageRequest { Body = body })))
+        {
+            draft = "";
+        }
+        sending = false;
+        await LoadAsync();
+    }
+
+    private async Task UpdateStatusAsync()
+    {
+        if (await TryAsync(() => ProjectService.UpdateStatusAsync(Me!, Id, new UpdateStatusRequest { Status = newStatus, Note = statusNote })))
+        {
+            statusNote = null;
+            await LoadAsync();
+        }
+    }
+
+    private async Task CreateInvoiceAsync()
+    {
+        invoiceDraft.ProjectId = Id;
+        if (await TryAsync(() => InvoiceService.CreateAsync(Me!, invoiceDraft)))
+        {
+            invoiceDraft = NewDraft();
+            prices.Clear();
+            showInvoiceForm = false;
+            await LoadAsync();
+        }
+    }
+
+    private static CreateInvoiceRequest NewDraft() => new() { Currency = "eur", DueInDays = 14, Lines = [new InvoiceLineRequest()] };
+
+    // Admins type prices in major units (1500.00); the domain stores minor units (150000).
+    private PriceBox Price(InvoiceLineRequest line)
+    {
+        if (!prices.TryGetValue(line, out var box))
+        {
+            prices[line] = box = new PriceBox(line);
+        }
+        return box;
+    }
+
+    private sealed class PriceBox(InvoiceLineRequest line)
+    {
+        public decimal Value
+        {
+            get => line.UnitAmountMinor / 100m;
+            set => line.UnitAmountMinor = (long)Math.Round(value * 100m, MidpointRounding.AwayFromZero);
+        }
+    }
+
+    public void Dispose() => Notifier.ProjectChanged -= OnProjectChanged;
+}

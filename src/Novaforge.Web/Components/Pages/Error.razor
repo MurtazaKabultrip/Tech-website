@@ -1,0 +1,25 @@
+@page "/error"
+@using System.Diagnostics
+
+<Seo Title="Error" NoIndex="true" />
+
+<section class="page-head">
+    <div class="container">
+        <h1>Something went wrong on our side</h1>
+        <p class="lede">The error has been logged. Please try again, or contact us if it keeps happening.</p>
+        @if (RequestId is not null)
+        {
+            <p class="small muted">Reference: <code>@RequestId</code></p>
+        }
+        <a class="btn btn--primary" href="/">Go to homepage</a>
+    </div>
+</section>
+
+@code {
+    [CascadingParameter] private HttpContext? HttpContext { get; set; }
+
+    private string? RequestId { get; set; }
+
+    protected override void OnInitialized() =>
+        RequestId = Activity.Current?.Id ?? HttpContext?.TraceIdentifier;
+}

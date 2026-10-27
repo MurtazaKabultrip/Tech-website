@@ -1,0 +1,63 @@
+@page "/services/{Slug}"
+@inject NavigationManager Navigation
+
+@if (service is not null)
+{
+    <Seo Title="@service.Title" Description="@service.Summary" />
+
+    <section class="page-head">
+        <div class="container">
+            <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/services">Services</a> / @service.Title</nav>
+            <h1>@service.Title</h1>
+            <p class="lede">@service.Summary</p>
+        </div>
+    </section>
+
+    <section class="section section--tight">
+        <div class="container detail-grid">
+            <div>
+                <p style="font-size:1.15rem">@service.Intro</p>
+                <h2 style="font-size:var(--step-2);margin-top:40px">What's included</h2>
+                <ul class="checklist">
+                    @foreach (var item in service.Deliverables)
+                    {
+                        <li><Icon Name="check" /><span>@item</span></li>
+                    }
+                </ul>
+            </div>
+            <aside class="aside-pane glass" aria-label="Get started">
+                <h2 style="font-size:1.15rem;font-family:var(--font-body);letter-spacing:0;margin:0">Typical stack</h2>
+                <ul class="stack-chips">
+                    @foreach (var tech in service.Stack)
+                    {
+                        <li class="chip">@tech</li>
+                    }
+                </ul>
+                <p class="muted" style="margin:0">Tell us what you need and get a written proposal within two business days.</p>
+                <a class="btn btn--primary" href="/contact?type=@service.ProjectType">Get a quote for @service.Title.ToLowerInvariant()</a>
+            </aside>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-head"><h2>How it runs</h2></div>
+            <ProcessSteps />
+        </div>
+    </section>
+}
+
+@code {
+    [Parameter] public string Slug { get; set; } = "";
+
+    private ServiceInfo? service;
+
+    protected override void OnParametersSet()
+    {
+        service = ServiceCatalog.Find(Slug);
+        if (service is null)
+        {
+            Navigation.NotFound();
+        }
+    }
+}

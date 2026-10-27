@@ -1,0 +1,95 @@
+@* Inline stroke icons (24px grid, 1.75 stroke). Decorative by default; pass Label to expose to screen readers. *@
+<svg class="icon @Class" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+     stroke-linecap="round" stroke-linejoin="round"
+     aria-hidden="@(Label is null ? "true" : null)" role="@(Label is null ? null : "img")" aria-label="@Label">
+    @switch (Name)
+    {
+        case "globe":
+            <circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z" />
+            break;
+        case "sparkles":
+            <path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z" /><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z" />
+            break;
+        case "wrench":
+            <path d="M14.7 6.3a4 4 0 0 0-5.4 5.2L3.5 17.3a1.8 1.8 0 0 0 2.5 2.5l5.8-5.8a4 4 0 0 0 5.2-5.4l-2.4 2.4-2.3-.4-.4-2.3z" />
+            break;
+        case "arrow-up":
+            <path d="M12 20V5M5.5 11.5L12 5l6.5 6.5" /><path d="M4 21h16" />
+            break;
+        case "plug":
+            <path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4" />
+            break;
+        case "card":
+            <rect x="3" y="5.5" width="18" height="13" rx="2.5" /><path d="M3 10h18M7 15h4" />
+            break;
+        case "phone":
+            <rect x="6.5" y="2.5" width="11" height="19" rx="2.5" /><path d="M10.5 18.5h3" />
+            break;
+        case "server":
+            <rect x="3.5" y="4" width="17" height="7" rx="2" /><rect x="3.5" y="13" width="17" height="7" rx="2" /><path d="M7.5 7.5h.01M7.5 16.5h.01" />
+            break;
+        case "cpu":
+            <rect x="6" y="6" width="12" height="12" rx="2" /><rect x="9.5" y="9.5" width="5" height="5" rx="1" /><path d="M9 2.5V6M15 2.5V6M9 18v3.5M15 18v3.5M2.5 9H6M2.5 15H6M18 9h3.5M18 15h3.5" />
+            break;
+        case "shield":
+            <path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6z" /><path d="M9 12l2 2 4-4" />
+            break;
+        case "gauge":
+            <path d="M4.2 17.5a9 9 0 1 1 15.6 0" /><path d="M12 13l4-4.5" /><circle cx="12" cy="13.5" r="1.2" />
+            break;
+        case "cloud":
+            <path d="M7 18.5a4.5 4.5 0 0 1-.6-9A6 6 0 0 1 18 8.6a5 5 0 0 1-1 9.9z" />
+            break;
+        case "check":
+            <path d="M4.5 12.5l4.5 4.5L19.5 6.5" />
+            break;
+        case "arrow-right":
+            <path d="M5 12h14M13 6l6 6-6 6" />
+            break;
+        case "menu":
+            <path d="M4 7h16M4 12h16M4 17h16" />
+            break;
+        case "sun":
+            <circle cx="12" cy="12" r="4" /><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4" />
+            break;
+        case "moon":
+            <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" />
+            break;
+        case "home":
+            <path d="M4 11l8-7 8 7v8.5a1.5 1.5 0 0 1-1.5 1.5H15v-6H9v6H5.5A1.5 1.5 0 0 1 4 19.5z" />
+            break;
+        case "folder":
+            <path d="M3.5 7.5A2 2 0 0 1 5.5 5.5h4l2 2.5h7a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" />
+            break;
+        case "file":
+            <path d="M7 3h7l5 5v11.5a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 6 19.5v-15A1.5 1.5 0 0 1 7.5 3z" /><path d="M14 3v5h5M9.5 13h5M9.5 17h5" />
+            break;
+        case "plus":
+            <path d="M12 5v14M5 12h14" />
+            break;
+        case "inbox":
+            <path d="M3.5 13.5l2.5-8h12l2.5 8v5a1.5 1.5 0 0 1-1.5 1.5h-14A1.5 1.5 0 0 1 3.5 18.5z" /><path d="M3.5 13.5H8l1.5 2.5h5l1.5-2.5h4.5" />
+            break;
+        case "send":
+            <path d="M21 3L10 14M21 3l-6.5 18-4-7.5L3 9.5z" />
+            break;
+        case "logout":
+            <path d="M15 4h3.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H15M10 16l-4-4 4-4M6 12h10" />
+            break;
+        case "bolt":
+            <path d="M13 2.5L4.5 13.5H12l-1 8 8.5-11H12z" />
+            break;
+        case "shield-admin":
+            <path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6z" /><circle cx="12" cy="10.5" r="2.2" /><path d="M8.5 16a3.8 3.8 0 0 1 7 0" />
+            break;
+        default:
+            <circle cx="12" cy="12" r="8" />
+            break;
+    }
+</svg>
+
+@code {
+    [Parameter, EditorRequired] public string Name { get; set; } = "";
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public string? Label { get; set; }
+}

@@ -1,0 +1,51 @@
+@page "/services"
+
+<Seo Title="Services" Description="Websites, web apps, mobile apps, bug fixing, upgrades, API and payment integrations, AI, security and DevOps." />
+
+<section class="page-head">
+    <div class="container">
+        <h1>Services</h1>
+        <p class="lede">Twelve disciplines, one team. Use one, or let us take the whole product from idea to production.</p>
+    </div>
+</section>
+
+<section class="section section--tight">
+    <div class="container">
+        <div class="cap-list" style="gap:28px 48px">
+            @foreach (var service in ServiceCatalog.All)
+            {
+                <a class="cap" href="/services/@service.Slug">
+                    <span class="cap-icon"><Icon Name="@service.Icon" /></span>
+                    <span>
+                        <span class="cap-title">@service.Title</span>
+                        <span class="cap-text">@service.Summary</span>
+                    </span>
+                </a>
+            }
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-head">
+            <h2>Technology we work with</h2>
+            <p>.NET 10 is our default for web, API and mobile. When a project needs something else, we use it.</p>
+        </div>
+        <ul class="stack-chips">
+            @foreach (var tech in Tech)
+            {
+                <li class="chip">@tech</li>
+            }
+        </ul>
+    </div>
+</section>
+
+@code {
+    private static readonly string[] Tech =
+    [
+        ".NET 10", "C#", "ASP.NET Core", "Blazor", ".NET MAUI", "Entity Framework Core", "PostgreSQL", "SQL Server",
+        "Redis", "TypeScript", "JavaScript", "Python", "Java", "Kotlin", "Swift", "PHP", "REST", "GraphQL",
+        "Stripe", "PayPal", "Adyen", "Claude API", "Docker", "GitHub Actions", "Azure", "AWS"
+    ];
+}

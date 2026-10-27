@@ -1,0 +1,29 @@
+<div class="table-wrap">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Invoice</th>
+                <th scope="col">Project</th>
+                <th scope="col">Status</th>
+                <th scope="col">Due</th>
+                <th scope="col" class="num">Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in Items)
+            {
+                <tr>
+                    <td><a href="/portal/invoices/@i.Id">@i.Number</a></td>
+                    <td class="muted">@i.ProjectTitle</td>
+                    <td><StatusBadge Invoice="i.Status" Overdue="i.IsOverdue" /></td>
+                    <td class="muted"><LocalTime Utc="i.DueDate" /></td>
+                    <td class="num">@DisplayText.Money(i.TotalMinor, i.Currency)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public IReadOnlyList<InvoiceDto> Items { get; set; } = [];
+}

@@ -1,0 +1,177 @@
+@page "/"
+@inject IOptions<SiteOptions> Site
+
+<Seo Title="" Description="@($"{Site.Value.Name} builds websites, web apps, mobile apps and SaaS products — and fixes, secures and upgrades the ones you already have.")" />
+
+<section class="hero">
+    <div class="container hero-grid">
+        <div>
+            <h1>
+                <span class="line">Build the new thing.</span>
+                <span class="line line--strong">Fix the old one.</span>
+            </h1>
+            <p class="lede">
+                We design, engineer and run websites, web apps and mobile apps — and we rescue the ones that
+                are slow, broken or out of date. One team, from first sketch to production.
+            </p>
+            <div class="hero-actions">
+                <a class="btn btn--primary btn--lg" href="/contact">Start a project</a>
+                <a class="btn btn--ghost btn--lg" href="/contact?type=BugFix">Report a problem</a>
+            </div>
+        </div>
+
+        @* The signature element: a real project moving through our real process. *@
+        <div class="console glass" aria-label="Example project status">
+            <div class="console-head">
+                <div>
+                    <div class="console-title">Booking platform for a travel agency</div>
+                    <div class="console-sub">Example project: web app, iOS and Android</div>
+                </div>
+                <span class="console-live">Testing</span>
+            </div>
+            <ol class="stages">
+                @for (var i = 0; i < Stages.Length; i++)
+                {
+                    var stage = Stages[i];
+                    var state = i < ActiveStage ? "is-done" : i == ActiveStage ? "is-active" : "";
+                    <li class="stage @state" style="--i:@i" aria-current="@(i == ActiveStage ? "step" : null)">
+                        <span class="stage-dot" aria-hidden="true"></span>
+                        <span class="stage-name">@stage.Name</span>
+                        <span class="stage-note">@stage.Note</span>
+                    </li>
+                }
+            </ol>
+            <div class="console-meter" role="progressbar" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" aria-label="Overall progress">
+                <span style="--progress:78%"></span>
+            </div>
+            <div class="console-log">
+                <div><b>Payments</b> Stripe checkout and refunds passed 42 tests</div>
+                <div><b>Flights API</b> retries and timeouts verified under load</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" aria-labelledby="what-heading">
+    <div class="container">
+        <div class="section-head">
+            <h2 id="what-heading">Everything a digital product needs</h2>
+            <p>Pick one service or hand us the whole thing. Every piece is built to work with the others.</p>
+        </div>
+
+        <div class="capabilities">
+            @foreach (var group in Groups)
+            {
+                <div class="cap-group">
+                    <h3>@group.Name</h3>
+                    <div class="cap-list">
+                        @foreach (var service in group.Services)
+                        {
+                            <a class="cap" href="/services/@service.Slug">
+                                <span class="cap-icon"><Icon Name="@service.Icon" /></span>
+                                <span>
+                                    <span class="cap-title">@service.Title</span>
+                                    <span class="cap-text">@service.Summary</span>
+                                </span>
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<section class="section section--tight" aria-labelledby="paths-heading">
+    <div class="container">
+        <h2 id="paths-heading" class="visually-hidden">Two ways to start</h2>
+        <div class="paths">
+            <article class="path glass">
+                <h3>Starting from scratch</h3>
+                <p class="muted">Tell us the idea. We turn it into a clear plan, a design you can click through, and then working software.</p>
+                <ul>
+                    <li>Free first call and written proposal</li>
+                    <li>Fixed-scope phases with a price per phase</li>
+                    <li>Weekly demos in your client portal</li>
+                </ul>
+                <a class="btn btn--primary" href="/contact">Start a project</a>
+            </article>
+            <article class="path path--fix glass">
+                <h3>Something is broken</h3>
+                <p class="muted">Errors, crashes, slow pages, a hacked plugin or code nobody dares to touch. Send us the link.</p>
+                <ul>
+                    <li>Diagnosis with a written root-cause report</li>
+                    <li>Fix plus a test so it stays fixed</li>
+                    <li>Security and upgrade recommendations</li>
+                </ul>
+                <a class="btn btn--ghost" href="/contact?type=BugFix">Report a problem</a>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="section" aria-labelledby="how-heading">
+    <div class="container">
+        <div class="section-head">
+            <h2 id="how-heading">How a project runs</h2>
+            <p>The same five steps for a landing page or a SaaS platform. You see each one live in your portal.</p>
+        </div>
+        <ProcessSteps />
+    </div>
+</section>
+
+<section class="section section--tight" aria-labelledby="principles-heading">
+    <div class="container">
+        <h2 id="principles-heading" class="visually-hidden">Our standards</h2>
+        <div class="principles">
+            <div>
+                <h3>Tested before it's done</h3>
+                <p>Automated tests run on every change. We fix, retest and only then call a task finished.</p>
+            </div>
+            <div>
+                <h3>Secure by default</h3>
+                <p>Hosted payment pages, signed webhooks, strict security headers and least-privilege access.</p>
+            </div>
+            <div>
+                <h3>Yours to keep</h3>
+                <p>You own the source code, the documentation and the accounts. No lock-in, ever.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" aria-labelledby="cta-heading">
+    <div class="container">
+        <div class="cta-band glass">
+            <h2 id="cta-heading">Tell us what you're building.</h2>
+            <a class="btn btn--primary btn--lg" href="/contact">Get a quote</a>
+        </div>
+    </div>
+</section>
+
+@code {
+    private sealed record Stage(string Name, string Note);
+
+    private static readonly Stage[] Stages =
+    [
+        new("Brief & proposal", "Week 1"),
+        new("Design", "Weeks 2–3"),
+        new("Build", "Weeks 4–9"),
+        new("Testing", "Week 10"),
+        new("Launch & support", "Week 11")
+    ];
+
+    private const int ActiveStage = 3;
+
+    private sealed record Group(string Name, IReadOnlyList<ServiceInfo> Services);
+
+    private static readonly Group[] Groups =
+    [
+        new("Build", Pick("websites", "mobile-apps", "ui-ux-design", "backend")),
+        new("Fix & upgrade", Pick("bug-fixing", "upgrades", "security", "testing")),
+        new("Connect & automate", Pick("api-integrations", "payments", "ai-automation", "devops")),
+    ];
+
+    private static IReadOnlyList<ServiceInfo> Pick(params string[] slugs) =>
+        slugs.Select(s => ServiceCatalog.Find(s)!).ToList();
+}

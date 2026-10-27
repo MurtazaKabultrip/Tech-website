@@ -1,0 +1,53 @@
+@inherits LayoutComponentBase
+@inject IOptions<SiteOptions> Site
+
+<SiteHeader />
+
+<main id="main" tabindex="-1">
+    @Body
+</main>
+
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <a class="brand" href="/">
+                    <img class="brand-mark" src="favicon.svg" alt="" width="28" height="28" />
+                    <span>@Site.Value.Name</span>
+                </a>
+                <p class="small" style="margin-top:12px">@Site.Value.Tagline</p>
+            </div>
+            <nav aria-labelledby="f-build">
+                <h2 id="f-build">Build</h2>
+                <ul>
+                    <li><a href="/services/websites">Websites & web apps</a></li>
+                    <li><a href="/services/mobile-apps">iOS & Android apps</a></li>
+                    <li><a href="/services/payments">Payments</a></li>
+                    <li><a href="/services/ai-automation">AI & automation</a></li>
+                </ul>
+            </nav>
+            <nav aria-labelledby="f-fix">
+                <h2 id="f-fix">Fix & run</h2>
+                <ul>
+                    <li><a href="/services/bug-fixing">Bug fixing</a></li>
+                    <li><a href="/services/upgrades">Upgrades</a></li>
+                    <li><a href="/services/security">Security</a></li>
+                    <li><a href="/services/devops">Hosting & DevOps</a></li>
+                </ul>
+            </nav>
+            <nav aria-labelledby="f-co">
+                <h2 id="f-co">Company</h2>
+                <ul>
+                    <li><a href="/process">How we work</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="mailto:@Site.Value.ContactEmail">@Site.Value.ContactEmail</a></li>
+                    <li><a href="/account/login">Client sign in</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="footer-base">
+            <span>© @DateTime.UtcNow.Year @Site.Value.Name</span>
+            <span><a href="/privacy">Privacy</a> &nbsp; <a href="/terms">Terms</a></span>
+        </div>
+    </div>
+</footer>

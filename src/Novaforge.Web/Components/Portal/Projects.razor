@@ -1,0 +1,52 @@
+@page "/portal/projects"
+@inherits PortalPageBase
+@inject ProjectService ProjectService
+
+<Seo Title="Projects" NoIndex="true" />
+
+<div class="portal-head">
+    <h1>Projects</h1>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <label class="visually-hidden" for="status-filter">Filter by status</label>
+        <select id="status-filter" class="input" style="width:auto;min-height:44px" @bind="filter" @bind:after="LoadAsync">
+            <option value="">All statuses</option>
+            @foreach (var s in Enum.GetValues<ProjectStatus>())
+            {
+                <option value="@s">@DisplayText.Of(s)</option>
+            }
+        </select>
+        <a class="btn btn--primary" href="/portal/projects/new"><Icon Name="plus" /> New request</a>
+    </div>
+</div>
+
+<section class="panel glass">
+    @if (items is null)
+    {
+        <p class="muted" role="status">Loading…</p>
+    }
+    else if (items.Count == 0)
+    {
+        <div class="empty">
+            <p style="margin:0">@(string.IsNullOrEmpty(filter) ? "No projects yet." : "No projects with this status.")</p>
+            <a class="btn btn--primary" href="/portal/projects/new">Start a request</a>
+        </div>
+    }
+    else
+    {
+        <ProjectTable Items="items" ShowOwner="@(Me?.IsAdmin == true)" />
+    }
+</section>
+
+@code {
+    private IReadOnlyList<ProjectSummaryDto>? items;
+    private string filter = "";
+
+    protected override Task OnInitializedAsync() => LoadAsync();
+
+    private async Task LoadAsync()
+    {
+        var me = await GetUserAsync();
+        ProjectStatus? status = Enum.TryParse<ProjectStatus>(filter, out var s) ? s : null;
+        items = await ProjectService.ListAsync(me, status);
+    }
+}

@@ -1,0 +1,36 @@
+<div class="table-wrap">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Project</th>
+                <th scope="col">Type</th>
+                @if (ShowOwner)
+                {
+                    <th scope="col">Client</th>
+                }
+                <th scope="col">Status</th>
+                <th scope="col">Updated</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Items)
+            {
+                <tr>
+                    <td><a href="/portal/projects/@p.Id">@p.Title</a></td>
+                    <td class="muted">@DisplayText.Of(p.Type)</td>
+                    @if (ShowOwner)
+                    {
+                        <td class="muted">@p.OwnerName</td>
+                    }
+                    <td><StatusBadge Project="p.Status" /></td>
+                    <td class="muted"><LocalTime Utc="p.UpdatedAt" /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public IReadOnlyList<ProjectSummaryDto> Items { get; set; } = [];
+    [Parameter] public bool ShowOwner { get; set; }
+}

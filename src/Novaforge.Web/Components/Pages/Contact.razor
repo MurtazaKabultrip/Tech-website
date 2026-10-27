@@ -1,0 +1,150 @@
+@page "/contact"
+@inject LeadService Leads
+@inject IOptions<SiteOptions> Site
+
+<Seo Title="Get a quote" Description="Tell us about your website, app or the problem you need fixed. We reply within one business day." />
+
+<section class="page-head">
+    <div class="container">
+        <h1>@(IsBugReport ? "Report a problem" : "Get a quote")</h1>
+        <p class="lede">
+            @(IsBugReport
+                ? "Describe what's broken and where. Include the URL and any error message you see."
+                : "Tell us what you want to build. We reply within one business day.")
+        </p>
+    </div>
+</section>
+
+<section class="section section--tight">
+    <div class="container contact-grid">
+        <div class="form-pane glass">
+            @if (submitted)
+            {
+                <div class="alert alert--ok" role="status">
+                    <h2 style="font-size:var(--step-1);margin-bottom:6px">Thanks — your message is in.</h2>
+                    <p style="margin:0">We've sent a confirmation to your inbox and will reply within one business day.</p>
+                </div>
+            }
+            else
+            {
+                <EditForm Model="Input" FormName="contact" OnValidSubmit="SubmitAsync" method="post" class="form" Enhance>
+                    <DataAnnotationsValidator />
+                    @if (error is not null)
+                    {
+                        <div class="alert alert--error" role="alert">@error</div>
+                    }
+
+                    <div class="form-row">
+                        <div class="field">
+                            <label for="name">Your name</label>
+                            <InputText id="name" @bind-Value="Input!.Name" autocomplete="name" />
+                            <ValidationMessage For="() => Input!.Name" />
+                        </div>
+                        <div class="field">
+                            <label for="email">E-mail</label>
+                            <InputText id="email" type="email" @bind-Value="Input!.Email" autocomplete="email" />
+                            <ValidationMessage For="() => Input!.Email" />
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="company">Company <span class="muted">(optional)</span></label>
+                        <InputText id="company" @bind-Value="Input!.Company" autocomplete="organization" />
+                    </div>
+
+                    <div class="form-row">
+                        <div class="field">
+                            <label for="type">What do you need?</label>
+                            <InputSelect id="type" @bind-Value="Input!.ProjectType">
+                                @foreach (var type in Enum.GetValues<ProjectType>())
+                                {
+                                    <option value="@type">@DisplayText.Of(type)</option>
+                                }
+                            </InputSelect>
+                        </div>
+                        <div class="field">
+                            <label for="budget">Budget</label>
+                            <InputSelect id="budget" @bind-Value="Input!.Budget">
+                                @foreach (var budget in Enum.GetValues<BudgetRange>())
+                                {
+                                    <option value="@budget">@DisplayText.Of(budget)</option>
+                                }
+                            </InputSelect>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="message">@(IsBugReport ? "What's going wrong?" : "Tell us about the project")</label>
+                        <InputTextArea id="message" @bind-Value="Input!.Message" rows="7" />
+                        <span class="hint">Links, goals, deadlines, error messages — anything that helps.</span>
+                        <ValidationMessage For="() => Input!.Message" />
+                    </div>
+
+                    <div class="honeypot" aria-hidden="true">
+                        <label for="website">Leave this empty</label>
+                        <InputText id="website" @bind-Value="Input!.Website" tabindex="-1" autocomplete="off" />
+                    </div>
+
+                    <div>
+                        <button type="submit" class="btn btn--primary btn--lg">@(IsBugReport ? "Send problem report" : "Send enquiry")</button>
+                    </div>
+                    <p class="hint" style="margin:0">We only use your details to reply. See our <a href="/privacy">privacy policy</a>.</p>
+                </EditForm>
+            }
+        </div>
+
+        <aside class="stack" style="--stack-gap:28px">
+            <div>
+                <h2 style="font-size:1.1rem;font-family:var(--font-body);letter-spacing:0">Prefer e-mail?</h2>
+                <p class="muted"><a href="mailto:@Site.Value.ContactEmail">@Site.Value.ContactEmail</a></p>
+            </div>
+            <div>
+                <h2 style="font-size:1.1rem;font-family:var(--font-body);letter-spacing:0">Already a client?</h2>
+                <p class="muted">Sign in to your portal to start a request, follow progress and pay invoices.</p>
+                <a class="btn btn--ghost" href="/account/login">Sign in</a>
+            </div>
+            <div>
+                <h2 style="font-size:1.1rem;font-family:var(--font-body);letter-spacing:0">What happens next</h2>
+                <ProcessSteps Vertical="true" />
+            </div>
+        </aside>
+    </div>
+</section>
+
+@code {
+    [SupplyParameterFromForm(FormName = "contact")]
+    private CreateLeadRequest? Input { get; set; }
+
+    [SupplyParameterFromQuery(Name = "type")]
+    private string? TypeFromQuery { get; set; }
+
+    private bool submitted;
+    private string? error;
+
+    private bool IsBugReport => Input?.ProjectType is ProjectType.BugFix;
+
+    protected override void OnInitialized()
+    {
+        if (Input is null)
+        {
+            Input = new CreateLeadRequest();
+            if (Enum.TryParse<ProjectType>(TypeFromQuery, ignoreCase: true, out var type))
+            {
+                Input.ProjectType = type;
+            }
+        }
+    }
+
+    private async Task SubmitAsync()
+    {
+        try
+        {
+            await Leads.SubmitAsync(Input!);
+            submitted = true;
+        }
+        catch (ValidationFailedException ex)
+        {
+            error = string.Join(" ", ex.Errors.SelectMany(e => e.Value));
+        }
+    }
+}

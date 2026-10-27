@@ -1,0 +1,78 @@
+@page "/portal"
+@inherits PortalPageBase
+@inject ProjectService Projects
+
+<Seo Title="Overview" NoIndex="true" />
+
+<div class="portal-head">
+    <div>
+        <h1>Hi @(Me?.Name.Split(' ')[0])</h1>
+        <p class="muted" style="margin:0">Here's where everything stands.</p>
+    </div>
+    <a class="btn btn--primary" href="/portal/projects/new"><Icon Name="plus" /> New request</a>
+</div>
+
+@if (dashboard is null)
+{
+    <p class="muted" role="status">Loading…</p>
+}
+else
+{
+    <div class="stats">
+        <div class="stat glass">
+            <div class="stat-value">@dashboard.ActiveProjects</div>
+            <div class="stat-label">Active projects</div>
+        </div>
+        <div class="stat glass">
+            <div class="stat-value">@dashboard.CompletedProjects</div>
+            <div class="stat-label">Completed</div>
+        </div>
+        <div class="stat glass">
+            <div class="stat-value">@dashboard.OpenInvoices</div>
+            <div class="stat-label">Open invoices</div>
+        </div>
+        <div class="stat glass">
+            <div class="stat-value">@DisplayText.Money(dashboard.OutstandingMinor, dashboard.Currency)</div>
+            <div class="stat-label">Outstanding</div>
+        </div>
+    </div>
+
+    <section class="panel glass" aria-labelledby="recent-h">
+        <div class="panel-head">
+            <h2 id="recent-h">Recent projects</h2>
+            <a href="/portal/projects">All projects</a>
+        </div>
+        @if (dashboard.RecentProjects.Count == 0)
+        {
+            <div class="empty">
+                <p style="margin:0">No projects yet. Start with a new website, an app, or a problem you need fixed.</p>
+                <a class="btn btn--primary" href="/portal/projects/new">Start a request</a>
+            </div>
+        }
+        else
+        {
+            <ProjectTable Items="dashboard.RecentProjects" ShowOwner="@(Me?.IsAdmin == true)" />
+        }
+    </section>
+
+    @if (dashboard.OpenInvoiceList.Count > 0)
+    {
+        <section class="panel glass" aria-labelledby="inv-h">
+            <div class="panel-head">
+                <h2 id="inv-h">Invoices to pay</h2>
+                <a href="/portal/invoices">All invoices</a>
+            </div>
+            <InvoiceTable Items="dashboard.OpenInvoiceList" />
+        </section>
+    }
+}
+
+@code {
+    private DashboardDto? dashboard;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var me = await GetUserAsync();
+        dashboard = await Projects.GetDashboardAsync(me);
+    }
+}

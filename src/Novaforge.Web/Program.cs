@@ -163,13 +163,11 @@ await DbInitializer.InitializeAsync(app.Services, config, app.Logger);
 app.UseForwardedHeaders();
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/error", createScopeForErrors: true);
+    app.UseExceptionHandler("/error", createScopeForErrors: true); // HTML error page for the website
     app.UseHsts();
 }
-else
-{
-    app.UseExceptionHandler(); // still maps /api errors to problem details
-}
+// JSON API: service exceptions become RFC 7807 problem responses (ApiExceptionHandler).
+app.UseWhen(ctx => ctx.Request.Path.StartsWithSegments("/api"), api => api.UseExceptionHandler());
 
 app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
 app.Use(async (context, next) =>

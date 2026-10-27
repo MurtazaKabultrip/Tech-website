@@ -1,0 +1,76 @@
+"""Smoke test + visual check: drives the running site in a real browser and saves screenshots.
+
+Usage: python scripts/screenshots.py http://localhost:5180 screenshots/
+Requires: pip install playwright && python -m playwright install --with-deps chromium
+Signs in with the Development admin account from appsettings.Development.json.
+"""
+import sys
+from pathlib import Path
+
+from playwright.sync_api import sync_playwright, expect
+
+BASE = sys.argv[1].rstrip("/") if len(sys.argv) > 1 else "http://localhost:5180"
+OUT = Path(sys.argv[2] if len(sys.argv) > 2 else "screenshots")
+OUT.mkdir(parents=True, exist_ok=True)
+
+PUBLIC = ["/", "/services", "/services/payments", "/process", "/contact?type=BugFix", "/account/login", "/not-a-page"]
+errors: list[str] = []
+
+
+def shoot(page, name: str) -> None:
+    page.wait_for_timeout(1500)  # let the one-off load animation finish
+    page.screenshot(path=str(OUT / f"{name}.png"), full_page=True)
+
+
+with sync_playwright() as p:
+    browser = p.chromium.launch()
+    for theme in ("dark", "light"):
+        for label, viewport in (("desktop", {"width": 1440, "height": 900}), ("mobile", {"width": 390, "height": 844})):
+            ctx = browser.new_context(viewport=viewport, color_scheme=theme)
+            page = ctx.new_page()
+            # The deliberate 404 page logs a "failed to load resource" console error; ignore only that.
+            page.on("console", lambda m: m.type == "error" and "404" not in m.text and errors.append(f"console: {m.text}"))
+            page.on("pageerror", lambda e: errors.append(f"pageerror: {e}"))
+            for path in PUBLIC:
+                page.goto(BASE + path, wait_until="networkidle")
+                slug = path.strip("/").replace("/", "_").replace("?", "_").replace("=", "-") or "home"
+                shoot(page, f"{theme}-{label}-{slug}")
+            ctx.close()
+
+    # Portal flow: sign in, submit a request, send a message.
+    ctx = browser.new_context(viewport={"width": 1440, "height": 900}, color_scheme="dark")
+    page = ctx.new_page()
+    page.on("pageerror", lambda e: errors.append(f"pageerror: {e}"))
+    page.goto(BASE + "/account/login")
+    page.fill("#email", "admin@novaforge.local")
+    page.fill("#password", "ChangeMe-Dev-123")
+    page.click("button[type=submit]")
+    page.wait_for_url("**/portal")
+    page.wait_for_load_state("networkidle")
+    shoot(page, "portal-dashboard-empty")
+
+    page.goto(BASE + "/portal/projects/new", wait_until="networkidle")
+    page.wait_for_timeout(1000)  # interactive circuit
+    page.click("label[for=type-BugFix]")
+    page.fill("#title", "Checkout page crashes on iPhone")
+    page.fill("#desc", "When a coupon code is entered on iOS Safari the checkout page goes blank. Started after the last plugin update.")
+    page.fill("#url", "https://shop.example.com/checkout")
+    shoot(page, "portal-new-request")
+    page.click("button[type=submit]")
+    page.wait_for_url("**/portal/projects/*-*")
+    page.wait_for_load_state("networkidle")
+    page.fill("#composer", "Reproduced on iOS 18. Looking into the coupon script now.")
+    page.click(".composer button[type=submit]")
+    expect(page.locator(".msg")).to_have_count(1, timeout=10000)
+    shoot(page, "portal-project-detail")
+
+    page.goto(BASE + "/portal", wait_until="networkidle")
+    shoot(page, "portal-dashboard")
+    page.goto(BASE + "/admin", wait_until="networkidle")
+    shoot(page, "admin-home")
+    ctx.close()
+    browser.close()
+
+(OUT / "errors.txt").write_text("\n".join(errors) or "no browser errors\n")
+print("\n".join(errors) or "no browser errors")
+sys.exit(1 if errors else 0)

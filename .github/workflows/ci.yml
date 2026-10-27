@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: read
+  contents: write # only used to publish CI reports to the ci-reports-* branches
 
 jobs:
   build-test:
@@ -37,6 +37,46 @@ jobs:
         with:
           name: test-results
           path: TestResults
+
+      - name: Publish test report to ci-reports-tests branch
+        if: always() && github.event_name == 'push'
+        run: scripts/publish-report.sh TestResults ci-reports-tests
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  smoke:
+    # Runs the real app and drives it in a browser; uploads screenshots for visual review.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Playwright
+        run: pip install playwright && python -m playwright install --with-deps chromium
+      - name: Start app
+        run: |
+          dotnet run --project src/Novaforge.Web --launch-profile http > app.log 2>&1 &
+          for i in $(seq 1 90); do curl -fs http://localhost:5180/health && break; sleep 2; done
+          curl -fs http://localhost:5180/health
+      - name: Browser smoke test + screenshots
+        run: python scripts/screenshots.py http://localhost:5180 screenshots
+      - name: Upload screenshots and log
+        if: always()
+        run: cp app.log screenshots/ || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: screenshots
+          path: screenshots
+      - name: Publish screenshots to ci-reports-screenshots branch
+        if: always() && github.event_name == 'push'
+        run: scripts/publish-report.sh screenshots ci-reports-screenshots
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   docker:
     runs-on: ubuntu-latest

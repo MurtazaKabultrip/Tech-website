@@ -15,7 +15,7 @@
                 <option value="@s">@DisplayText.Of(s)</option>
             }
         </select>
-        <a class="btn btn--primary" href="/portal/projects/new"><Icon Name="plus" /> New request</a>
+        <a class="btn btn--primary" href="/portal/new"><Icon Name="plus" /> New request</a>
     </div>
 </div>
 
@@ -28,7 +28,7 @@
     {
         <div class="empty">
             <p style="margin:0">@(string.IsNullOrEmpty(filter) ? "No projects yet." : "No projects with this status.")</p>
-            <a class="btn btn--primary" href="/portal/projects/new">Start a request</a>
+            <a class="btn btn--primary" href="/portal/new">Start a request</a>
         </div>
     }
     else

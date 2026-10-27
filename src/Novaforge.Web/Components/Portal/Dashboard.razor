@@ -9,7 +9,7 @@
         <h1>Hi @(Me?.Name.Split(' ')[0])</h1>
         <p class="muted" style="margin:0">Here's where everything stands.</p>
     </div>
-    <a class="btn btn--primary" href="/portal/projects/new"><Icon Name="plus" /> New request</a>
+    <a class="btn btn--primary" href="/portal/new"><Icon Name="plus" /> New request</a>
 </div>
 
 @if (dashboard is null)
@@ -46,7 +46,7 @@ else
         {
             <div class="empty">
                 <p style="margin:0">No projects yet. Start with a new website, an app, or a problem you need fixed.</p>
-                <a class="btn btn--primary" href="/portal/projects/new">Start a request</a>
+                <a class="btn btn--primary" href="/portal/new">Start a request</a>
             </div>
         }
         else

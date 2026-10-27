@@ -62,11 +62,13 @@ jobs:
           dotnet run --project src/Novaforge.Web --launch-profile http > app.log 2>&1 &
           for i in $(seq 1 90); do curl -fs http://localhost:5180/health && break; sleep 2; done
           curl -fs http://localhost:5180/health
+          echo "--- API probe: invalid lead (expect 400)" >> probe.log
+          curl -s -X POST http://localhost:5180/api/leads -H "content-type: application/json" -d '{"name":"","email":"x","message":"hi"}' -w "\nHTTP %{http_code}\n" >> probe.log 2>&1 || true
       - name: Browser smoke test + screenshots
         run: python scripts/screenshots.py http://localhost:5180 screenshots
       - name: Upload screenshots and log
         if: always()
-        run: cp app.log screenshots/ || true
+        run: cp app.log probe.log screenshots/ || true
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -49,7 +49,7 @@ with sync_playwright() as p:
     page.wait_for_load_state("networkidle")
     shoot(page, "portal-dashboard-empty")
 
-    page.goto(BASE + "/portal/projects/new", wait_until="networkidle")
+    page.goto(BASE + "/portal/new", wait_until="networkidle")
     page.wait_for_timeout(1000)  # interactive circuit
     page.click("label[for=type-BugFix]")
     page.fill("#title", "Checkout page crashes on iPhone")
@@ -57,8 +57,8 @@ with sync_playwright() as p:
     page.fill("#url", "https://shop.example.com/checkout")
     shoot(page, "portal-new-request")
     page.click("button[type=submit]")
-    page.wait_for_url("**/portal/projects/*-*")
-    page.wait_for_load_state("networkidle")
+    # Interactive (client-side) navigation: wait for the project page itself, not a page load.
+    page.wait_for_selector("#composer", timeout=20000)
     page.fill("#composer", "Reproduced on iOS 18. Looking into the coupon script now.")
     page.click(".composer button[type=submit]")
     expect(page.locator(".msg")).to_have_count(1, timeout=10000)

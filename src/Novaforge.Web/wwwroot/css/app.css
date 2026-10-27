@@ -140,6 +140,8 @@ small, .small { font-size: var(--step--1); }
 .lede { font-size: var(--step-1); line-height: 1.45; color: var(--muted); max-width: 46ch; }
 
 :focus-visible { outline: 2px solid var(--ion); outline-offset: 3px; border-radius: 6px; }
+/* Headings and <main> receive focus programmatically after navigation (for screen readers); no ring for that. */
+[tabindex="-1"]:focus, h1:focus { outline: none; }
 ::selection { background: var(--ion); color: var(--ion-ink); }
 
 .skip-link { position: absolute; left: -999px; top: 8px; z-index: 100; background: var(--ion); color: var(--ion-ink); padding: 8px 14px; border-radius: 8px; }
@@ -175,10 +177,10 @@ small, .small { font-size: var(--step--1); }
 .nav a { color: var(--muted); text-decoration: none; padding: 8px 12px; border-radius: var(--radius-control); font-size: 0.95rem; font-weight: 500; }
 .nav a:hover, .nav a.active { color: var(--text); background: var(--pane); }
 .header-actions { display: flex; align-items: center; gap: 8px; }
-.menu-toggle { display: none; }
+.icon-btn.menu-toggle { display: none; }
 
 @media (max-width: 900px) {
-  .menu-toggle { display: inline-flex; }
+  .icon-btn.menu-toggle { display: inline-grid; }
   .nav {
     position: fixed; inset: var(--header-h) 0 auto 0;
     flex-direction: column; align-items: stretch; gap: 0;
@@ -253,7 +255,7 @@ small, .small { font-size: var(--step--1); }
 .alert--warn { border-color: color-mix(in srgb, var(--signal) 45%, transparent); }
 
 /* ---------- Hero ---------- */
-.hero { padding: clamp(48px, 9vw, 120px) 0 clamp(56px, 8vw, 110px); }
+.hero { padding: clamp(40px, 8vw, 112px) 0 clamp(24px, 4vw, 48px); }
 .hero-grid { display: grid; gap: clamp(40px, 6vw, 72px); grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); align-items: center; }
 .hero h1 {
   font-size: var(--step-5);
@@ -262,11 +264,12 @@ small, .small { font-size: var(--step--1); }
   line-height: 0.98;
   margin-bottom: 0.35em;
 }
-.hero h1 .line { display: block; }
+.hero h1 .line { display: block; text-wrap: balance; }
 .hero h1 .line--strong { font-weight: 600; }
 .hero .lede { margin-bottom: 32px; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 @media (max-width: 960px) { .hero-grid { grid-template-columns: 1fr; } }
+@media (max-width: 600px) { .lede { font-size: 1.15rem; } }
 
 /* Build console — the signature element: a project moving through the real process */
 .console { padding: 22px; position: relative; overflow: hidden; }
@@ -297,8 +300,8 @@ small, .small { font-size: var(--step--1); }
 @keyframes meter-in { to { transform: scaleX(1); } }
 
 /* ---------- Sections ---------- */
-.section { padding: clamp(64px, 9vw, 120px) 0; }
-.section--tight { padding: clamp(40px, 6vw, 72px) 0; }
+.section { padding: clamp(48px, 7vw, 96px) 0; }
+.section--tight { padding: clamp(32px, 5vw, 56px) 0; }
 .section-head { display: grid; gap: 12px; margin-bottom: clamp(32px, 5vw, 56px); max-width: 720px; }
 .section-head p { color: var(--muted); font-size: 1.1rem; margin: 0; }
 .page-head { padding: clamp(48px, 8vw, 96px) 0 clamp(24px, 4vw, 40px); }
@@ -417,7 +420,7 @@ small, .small { font-size: var(--step--1); }
 .portal-nav button.linklike:focus-visible { outline: 2px solid var(--ion); }
 .portal-main { display: grid; gap: 24px; min-width: 0; }
 .portal-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px; }
-.portal-head h1 { font-size: var(--step-3); font-weight: 300; letter-spacing: -0.035em; margin: 0; }
+.portal-head h1 { font-size: var(--step-3); font-weight: 300; letter-spacing: -0.035em; margin: 0 0 6px; }
 @media (max-width: 900px) {
   .portal { grid-template-columns: 1fr; gap: 16px; }
   .portal-nav { position: static; display: flex; overflow-x: auto; padding: 6px; }

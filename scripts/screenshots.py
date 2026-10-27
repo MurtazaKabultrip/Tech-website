@@ -20,8 +20,8 @@ errors: list[str] = []
 def shoot(page, name: str) -> None:
     # Scroll through the page so scroll-triggered reveals and counters run, then back to the top.
     page.evaluate("""async () => {
-        for (let y = 0; y < document.body.scrollHeight; y += 500) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 60)); }
-        window.scrollTo(0, 0);
+        for (let y = 0; y < document.body.scrollHeight; y += 500) { window.scrollTo({ top: y, behavior: 'instant' }); await new Promise(r => setTimeout(r, 80)); }
+        window.scrollTo({ top: 0, behavior: 'instant' });
     }""")
     page.wait_for_timeout(1600)
     hidden = page.evaluate("[...document.querySelectorAll('[data-reveal]')].filter(e => getComputedStyle(e).opacity === '0').length")

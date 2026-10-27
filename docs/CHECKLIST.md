@@ -15,7 +15,7 @@
 - [x] JSON API with bearer tokens for mobile
 - [x] Unit + integration tests
 - [x] Dockerfile, docker-compose, GitHub Actions CI, Dependabot
-- [ ] **First CI run green on GitHub** (code was written in an environment without the .NET SDK — CI is the first compile)
+- [x] CI green on GitHub: build, 45 unit/integration tests, browser smoke test (desktop/mobile, dark/light, zero console errors), Docker image
 - [ ] Generate EF migrations (see DEPLOYMENT.md)
 - [ ] Real brand name, domain, legal texts
 

@@ -222,6 +222,10 @@ small, .small { font-size: var(--step--1); }
 .theme-icon-light { display: none; }
 :root[data-theme="light"] .theme-icon-light { display: block; }
 :root[data-theme="light"] .theme-icon-dark { display: none; }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .theme-icon-light { display: block; }
+  :root:not([data-theme]) .theme-icon-dark { display: none; }
+}
 
 /* ---------- Forms ---------- */
 .form { display: grid; gap: 18px; }

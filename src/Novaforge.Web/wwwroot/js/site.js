@@ -100,19 +100,28 @@
     cleanups.push(function () { clearInterval(timer); });
   }
 
+  // Scroll reveal. Uses positions, not just IntersectionObserver, so content a visitor skips past
+  // (fast scroll, anchor links, End key) is never left invisible.
   function initReveal() {
-    var items = document.querySelectorAll("[data-reveal], .x-steps");
-    if (!("IntersectionObserver" in window)) { items.forEach(function (el) { el.classList.add("is-in"); }); return; }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); }
+    var items = Array.prototype.slice.call(document.querySelectorAll("[data-reveal]"));
+    if (!items.length) return;
+    items.forEach(function (el, idx) { el.style.transitionDelay = (idx % 4) * 70 + "ms"; });
+    var pending = items.slice(), ticking = false;
+    function check() {
+      ticking = false;
+      var limit = window.innerHeight * 0.92;
+      pending = pending.filter(function (el) {
+        if (el.getBoundingClientRect().top < limit) { el.classList.add("is-in"); return false; }
+        return true;
       });
-    }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
-    items.forEach(function (el, idx) {
-      el.style.transitionDelay = (el.matches("[data-reveal]") ? (idx % 4) * 70 : 0) + "ms";
-      io.observe(el);
-    });
-    cleanups.push(function () { io.disconnect(); });
+      if (!pending.length) detach();
+    }
+    function onScrollReveal() { if (!ticking) { ticking = true; requestAnimationFrame(check); } }
+    function detach() { window.removeEventListener("scroll", onScrollReveal); window.removeEventListener("resize", onScrollReveal); }
+    window.addEventListener("scroll", onScrollReveal, { passive: true });
+    window.addEventListener("resize", onScrollReveal, { passive: true });
+    check();
+    cleanups.push(detach);
   }
 
   function initCounters() {

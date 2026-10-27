@@ -24,6 +24,9 @@ def shoot(page, name: str) -> None:
         window.scrollTo(0, 0);
     }""")
     page.wait_for_timeout(1600)
+    hidden = page.evaluate("[...document.querySelectorAll('[data-reveal]')].filter(e => getComputedStyle(e).opacity === '0').length")
+    if hidden:
+        errors.append(f"{name}: {hidden} section(s) still invisible after scrolling")
     page.screenshot(path=str(OUT / f"{name}.png"), full_page=True)
 
 

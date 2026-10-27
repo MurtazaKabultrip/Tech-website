@@ -56,7 +56,7 @@ with sync_playwright() as p:
         page.fill("#desc", "When a coupon code is entered on iOS Safari the checkout page goes blank. Started after the last plugin update.")
         page.fill("#url", "https://shop.example.com/checkout")
         shoot(page, "portal-new-request")
-        page.click("button[type=submit]")
+        page.click("main button[type=submit]")  # not the sidebar's "Sign out"
         # Interactive (client-side) navigation: wait for the project page itself, not a page load.
         page.wait_for_selector("#composer", timeout=20000)
         page.fill("#composer", "Reproduced on iOS 18. Looking into the coupon script now.")

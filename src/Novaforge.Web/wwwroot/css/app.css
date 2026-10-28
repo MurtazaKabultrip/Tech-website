@@ -1376,3 +1376,81 @@ html:not(.js) .x-tablist button[aria-selected="true"] { background: var(--brand-
   .x-chip--b { right: 0; bottom: 14%; }
 }
 @media (max-width: 700px) { .x-stage { height: clamp(350px, 104vw, 470px); margin-bottom: 8px; } }
+
+/* ==========================================================================
+   Phone / tablet menu: solid modern sheet + finger-following highlight
+   ========================================================================== */
+@media (max-width: 960px) {
+  html.nav-open, html.nav-open body { overflow: hidden; }       /* page doesn't scroll behind the menu */
+  .nav {
+    position: fixed; inset: calc(var(--header-h) + 6px) 10px auto 10px;
+    padding: 10px; gap: 4px; border-radius: 26px;
+    background:
+      radial-gradient(120% 80% at 100% 0%, color-mix(in srgb, var(--brand-a) 22%, transparent), transparent 60%),
+      radial-gradient(90% 70% at 0% 100%, color-mix(in srgb, var(--brand-b) 14%, transparent), transparent 60%),
+      var(--night-2) !important;
+    border: 1px solid var(--edge-strong);
+    box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.75);
+    touch-action: none;                                            /* finger slides highlight instead of scrolling */
+    -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
+    transform-origin: top right;
+    transition: opacity 0.22s ease, transform 0.32s cubic-bezier(.2,.9,.2,1.1), visibility 0.3s;
+  }
+  .nav::before { display: none; }
+  .nav a {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 17px 20px; border-radius: 18px;
+    font-size: 1.2rem; font-weight: 600; letter-spacing: -0.01em;
+    color: var(--text);
+    -webkit-tap-highlight-color: transparent;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+  .nav a:not(.nav-cta)::after {
+    content: ""; width: 9px; height: 9px; flex: none;
+    border-top: 2px solid currentColor; border-right: 2px solid currentColor;
+    transform: rotate(45deg); opacity: 0.45; transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .nav a.is-lit { color: #fff; }
+  .nav a.is-lit::after { opacity: 1; transform: translateX(3px) rotate(45deg); }
+  .nav a.active:not(.is-lit) { color: var(--brand-b); }
+  .nav .nav-cta { margin-top: 8px; justify-content: center; min-height: 56px; font-size: 1.05rem; border-radius: 18px; }
+
+  /* The highlight that glides under the finger. */
+  .nav-ind {
+    display: block; position: absolute; z-index: 0;
+    left: var(--ind-x, 10px); top: var(--ind-y, 10px); width: var(--ind-w, 0); height: var(--ind-h, 0);
+    opacity: var(--ind-o, 0); border-radius: 18px;
+    background: var(--brand-grad);
+    box-shadow: 0 10px 30px -8px color-mix(in srgb, var(--brand-a) 80%, transparent), inset 0 1px 0 rgba(255,255,255,.3);
+    transition: top 0.28s cubic-bezier(.2,.9,.2,1.15), height 0.28s ease, opacity 0.2s ease;
+    animation: none !important;
+  }
+
+  /* Opening: items slide in one after another. */
+  .nav a { opacity: 0; transform: translateY(-8px); }
+  html.nav-open .nav a { opacity: 1; transform: none; transition: opacity 0.35s ease, transform 0.4s cubic-bezier(.2,.9,.2,1.1), color 0.2s ease; }
+  html.nav-open .nav a:nth-of-type(1) { transition-delay: 0.03s; }
+  html.nav-open .nav a:nth-of-type(2) { transition-delay: 0.07s; }
+  html.nav-open .nav a:nth-of-type(3) { transition-delay: 0.11s; }
+  html.nav-open .nav a:nth-of-type(4) { transition-delay: 0.15s; }
+  html.nav-open .nav a:nth-of-type(5) { transition-delay: 0.19s; }
+  html.nav-open .nav a:nth-of-type(6) { transition-delay: 0.23s; }
+
+  /* Menu button turns into a close (×) icon when open. */
+  .menu-toggle .icon { transition: transform 0.3s ease; }
+  html.nav-open .menu-toggle { background: var(--pane-strong); }
+  html.nav-open .menu-toggle .icon { transform: rotate(90deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav a, html.nav-open .nav a { transition: none !important; opacity: 1; transform: none; }
+}
+
+@media (max-width: 960px) {
+  .nav a:not(.nav-cta) { background: transparent !important; }
+  .nav .nav-cta { color: #fff; }
+  html.nav-open .menu-toggle .icon { transform: none; }
+}
+.menu-toggle .icon-close { display: none; }
+html.nav-open .menu-toggle .icon-open { display: none; }
+html.nav-open .menu-toggle .icon-close { display: block; }

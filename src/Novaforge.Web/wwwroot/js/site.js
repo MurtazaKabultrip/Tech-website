@@ -32,6 +32,7 @@
     if (menu) {
       var open = root.classList.toggle("nav-open");
       menu.setAttribute("aria-expanded", open ? "true" : "false");
+      if (open) setTimeout(function () { window.dispatchEvent(new Event("resize")); }, 30);
       return;
     }
     if (e.target.closest("[data-print]")) { window.print(); return; }
@@ -285,9 +286,55 @@
       if (!link || getComputedStyle(ind).display === "none") { nav.style.setProperty("--ind-o", "0"); return; }
       link.classList.add("is-lit");
       nav.style.setProperty("--ind-x", link.offsetLeft + "px");
+      nav.style.setProperty("--ind-y", link.offsetTop + "px");
       nav.style.setProperty("--ind-w", link.offsetWidth + "px");
+      nav.style.setProperty("--ind-h", link.offsetHeight + "px");
       nav.style.setProperty("--ind-o", "1");
     }
+
+    // Phone menu: hold and slide a finger over the items — the highlight follows the finger;
+    // lifting the finger on an item opens it.
+    var dragging = false, startLink = null, current = null;
+    function linkAt(x, y) {
+      var el = document.elementFromPoint(x, y);
+      var a = el && el.closest && el.closest(".nav a");
+      return a && nav.contains(a) ? a : null;
+    }
+    function onDown(e) {
+      if (e.pointerType !== "touch" || !root.classList.contains("nav-open")) return;
+      dragging = true; startLink = current = linkAt(e.clientX, e.clientY);
+      if (current && !current.classList.contains("nav-cta")) place(current);
+      if (navigator.vibrate) { try { navigator.vibrate(5); } catch (x) { } }
+    }
+    function onMove(e) {
+      if (!dragging) return;
+      var a = linkAt(e.clientX, e.clientY);
+      // In the small gaps between items keep the last highlight; clear only outside the menu.
+      if (!a) {
+        var r = nav.getBoundingClientRect();
+        if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) return;
+      }
+      if (a !== current) {
+        current = a;
+        if (a && !a.classList.contains("nav-cta")) place(a); else place(null);
+        if (a && navigator.vibrate) { try { navigator.vibrate(3); } catch (x) { } }
+      }
+    }
+    function onUp() {
+      if (!dragging) return;
+      dragging = false;
+      // Same item as where the finger landed: let the normal tap/click happen.
+      if (current && current !== startLink) current.click();
+      if (!current) rest();
+    }
+    nav.addEventListener("pointerdown", onDown);
+    nav.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+    window.addEventListener("pointercancel", onUp);
+    cleanups.push(function () {
+      nav.removeEventListener("pointerdown", onDown); nav.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp); window.removeEventListener("pointercancel", onUp);
+    });
     function rest() { place(nav.querySelector("a.active:not(.nav-cta)")); }
     function over(e) { var a = e.target.closest("a:not(.nav-cta)"); if (a && nav.contains(a)) place(a); }
     nav.addEventListener("pointerover", over);

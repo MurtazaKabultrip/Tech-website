@@ -46,6 +46,29 @@ with sync_playwright() as p:
                 shoot(page, f"{theme}-{label}-{slug}")
             ctx.close()
 
+    # One-section-per-screen check: every full-screen section must fit the window (informational report + shots).
+    fit_report = []
+    for vw, vh in ((1366, 768), (1440, 900), (1920, 1080), (390, 844)):
+        ctx = browser.new_context(viewport={"width": vw, "height": vh}, color_scheme="dark")
+        page = ctx.new_page()
+        for path in ("/", "/about"):
+            page.goto(BASE + path, wait_until="networkidle")
+            page.wait_for_timeout(600)
+            res = page.evaluate("""() => [...document.querySelectorAll('.fs-section')].map((s, i) => {
+                const z = s.firstElementChild ? (s.firstElementChild.style.zoom || '1') : '1';
+                return { i, h: Math.round(s.getBoundingClientRect().height), zoom: z };
+            })""")
+            over = [r for r in res if r["h"] > vh + 2]
+            fit_report.append(f"{vw}x{vh} {path}: sections={len(res)} over={[(r['i'], r['h']) for r in over]} zooms={[r['zoom'] for r in res]}")
+            if (vw, vh) in ((1366, 768), (390, 844)) and path == "/":
+                for r in res:
+                    page.evaluate(f"document.querySelectorAll('.fs-section')[{r['i']}].scrollIntoView({{behavior:'instant'}})")
+                    page.evaluate("document.querySelectorAll('[data-reveal]').forEach(e => e.classList.add('is-in'))")
+                    page.wait_for_timeout(1300)
+                    page.screenshot(path=str(OUT / f"fit-{vw}x{vh}-home-{r['i']}.png"))
+        ctx.close()
+    (OUT / "fit-report.txt").write_text("\n".join(fit_report) + "\n")
+
     # Portal flow: sign in, submit a request, send a message.
     ctx = browser.new_context(viewport={"width": 1440, "height": 900}, color_scheme="dark")
     page = ctx.new_page()

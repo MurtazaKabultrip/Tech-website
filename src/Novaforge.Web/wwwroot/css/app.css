@@ -1116,3 +1116,6 @@ html:has(main .x-hero), html:has(main .about-hero) { scroll-snap-type: y proximi
 
 /* The strip now lives inside the hero on every screen size. */
 .x-hero > .x-marquee { margin-top: clamp(32px, 6vw, 64px); }
+/* Used by site.js while measuring a section's natural content height. */
+.fs-section.fs-measuring { min-height: 0 !important; justify-content: flex-start; }
+.fs-section.fs-measuring > * { flex: none !important; }

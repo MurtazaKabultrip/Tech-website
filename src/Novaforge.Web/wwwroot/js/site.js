@@ -347,17 +347,19 @@
       sec.classList.add("fs-section");
       var kids = Array.prototype.slice.call(sec.children);
       kids.forEach(function (k) { k.style.zoom = ""; });
+      // Measure natural content height (no stretch-to-fill, no min-height).
+      sec.classList.add("fs-measuring");
       var cs = getComputedStyle(sec);
-      var avail = window.innerHeight - (sec.classList.contains("tone-alt") ? 2 * parseFloat(cs.scrollMarginTop || 0) : 0)
-        - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
-      var content = kids.reduce(function (sum, k) {
-        var m = getComputedStyle(k);
-        return sum + k.getBoundingClientRect().height + parseFloat(m.marginTop) + parseFloat(m.marginBottom);
-      }, 0);
-      if (content > avail && avail > 0) {
-        var z = Math.max(minZoom, Math.floor(avail / content * 1000) / 1000);
+      var frame = sec.classList.contains("tone-alt") ? 2 * (parseFloat(cs.scrollMarginTop) || 0) : 0;
+      var target = window.innerHeight - frame;
+      var pad = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+      var h = sec.offsetHeight, z = 1;
+      for (var pass = 0; pass < 3 && h > target + 1 && z > minZoom; pass++) {
+        z = Math.max(minZoom, Math.floor(z * (target - pad) / (h - pad) * 1000) / 1000);
         kids.forEach(function (k) { k.style.zoom = z; });
+        h = sec.offsetHeight;
       }
+      sec.classList.remove("fs-measuring");
     });
   }
   var fitQueued = false;

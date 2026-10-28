@@ -344,24 +344,9 @@
     var units = Array.prototype.filter.call(main.children, function (el) {
       return el.matches("section, .tone-alt");
     });
-    var minZoom = window.innerWidth < 700 ? 0.82 : 0.6;
     units.forEach(function (sec) {
       sec.classList.add("fs-section");
-      var kids = Array.prototype.slice.call(sec.children);
-      kids.forEach(function (k) { k.style.zoom = ""; });
-      // Measure natural content height (no stretch-to-fill, no min-height).
-      sec.classList.add("fs-measuring");
-      var cs = getComputedStyle(sec);
-      var frame = sec.classList.contains("tone-alt") ? 2 * (parseFloat(cs.scrollMarginTop) || 0) : 0;
-      var target = window.innerHeight - frame;
-      var pad = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
-      var h = sec.offsetHeight, z = 1;
-      for (var pass = 0; pass < 6 && h > target + 1 && z > minZoom; pass++) {
-        z = Math.max(minZoom, Math.floor(z * (target - pad) / (h - pad) * 0.985 * 1000) / 1000);
-        kids.forEach(function (k) { k.style.zoom = z; });
-        h = sec.offsetHeight;
-      }
-      sec.classList.remove("fs-measuring");
+      Array.prototype.forEach.call(sec.children, function (k) { k.style.zoom = ""; });
     });
   }
   var fitQueued = false;

@@ -1093,13 +1093,11 @@ html:not(.js) .x-tablist button[aria-selected="true"] { background: var(--brand-
    (CSS zoom) when it is taller than the screen, so nothing needs scrolling
    inside a section. Scrolling snaps to whole sections.
    ========================================================================== */
-html:has(main .x-hero), html:has(main .about-hero) { scroll-snap-type: y proximity; scroll-padding-top: 0; }
 .fs-section {
   min-height: 100svh;
   display: flex; flex-direction: column; justify-content: center;
   padding-top: calc(var(--header-h) + clamp(12px, 3vh, 40px));
   padding-bottom: clamp(16px, 4vh, 48px);
-  scroll-snap-align: start;
   box-sizing: border-box;
 }
 .fs-section.tone-alt {
@@ -1119,3 +1117,34 @@ html:has(main .x-hero), html:has(main .about-hero) { scroll-snap-type: y proximi
 /* Used by site.js while measuring a section's natural content height. */
 .fs-section.fs-measuring { min-height: 0 !important; justify-content: flex-start; }
 .fs-section.fs-measuring > * { flex: none !important; }
+
+
+/* ==========================================================================
+   Height-aware sizing: type, artwork and spacing scale with the screen height
+   as well as width, so each section fits a normal laptop screen at 100% —
+   same scale as the menu, no shrinking. Long sections may still grow.
+   ========================================================================== */
+.x-title { font-size: min(var(--step-5), 10.5vh); }
+.about-hero h1 { font-size: min(var(--step-5), 9.5vh); }
+.x-head h2, .x-cta h2 { font-size: min(var(--step-4), 7.2vh); }
+.x-lede { margin-bottom: clamp(18px, 3.2vh, 36px); }
+.x-pill { margin-bottom: clamp(12px, 2.2vh, 24px); }
+.x-title { margin-bottom: clamp(14px, 2.6vh, 28px); }
+.x-trust { margin-top: clamp(16px, 3vh, 36px); }
+.x-head { margin-bottom: clamp(20px, 4.5vh, 64px); }
+.x-stage { height: min(clamp(380px, 42vw, 560px), 56vh); }
+.x-panel { padding: clamp(20px, 3.5vh, 48px) clamp(20px, 4vw, 48px); }
+.x-panel-art .mock { font-size: min(13px, 1.5vh); }
+.bento { grid-auto-rows: minmax(min(190px, 21vh), auto); gap: clamp(10px, 1.6vh, 16px); }
+.tile { padding: clamp(16px, 2.6vh, 26px); }
+.x-steps li::before { margin-bottom: clamp(12px, 2.4vh, 22px); }
+.x-stats { margin-top: clamp(8px, 2vh, 24px); }
+.x-stat { padding: clamp(18px, 3vh, 28px); }
+.x-pkg { padding: clamp(20px, 3.4vh, 32px); }
+.x-faq summary { padding-block: clamp(12px, 2vh, 20px); }
+.about-exp-num b { font-size: min(clamp(9rem, 6rem + 12vw, 18rem), 34vh); }
+.about-exp-list { gap: clamp(10px, 1.8vh, 18px); }
+@media (max-height: 820px) and (min-width: 1024px) {
+  .tile-art { display: none; }          /* the big services tile keeps its text; mock hidden on short screens */
+  .tile--xl { grid-row: span 1; }
+}

@@ -149,7 +149,7 @@
   function revealCheck() {
     revealTicking = false;
     autoTag();
-    var limit = window.innerHeight * 0.9;
+    var limit = window.innerHeight * 0.9, revealed = false;
     document.querySelectorAll("[data-reveal]:not(.is-in)").forEach(function (el) {
       if (el.getBoundingClientRect().top < limit) {
         // Stagger siblings that enter together.
@@ -157,8 +157,10 @@
         while ((sib = sib.previousElementSibling)) { if (sib.hasAttribute("data-reveal")) i++; }
         el.style.transitionDelay = Math.min(i, 8) * (el.getAttribute("data-reveal") === "pop" ? 35 : 90) + "ms";
         el.classList.add("is-in");
+        revealed = true;
       }
     });
+    if (revealed) setTimeout(scheduleFit, 1200);
   }
   function scheduleReveal() { if (!revealTicking) { revealTicking = true; requestAnimationFrame(revealCheck); } }
   window.addEventListener("scroll", scheduleReveal, { passive: true });
@@ -354,8 +356,8 @@
       var target = window.innerHeight - frame;
       var pad = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
       var h = sec.offsetHeight, z = 1;
-      for (var pass = 0; pass < 3 && h > target + 1 && z > minZoom; pass++) {
-        z = Math.max(minZoom, Math.floor(z * (target - pad) / (h - pad) * 1000) / 1000);
+      for (var pass = 0; pass < 6 && h > target + 1 && z > minZoom; pass++) {
+        z = Math.max(minZoom, Math.floor(z * (target - pad) / (h - pad) * 0.985 * 1000) / 1000);
         kids.forEach(function (k) { k.style.zoom = z; });
         h = sec.offsetHeight;
       }
@@ -366,7 +368,7 @@
   function scheduleFit() { if (!fitQueued) { fitQueued = true; requestAnimationFrame(function () { fitQueued = false; fitSections(); }); } }
   window.addEventListener("resize", scheduleFit);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleFit);
-  window.addEventListener("load", scheduleFit);
+  window.addEventListener("load", function () { scheduleFit(); setTimeout(scheduleFit, 1500); });
 
   function initPage() {
     cleanup();

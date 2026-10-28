@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="78678ca2-4a78-4c75-9416-6979bb4b0d00" name="@runnervmnwato 2026-10-28 19:52:06" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-10-28T19:52:06.0719833+00:00" queuing="2026-10-28T19:52:06.0719834+00:00" start="2026-10-28T19:52:05.1946312+00:00" finish="2026-10-28T19:52:12.4373353+00:00" />
+  <TestSettings name="default" id="03c31427-5736-4c00-947f-84004b28049d">
+    <Deployment runDeploymentRoot="_runnervmnwato_2026-10-28_19_52_06" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="4b632fbb-6a4a-49e9-b9dd-e64cd2738dc1" testId="8bab0067-74fc-adc4-1a55-cd7e89e135cc" testName="Novaforge.Tests.SiteTests.Unknown_service_returns_404" computerName="runnervmnwato" duration="00:00:00.0040036" startTime="2026-10-28T19:52:12.3441026+00:00" endTime="2026-10-28T19:52:12.3481891+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4b632fbb-6a4a-49e9-b9dd-e64cd2738dc1" />
+    <UnitTestResult executionId="27eda661-de2f-45fa-8c79-a39a47232551" testId="4cae5803-c842-451d-c009-84aa5be672ab" testName="Novaforge.Tests.ProjectApiTests.Anonymous_requests_are_rejected" computerName="runnervmnwato" duration="00:00:00.0048344" startTime="2026-10-28T19:52:11.1188206+00:00" endTime="2026-10-28T19:52:11.1236624+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="27eda661-de2f-45fa-8c79-a39a47232551" />
+    <UnitTestResult executionId="64ccd671-c599-46e1-a094-62c83c3bc91a" testId="7ad81513-acb0-edc1-e647-0f2def2caa89" testName="Novaforge.Tests.SiteTests.Public_pages_render(path: &quot;/services/bug-fixing&quot;)" computerName="runnervmnwato" duration="00:00:00.0043532" startTime="2026-10-28T19:52:12.2641774+00:00" endTime="2026-10-28T19:52:12.2687801+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="64ccd671-c599-46e1-a094-62c83c3bc91a" />
+    <UnitTestResult executionId="f7c6712e-1910-4535-bb03-ff15f650d402" testId="4f39c335-64dd-2c3b-060f-abe2a5632955" testName="Novaforge.Tests.SiteTests.Sitemap_and_robots_are_served" computerName="runnervmnwato" duration="00:00:00.0057624" startTime="2026-10-28T19:52:12.3483540+00:00" endTime="2026-10-28T19:52:12.3543621+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f7c6712e-1910-4535-bb03-ff15f650d402" />
+    <UnitTestResult executionId="7f2b0fa7-fdbb-434f-9aa4-a5421ed7caf0" testId="b7433c33-1ff9-6c36-0895-82cf0210dcf9" testName="Novaforge.Tests.LeadApiTests.Honeypot_submission_is_silently_dropped" computerName="runnervmnwato" duration="00:00:00.0875753" startTime="2026-10-28T19:52:11.8607235+00:00" endTime="2026-10-28T19:52:11.9484555+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7f2b0fa7-fdbb-434f-9aa4-a5421ed7caf0" />
+    <UnitTestResult executionId="d2ff4b30-4c4a-42e4-bf14-661fb317755e" testId="a3b053ae-357e-3474-342f-bdc3f39d9cae" testName="Novaforge.Tests.InvoiceApiTests.Checkout_then_signed_webhook_marks_invoice_paid_idempotently" computerName="runnervmnwato" duration="00:00:00.3260658" startTime="2026-10-28T19:52:10.1072352+00:00" endTime="2026-10-28T19:52:10.4335776+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d2ff4b30-4c4a-42e4-bf14-661fb317755e" />
+    <UnitTestResult executionId="eb80b6f8-bc2d-4713-86e1-42b58e06ac35" testId="ddb23f5d-2546-7e68-088e-ebc4600d0ce2" testName="Novaforge.Tests.StripeWebhookVerifierTests.Rejects_malformed_header(header: &quot;garbage&quot;)" computerName="runnervmnwato" duration="00:00:00.0002150" startTime="2026-10-28T19:52:06.0416683+00:00" endTime="2026-10-28T19:52:06.0417743+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="eb80b6f8-bc2d-4713-86e1-42b58e06ac35" />
+    <UnitTestResult executionId="68fe4607-09be-480c-8e0a-5e4685f5b715" testId="d94205f6-1075-4583-33f6-910b1ce971d8" testName="Novaforge.Tests.SiteTests.Health_endpoint_reports_healthy" computerName="runnervmnwato" duration="00:00:00.0196573" startTime="2026-10-28T19:52:12.2982396+00:00" endTime="2026-10-28T19:52:12.3180552+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="68fe4607-09be-480c-8e0a-5e4685f5b715" />
+    <UnitTestResult executionId="8e23a33a-9df1-4a1b-b269-ee6fff54139b" testId="a4510551-eb05-778e-6d97-c07156f8de0c" testName="Novaforge.Tests.SiteTests.Public_pages_render(path: &quot;/process&quot;)" computerName="runnervmnwato" duration="00:00:00.0236127" startTime="2026-10-28T19:52:12.2339970+00:00" endTime="2026-10-28T19:52:12.2580024+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8e23a33a-9df1-4a1b-b269-ee6fff54139b" />
+    <UnitTestResult executionId="301b7232-8638-4c53-9629-424e91c3288f" testId="8d78ea25-a2a3-d8a7-d8db-8dcbce2f73cd" testName="Novaforge.Tests.InvoiceApiTests.Webhook_with_bad_signature_is_rejected_and_changes_nothing" computerName="runnervmnwato" duration="00:00:00.1994273" startTime="2026-10-28T19:52:10.6742504+00:00" endTime="2026-10-28T19:52:10.8747003+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="301b7232-8638-4c53-9629-424e91c3288f" />
+    <UnitTestResult executionId="4174a69f-3268-432f-868c-e3c659a01032" testId="3ec3a2df-abdf-c5e1-0597-3c4ec1e212f0" testName="Novaforge.Tests.DomainTests.Invoice_total_is_sum_of_lines_in_minor_units" computerName="runnervmnwato" duration="00:00:00.0049838" startTime="2026-10-28T19:52:05.9974190+00:00" endTime="2026-10-28T19:52:06.0018874+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4174a69f-3268-432f-868c-e3c659a01032" />
+    <UnitTestResult executionId="72e80f30-8717-49fd-9af5-66dc5f83914a" testId="4e271144-ed48-e4d7-228d-2fefa2fb3c05" testName="Novaforge.Tests.SiteTests.Public_pages_render(path: &quot;/about&quot;)" computerName="runnervmnwato" duration="00:00:00.0180512" startTime="2026-10-28T19:52:12.1458615+00:00" endTime="2026-10-28T19:52:12.1640171+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="72e80f30-8717-49fd-9af5-66dc5f83914a" />
+    <UnitTestResult executionId="190b4f51-ac37-4eb9-9246-db9f4fc450eb" testId="cd2c409b-de25-b4b7-f4ea-92bf6bb5011c" testName="Novaforge.Tests.DomainTests.Money_formats_minor_units(minor: 123450, currency: &quot;eur&quot;, expected: &quot;€1,234.50&quot;)" computerName="runnervmnwato" duration="00:00:00.0002824" startTime="2026-10-28T19:52:05.9967103+00:00" endTime="2026-10-28T19:52:05.9968085+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="190b4f51-ac37-4eb9-9246-db9f4fc450eb" />
+    <UnitTestResult executionId="b817c399-d4f8-4468-8f7a-3e4eece6cd47" testId="43e309d1-eb25-2977-f8fc-a27a730ec5f3" testName="Novaforge.Tests.RequestValidatorTests.Validates_nested_invoice_lines" computerName="runnervmnwato" duration="00:00:00.0046898" startTime="2026-10-28T19:52:05.9936979+00:00" endTime="2026-10-28T19:52:05.9937811+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b817c399-d4f8-4468-8f7a-3e4eece6cd47" />
+    <UnitTestResult executionId="49f7902f-ad02-486e-b49d-a16cae28a52f" testId="aaed100a-6b6a-cebe-c6f9-14b8ed4ecdf4" testName="Novaforge.Tests.InvoiceApiTests.Admin_can_partially_then_fully_refund" computerName="runnervmnwato" duration="00:00:00.2396038" startTime="2026-10-28T19:52:10.4338412+00:00" endTime="2026-10-28T19:52:10.6738332+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="49f7902f-ad02-486e-b49d-a16cae28a52f" />
+    <UnitTestResult executionId="1f7f7221-401d-4a9d-b867-771b401c0bb5" testId="8455ac1a-174a-b7d8-79c6-dfccf81e6dd0" testName="Novaforge.Tests.ProjectApiTests.Client_creates_and_reads_own_project" computerName="runnervmnwato" duration="00:00:00.2424403" startTime="2026-10-28T19:52:10.8755281+00:00" endTime="2026-10-28T19:52:11.1184133+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1f7f7221-401d-4a9d-b867-771b401c0bb5" />
+    <UnitTestResult executionId="9ab21ac2-4196-4eb5-95d9-89e99fdbf6b5" testId="9589880c-73bc-dc91-243a-60de24042fe6" testName="Novaforge.Tests.StripeWebhookVerifierTests.Rejects_tampered_payload" computerName="runnervmnwato" duration="00:00:00.0016479" startTime="2026-10-28T19:52:06.0023906+00:00" endTime="2026-10-28T19:52:06.0037943+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9ab21ac2-4196-4eb5-95d9-89e99fdbf6b5" />
+    <UnitTestResult executionId="e3a15df0-837c-4a51-9914-38393f766839" testId="2ffd97e4-3633-f241-ed54-5f6c5c067cb1" testName="Novaforge.Tests.StripeWebhookVerifierTests.Rejects_malformed_header(header: &quot;t=abc,v1=00&quot;)" computerName="runnervmnwato" duration="00:00:00.0000073" startTime="2026-10-28T19:52:06.0422276+00:00" endTime="2026-10-28T19:52:06.0423253+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e3a15df0-837c-4a51-9914-38393f766839" />
+    <UnitTestResult executionId="050f9458-bb28-4956-92a7-78dd3f081e22" testId="bdf15a79-a2ba-4be4-100c-ce0e11c97e37" testName="Novaforge.Tests.InvoiceApiTests.Clients_cannot_issue_invoices" computerName="runnervmnwato" duration="00:00:03.6703437" startTime="2026-10-28T19:52:05.9472026+00:00" endTime="2026-10-28T19:52:09.6231925+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="050f9458-bb28-4956-92a7-78dd3f081e22" />
+    <UnitTestResult executionId="3926793b-1557-4506-8a86-5635f109fe3f" testId="50f97404-9bb5-9afe-4ae1-e8e9c5da5d8d" testName="Novaforge.Tests.SiteTests.Public_pages_render(path: &quot;/terms&quot;)" computerName="runnervmnwato" duration="00:00:00.0163354" startTime="2026-10-28T19:52:12.1651618+00:00" endTime="2026-10-28T19:52:12.1810607+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3926793b-1557-4506-8a86-5635f109fe3f" />
+    <UnitTestResult executionId="8dd40098-82b0-4735-867f-2a97cc6c2c91" testId="1c7a8535-88f7-93dd-3e35-6d0925ade387" testName="Novaforge.Tests.RequestValidatorTests.Optional_url_accepts_blank_and_rejects_non_http" computerName="runnervmnwato" duration="00:00:00.0260722" startTime="2026-10-28T19:52:05.9453461+00:00" endTime="2026-10-28T19:52:05.9784696+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8dd40098-82b0-4735-867f-2a97cc6c2c91" />
+    <UnitTestResult executionId="8ec45d7f-2064-494a-9238-0a494c0384e2" testId="d212c873-c241-a920-b7c0-c50422027275" testName="Novaforge.Tests.SiteTests.Portal_redirects_anonymous_visitors_to_login" computerName="runnervmnwato" duration="00:00:00.0027313" startTime="2026-10-28T19:52:12.3190999+00:00" endTime="2026-10-28T19:52:12.3211927+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8ec45d7f-2064-494a-9238-0a494c0384e2" />
+    <UnitTestResult executionId="9b9dfcbf-4372-4d9e-ba88-5835e2b0951e" testId="cf0ef24f-f535-75fa-4d65-7a604d21111d" testName="Novaforge.Tests.StripeWebhookVerifierTests.Rejects_wrong_secret" computerName="runnervmnwato" duration="00:00:00.0001687" startTime="2026-10-28T19:52:06.0409677+00:00" endTime="2026-10-28T19:52:06.0410658+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9b9dfcbf-4372-4d9e-ba88-5835e2b0951e" />
+    <UnitTestResult executionId="454f97bf-f1ac-4793-940c-13a2b6abca8c" testId="5da518d0-b79a-eea0-683f-5236e515744a" testName="Novaforge.Tests.SiteTests.Public_pages_render(path: &quot;/contact&quot;)" computerName="runnervmnwato" duration="00:00:00.0026445" startTime="2026-10-28T19:52:12.2888726+00:00" endTime="2026-10-28T19:52:12.2917391+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="454f97bf-f1ac-4793-940c-13a2b6abca8c" />
+    <UnitTestResult executionId="49c56beb-c294-499e-b059-59f3d1a020cc" testId="6bccf511-6794-cae4-e285-3860decb3653" testName="Novaforge.Tests.SiteTests.Public_pages_render(path: &quot;/privacy&quot;)" computerName="runnervmnwato" duration="00:00:00.0925963" startTime="2026-10-28T19:52:12.0525515+00:00" endTime="2026-10-28T19:52:12.1455142+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="49c56beb-c294-499e-b059-59f3d1a020cc" />
+    <UnitTestResult executionId="928f6d3f-bc82-422b-8a7d-1759bf6cb351" testId="ec392857-8cc7-8564-0c05-069d8564e8a8" testName="Novaforge.Tests.StripeWebhookVerifierTests.Rejects_replayed_old_event" computerName="runnervmnwato" duration="00:00:00.0002266" startTime="2026-10-28T19:52:06.0425727+00:00" endTime="2026-10-28T19:52:06.0437405+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="928f6d3f-bc82-422b-8a7d-1759bf6cb351" />
+    <UnitTestResult executionId="442cf046-b9ff-4aa5-95dc-d9b935243b77" testId="ef13dea3-c9d4-8147-d45f-05fccf30b7f0" testName="Novaforge.Tests.StripeWebhookVerifierTests.Matches_independently_computed_hmac" computerName="runnervmnwato" duration="00:00:00.0000926" startTime="2026-10-28T19:52:06.0398650+00:00" endTime="2026-10-28T19:52:06.0400209+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="442cf046-b9ff-4aa5-95dc-d9b935243b77" />
+    <UnitTestResult executionId="2ea3b471-f1b4-4641-a36e-973166a19d69" testId="6e7e32ea-8833-0cf8-461e-1c595fb05edb" testName="Novaforge.Tests.SiteTests.Public_pages_render(path: &quot;/account/login&quot;)" computerName="runnervmnwato" duration="00:00:00.0058266" startTime="2026-10-28T19:52:12.2918946+00:00" endTime="2026-10-28T19:52:12.2979596+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2ea3b471-f1b4-4641-a36e-973166a19d69" />
+    <UnitTestResult executionId="39cb0ea7-6abf-48ca-8612-1391a61921e7" testId="51258278-13ee-7425-ef86-c6e578deef6b" testName="Novaforge.Tests.StripeWebhookVerifierTests.Accepts_when_one_of_several_signatures_matches" computerName="runnervmnwato" duration="00:00:00.0002012" startTime="2026-10-28T19:52:06.0405407+00:00" endTime="2026-10-28T19:52:06.0406758+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="39cb0ea7-6abf-48ca-8612-1391a61921e7" />
+    <UnitTestResult executionId="2e2960b0-edb8-4fa7-ae73-dc134342c0df" testId="1014a720-9802-3e89-44e7-54d1eff005a9" testName="Novaforge.Tests.StripeWebhookVerifierTests.Rejects_malformed_header(header: null)" computerName="runnervmnwato" duration="00:00:00.0000063" startTime="2026-10-28T19:52:06.0419688+00:00" endTime="2026-10-28T19:52:06.0420707+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2e2960b0-edb8-4fa7-ae73-dc134342c0df" />
+    <UnitTestResult executionId="686d6398-8dd0-4bf5-aa33-3ef0fdbc2407" testId="794eb58e-8918-91eb-0828-f045daff0f68" testName="Novaforge.Tests.SiteTests.Home_page_renders_with_security_headers" computerName="runnervmnwato" duration="00:00:00.0222158" startTime="2026-10-28T19:52:12.3213582+00:00" endTime="2026-10-28T19:52:12.3438005+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="686d6398-8dd0-4bf5-aa33-3ef0fdbc2407" />
+    <UnitTestResult executionId="03cbe559-76eb-4029-9473-fec73b80fc8a" testId="3258618b-7fe2-c1a7-3cef-90729c76e806" testName="Novaforge.Tests.ProjectApiTests.Other_clients_cannot_see_or_message_a_project" computerName="runnervmnwato" duration="00:00:00.2748109" startTime="2026-10-28T19:52:11.2465029+00:00" endTime="2026-10-28T19:52:11.5214420+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="03cbe559-76eb-4029-9473-fec73b80fc8a" />
+    <UnitTestResult executionId="4d594dfb-2b4c-4749-ae8e-2d08daf44907" testId="bdf8c5b4-cf50-a46f-9dcd-e41209115598" testName="Novaforge.Tests.DomainTests.Money_formats_minor_units(minor: 5, currency: &quot;usd&quot;, expected: &quot;$0.05&quot;)" computerName="runnervmnwato" duration="00:00:00.0066903" startTime="2026-10-28T19:52:05.9959002+00:00" endTime="2026-10-28T19:52:05.9964654+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4d594dfb-2b4c-4749-ae8e-2d08daf44907" />
+    <UnitTestResult executionId="50a054f6-aa79-4f64-bd2b-8018a9e766b7" testId="f3c84ac0-e4a9-c372-8fc5-aba17fceeae5" testName="Novaforge.Tests.SiteTests.Public_pages_render(path: &quot;/contact?type=BugFix&quot;)" computerName="runnervmnwato" duration="00:00:00.0194676" startTime="2026-10-28T19:52:12.2689938+00:00" endTime="2026-10-28T19:52:12.2886809+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="50a054f6-aa79-4f64-bd2b-8018a9e766b7" />
+    <UnitTestResult executionId="f79eca50-c770-4c5f-9c3e-3bcaa790f998" testId="af439fb3-fdf7-2630-1101-5ce59cc84b59" testName="Novaforge.Tests.StripeWebhookVerifierTests.Accepts_valid_signature" computerName="runnervmnwato" duration="00:00:00.0002113" startTime="2026-10-28T19:52:06.0440199+00:00" endTime="2026-10-28T19:52:06.0441185+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f79eca50-c770-4c5f-9c3e-3bcaa790f998" />
+    <UnitTestResult executionId="087e5fc1-3974-4a6d-9b69-d0c8f7d7133c" testId="4ddc0293-cbf6-0f12-f91c-dcf5cf86fd61" testName="Novaforge.Tests.DomainTests.Invoice_is_overdue_only_when_open_and_past_due" computerName="runnervmnwato" duration="00:00:00.0009910" startTime="2026-10-28T19:52:05.9956312+00:00" endTime="2026-10-28T19:52:05.9957601+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="087e5fc1-3974-4a6d-9b69-d0c8f7d7133c" />
+    <UnitTestResult executionId="96ff6831-4672-4dd6-ab7c-d7103316fc93" testId="bcd46a47-e2d5-fea2-74b5-5b78d9f393e2" testName="Novaforge.Tests.InvoiceApiTests.Admin_issues_invoice_with_correct_total_and_number" computerName="runnervmnwato" duration="00:00:00.4819251" startTime="2026-10-28T19:52:09.6250669+00:00" endTime="2026-10-28T19:52:10.1069843+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="96ff6831-4672-4dd6-ab7c-d7103316fc93" />
+    <UnitTestResult executionId="967ea705-7294-41d9-a757-f59b8764c4b0" testId="d0d42197-f82e-02d3-5b4f-560c67d3d06d" testName="Novaforge.Tests.LeadApiTests.Valid_lead_is_stored_and_visible_to_admin" computerName="runnervmnwato" duration="00:00:00.0977239" startTime="2026-10-28T19:52:11.9543296+00:00" endTime="2026-10-28T19:52:12.0523047+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="967ea705-7294-41d9-a757-f59b8764c4b0" />
+    <UnitTestResult executionId="a5b3c93b-0fe8-4ee6-9a09-4899b8de262b" testId="41e5cb50-5077-02ad-29dc-70290c5d85a9" testName="Novaforge.Tests.LeadApiTests.Clients_cannot_read_leads" computerName="runnervmnwato" duration="00:00:00.1076087" startTime="2026-10-28T19:52:11.7525123+00:00" endTime="2026-10-28T19:52:11.8604240+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a5b3c93b-0fe8-4ee6-9a09-4899b8de262b" />
+    <UnitTestResult executionId="10b0e79f-7e05-4c75-9cb2-4416fb546edd" testId="1e3023d9-1513-7828-4ede-9c3812c3350f" testName="Novaforge.Tests.ProjectApiTests.Invalid_project_is_rejected" computerName="runnervmnwato" duration="00:00:00.1220301" startTime="2026-10-28T19:52:11.1239657+00:00" endTime="2026-10-28T19:52:11.2461483+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="10b0e79f-7e05-4c75-9cb2-4416fb546edd" />
+    <UnitTestResult executionId="96e7ebf8-bbb3-44cf-90a1-66835830fbf0" testId="04861ccb-3432-106b-ebb2-35f252613f1a" testName="Novaforge.Tests.SiteTests.Public_pages_render(path: &quot;/account/register&quot;)" computerName="runnervmnwato" duration="00:00:00.0525547" startTime="2026-10-28T19:52:12.1812797+00:00" endTime="2026-10-28T19:52:12.2337874+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="96e7ebf8-bbb3-44cf-90a1-66835830fbf0" />
+    <UnitTestResult executionId="b9c7ad6a-b04e-458c-9415-ccf4a502231e" testId="2f2b6766-a0a2-f80e-12f1-ff928dd4d49e" testName="Novaforge.Tests.LeadApiTests.Invalid_lead_returns_validation_problem" computerName="runnervmnwato" duration="00:00:00.0052747" startTime="2026-10-28T19:52:11.9488179+00:00" endTime="2026-10-28T19:52:11.9541165+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b9c7ad6a-b04e-458c-9415-ccf4a502231e" />
+    <UnitTestResult executionId="2681ba48-032f-4a58-aaaa-0bd48995e87e" testId="ac0d69ad-707c-1303-30f5-b463c471faa9" testName="Novaforge.Tests.DomainTests.Money_formats_minor_units(minor: 100000, currency: &quot;dkk&quot;, expected: &quot;1,000.00 DKK&quot;)" computerName="runnervmnwato" duration="00:00:00.0000086" startTime="2026-10-28T19:52:05.9970157+00:00" endTime="2026-10-28T19:52:05.9971217+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2681ba48-032f-4a58-aaaa-0bd48995e87e" />
+    <UnitTestResult executionId="f742cddd-03dc-4bc4-b89d-5b53ecb77388" testId="ae5ceac2-830f-3255-d2b2-cc7c8bd4967e" testName="Novaforge.Tests.ProjectApiTests.Messages_and_status_changes_flow_between_client_and_team" computerName="runnervmnwato" duration="00:00:00.2302785" startTime="2026-10-28T19:52:11.5218148+00:00" endTime="2026-10-28T19:52:11.7521878+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f742cddd-03dc-4bc4-b89d-5b53ecb77388" />
+    <UnitTestResult executionId="89d027c7-73b9-4623-ae55-685f1cce538e" testId="be9b2363-54c0-7497-2b82-e5fe3d3fc3eb" testName="Novaforge.Tests.StripeWebhookVerifierTests.Rejects_malformed_header(header: &quot;&quot;)" computerName="runnervmnwato" duration="00:00:00.0001024" startTime="2026-10-28T19:52:06.0413158+00:00" endTime="2026-10-28T19:52:06.0414359+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="89d027c7-73b9-4623-ae55-685f1cce538e" />
+    <UnitTestResult executionId="c9e1dff6-9845-452c-a4ec-fbd1dfa0498f" testId="e4a7ca3f-faa0-2b12-1603-6286dffe6ec7" testName="Novaforge.Tests.SiteTests.Public_pages_render(path: &quot;/services&quot;)" computerName="runnervmnwato" duration="00:00:00.0057202" startTime="2026-10-28T19:52:12.2583214+00:00" endTime="2026-10-28T19:52:12.2640057+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c9e1dff6-9845-452c-a4ec-fbd1dfa0498f" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Novaforge.Tests.SiteTests.Public_pages_render(path: &quot;/about&quot;)" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="4e271144-ed48-e4d7-228d-2fefa2fb3c05">
+      <Execution id="72e80f30-8717-49fd-9af5-66dc5f83914a" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.SiteTests" name="Public_pages_render" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.RequestValidatorTests.Validates_nested_invoice_lines" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="43e309d1-eb25-2977-f8fc-a27a730ec5f3">
+      <Execution id="b817c399-d4f8-4468-8f7a-3e4eece6cd47" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.RequestValidatorTests" name="Validates_nested_invoice_lines" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.InvoiceApiTests.Admin_can_partially_then_fully_refund" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="aaed100a-6b6a-cebe-c6f9-14b8ed4ecdf4">
+      <Execution id="49f7902f-ad02-486e-b49d-a16cae28a52f" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.InvoiceApiTests" name="Admin_can_partially_then_fully_refund" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.SiteTests.Public_pages_render(path: &quot;/account/register&quot;)" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="04861ccb-3432-106b-ebb2-35f252613f1a">
+      <Execution id="96e7ebf8-bbb3-44cf-90a1-66835830fbf0" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.SiteTests" name="Public_pages_render" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.DomainTests.Money_formats_minor_units(minor: 5, currency: &quot;usd&quot;, expected: &quot;$0.05&quot;)" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="bdf8c5b4-cf50-a46f-9dcd-e41209115598">
+      <Execution id="4d594dfb-2b4c-4749-ae8e-2d08daf44907" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.DomainTests" name="Money_formats_minor_units" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.SiteTests.Health_endpoint_reports_healthy" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="d94205f6-1075-4583-33f6-910b1ce971d8">
+      <Execution id="68fe4607-09be-480c-8e0a-5e4685f5b715" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.SiteTests" name="Health_endpoint_reports_healthy" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.SiteTests.Public_pages_render(path: &quot;/privacy&quot;)" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="6bccf511-6794-cae4-e285-3860decb3653">
+      <Execution id="49c56beb-c294-499e-b059-59f3d1a020cc" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.SiteTests" name="Public_pages_render" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.ProjectApiTests.Other_clients_cannot_see_or_message_a_project" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="3258618b-7fe2-c1a7-3cef-90729c76e806">
+      <Execution id="03cbe559-76eb-4029-9473-fec73b80fc8a" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.ProjectApiTests" name="Other_clients_cannot_see_or_message_a_project" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.DomainTests.Money_formats_minor_units(minor: 123450, currency: &quot;eur&quot;, expected: &quot;€1,234.50&quot;)" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="cd2c409b-de25-b4b7-f4ea-92bf6bb5011c">
+      <Execution id="190b4f51-ac37-4eb9-9246-db9f4fc450eb" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.DomainTests" name="Money_formats_minor_units" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.StripeWebhookVerifierTests.Rejects_malformed_header(header: &quot;&quot;)" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="be9b2363-54c0-7497-2b82-e5fe3d3fc3eb">
+      <Execution id="89d027c7-73b9-4623-ae55-685f1cce538e" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.StripeWebhookVerifierTests" name="Rejects_malformed_header" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.StripeWebhookVerifierTests.Rejects_wrong_secret" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="cf0ef24f-f535-75fa-4d65-7a604d21111d">
+      <Execution id="9b9dfcbf-4372-4d9e-ba88-5835e2b0951e" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.StripeWebhookVerifierTests" name="Rejects_wrong_secret" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.SiteTests.Public_pages_render(path: &quot;/account/login&quot;)" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="6e7e32ea-8833-0cf8-461e-1c595fb05edb">
+      <Execution id="2ea3b471-f1b4-4641-a36e-973166a19d69" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.SiteTests" name="Public_pages_render" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.DomainTests.Invoice_is_overdue_only_when_open_and_past_due" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="4ddc0293-cbf6-0f12-f91c-dcf5cf86fd61">
+      <Execution id="087e5fc1-3974-4a6d-9b69-d0c8f7d7133c" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.DomainTests" name="Invoice_is_overdue_only_when_open_and_past_due" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.InvoiceApiTests.Admin_issues_invoice_with_correct_total_and_number" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="bcd46a47-e2d5-fea2-74b5-5b78d9f393e2">
+      <Execution id="96ff6831-4672-4dd6-ab7c-d7103316fc93" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.InvoiceApiTests" name="Admin_issues_invoice_with_correct_total_and_number" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.InvoiceApiTests.Clients_cannot_issue_invoices" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="bdf15a79-a2ba-4be4-100c-ce0e11c97e37">
+      <Execution id="050f9458-bb28-4956-92a7-78dd3f081e22" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.InvoiceApiTests" name="Clients_cannot_issue_invoices" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.StripeWebhookVerifierTests.Rejects_malformed_header(header: &quot;t=abc,v1=00&quot;)" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="2ffd97e4-3633-f241-ed54-5f6c5c067cb1">
+      <Execution id="e3a15df0-837c-4a51-9914-38393f766839" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.StripeWebhookVerifierTests" name="Rejects_malformed_header" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.DomainTests.Money_formats_minor_units(minor: 100000, currency: &quot;dkk&quot;, expected: &quot;1,000.00 DKK&quot;)" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="ac0d69ad-707c-1303-30f5-b463c471faa9">
+      <Execution id="2681ba48-032f-4a58-aaaa-0bd48995e87e" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.DomainTests" name="Money_formats_minor_units" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.DomainTests.Invoice_total_is_sum_of_lines_in_minor_units" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="3ec3a2df-abdf-c5e1-0597-3c4ec1e212f0">
+      <Execution id="4174a69f-3268-432f-868c-e3c659a01032" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.DomainTests" name="Invoice_total_is_sum_of_lines_in_minor_units" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.StripeWebhookVerifierTests.Rejects_malformed_header(header: &quot;garbage&quot;)" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="ddb23f5d-2546-7e68-088e-ebc4600d0ce2">
+      <Execution id="eb80b6f8-bc2d-4713-86e1-42b58e06ac35" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.StripeWebhookVerifierTests" name="Rejects_malformed_header" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.SiteTests.Sitemap_and_robots_are_served" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="4f39c335-64dd-2c3b-060f-abe2a5632955">
+      <Execution id="f7c6712e-1910-4535-bb03-ff15f650d402" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.SiteTests" name="Sitemap_and_robots_are_served" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.SiteTests.Unknown_service_returns_404" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="8bab0067-74fc-adc4-1a55-cd7e89e135cc">
+      <Execution id="4b632fbb-6a4a-49e9-b9dd-e64cd2738dc1" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.SiteTests" name="Unknown_service_returns_404" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.SiteTests.Public_pages_render(path: &quot;/terms&quot;)" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="50f97404-9bb5-9afe-4ae1-e8e9c5da5d8d">
+      <Execution id="3926793b-1557-4506-8a86-5635f109fe3f" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.SiteTests" name="Public_pages_render" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.LeadApiTests.Valid_lead_is_stored_and_visible_to_admin" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="d0d42197-f82e-02d3-5b4f-560c67d3d06d">
+      <Execution id="967ea705-7294-41d9-a757-f59b8764c4b0" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.LeadApiTests" name="Valid_lead_is_stored_and_visible_to_admin" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.SiteTests.Portal_redirects_anonymous_visitors_to_login" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="d212c873-c241-a920-b7c0-c50422027275">
+      <Execution id="8ec45d7f-2064-494a-9238-0a494c0384e2" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.SiteTests" name="Portal_redirects_anonymous_visitors_to_login" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.StripeWebhookVerifierTests.Rejects_replayed_old_event" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="ec392857-8cc7-8564-0c05-069d8564e8a8">
+      <Execution id="928f6d3f-bc82-422b-8a7d-1759bf6cb351" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.StripeWebhookVerifierTests" name="Rejects_replayed_old_event" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.StripeWebhookVerifierTests.Accepts_valid_signature" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="af439fb3-fdf7-2630-1101-5ce59cc84b59">
+      <Execution id="f79eca50-c770-4c5f-9c3e-3bcaa790f998" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.StripeWebhookVerifierTests" name="Accepts_valid_signature" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.StripeWebhookVerifierTests.Matches_independently_computed_hmac" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="ef13dea3-c9d4-8147-d45f-05fccf30b7f0">
+      <Execution id="442cf046-b9ff-4aa5-95dc-d9b935243b77" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.StripeWebhookVerifierTests" name="Matches_independently_computed_hmac" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.SiteTests.Public_pages_render(path: &quot;/process&quot;)" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="a4510551-eb05-778e-6d97-c07156f8de0c">
+      <Execution id="8e23a33a-9df1-4a1b-b269-ee6fff54139b" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.SiteTests" name="Public_pages_render" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.SiteTests.Public_pages_render(path: &quot;/services&quot;)" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="e4a7ca3f-faa0-2b12-1603-6286dffe6ec7">
+      <Execution id="c9e1dff6-9845-452c-a4ec-fbd1dfa0498f" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.SiteTests" name="Public_pages_render" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.LeadApiTests.Clients_cannot_read_leads" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="41e5cb50-5077-02ad-29dc-70290c5d85a9">
+      <Execution id="a5b3c93b-0fe8-4ee6-9a09-4899b8de262b" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.LeadApiTests" name="Clients_cannot_read_leads" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.StripeWebhookVerifierTests.Accepts_when_one_of_several_signatures_matches" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="51258278-13ee-7425-ef86-c6e578deef6b">
+      <Execution id="39cb0ea7-6abf-48ca-8612-1391a61921e7" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.StripeWebhookVerifierTests" name="Accepts_when_one_of_several_signatures_matches" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.InvoiceApiTests.Checkout_then_signed_webhook_marks_invoice_paid_idempotently" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="a3b053ae-357e-3474-342f-bdc3f39d9cae">
+      <Execution id="d2ff4b30-4c4a-42e4-bf14-661fb317755e" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.InvoiceApiTests" name="Checkout_then_signed_webhook_marks_invoice_paid_idempotently" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.ProjectApiTests.Invalid_project_is_rejected" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="1e3023d9-1513-7828-4ede-9c3812c3350f">
+      <Execution id="10b0e79f-7e05-4c75-9cb2-4416fb546edd" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.ProjectApiTests" name="Invalid_project_is_rejected" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.SiteTests.Public_pages_render(path: &quot;/contact&quot;)" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="5da518d0-b79a-eea0-683f-5236e515744a">
+      <Execution id="454f97bf-f1ac-4793-940c-13a2b6abca8c" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.SiteTests" name="Public_pages_render" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.LeadApiTests.Honeypot_submission_is_silently_dropped" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="b7433c33-1ff9-6c36-0895-82cf0210dcf9">
+      <Execution id="7f2b0fa7-fdbb-434f-9aa4-a5421ed7caf0" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.LeadApiTests" name="Honeypot_submission_is_silently_dropped" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.ProjectApiTests.Messages_and_status_changes_flow_between_client_and_team" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="ae5ceac2-830f-3255-d2b2-cc7c8bd4967e">
+      <Execution id="f742cddd-03dc-4bc4-b89d-5b53ecb77388" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.ProjectApiTests" name="Messages_and_status_changes_flow_between_client_and_team" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.SiteTests.Public_pages_render(path: &quot;/contact?type=BugFix&quot;)" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="f3c84ac0-e4a9-c372-8fc5-aba17fceeae5">
+      <Execution id="50a054f6-aa79-4f64-bd2b-8018a9e766b7" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.SiteTests" name="Public_pages_render" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.StripeWebhookVerifierTests.Rejects_malformed_header(header: null)" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="1014a720-9802-3e89-44e7-54d1eff005a9">
+      <Execution id="2e2960b0-edb8-4fa7-ae73-dc134342c0df" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.StripeWebhookVerifierTests" name="Rejects_malformed_header" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.RequestValidatorTests.Optional_url_accepts_blank_and_rejects_non_http" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="1c7a8535-88f7-93dd-3e35-6d0925ade387">
+      <Execution id="8dd40098-82b0-4735-867f-2a97cc6c2c91" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.RequestValidatorTests" name="Optional_url_accepts_blank_and_rejects_non_http" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.SiteTests.Public_pages_render(path: &quot;/services/bug-fixing&quot;)" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="7ad81513-acb0-edc1-e647-0f2def2caa89">
+      <Execution id="64ccd671-c599-46e1-a094-62c83c3bc91a" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.SiteTests" name="Public_pages_render" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.ProjectApiTests.Client_creates_and_reads_own_project" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="8455ac1a-174a-b7d8-79c6-dfccf81e6dd0">
+      <Execution id="1f7f7221-401d-4a9d-b867-771b401c0bb5" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.ProjectApiTests" name="Client_creates_and_reads_own_project" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.ProjectApiTests.Anonymous_requests_are_rejected" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="4cae5803-c842-451d-c009-84aa5be672ab">
+      <Execution id="27eda661-de2f-45fa-8c79-a39a47232551" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.ProjectApiTests" name="Anonymous_requests_are_rejected" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.SiteTests.Home_page_renders_with_security_headers" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="794eb58e-8918-91eb-0828-f045daff0f68">
+      <Execution id="686d6398-8dd0-4bf5-aa33-3ef0fdbc2407" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.SiteTests" name="Home_page_renders_with_security_headers" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.LeadApiTests.Invalid_lead_returns_validation_problem" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="2f2b6766-a0a2-f80e-12f1-ff928dd4d49e">
+      <Execution id="b9c7ad6a-b04e-458c-9415-ccf4a502231e" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.LeadApiTests" name="Invalid_lead_returns_validation_problem" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.InvoiceApiTests.Webhook_with_bad_signature_is_rejected_and_changes_nothing" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="8d78ea25-a2a3-d8a7-d8db-8dcbce2f73cd">
+      <Execution id="301b7232-8638-4c53-9629-424e91c3288f" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.InvoiceApiTests" name="Webhook_with_bad_signature_is_rejected_and_changes_nothing" />
+    </UnitTest>
+    <UnitTest name="Novaforge.Tests.StripeWebhookVerifierTests.Rejects_tampered_payload" storage="/home/runner/work/tech-website/tech-website/tests/novaforge.tests/bin/release/net10.0/novaforge.tests.dll" id="9589880c-73bc-dc91-243a-60de24042fe6">
+      <Execution id="9ab21ac2-4196-4eb5-95d9-89e99fdbf6b5" />
+      <TestMethod codeBase="/home/runner/work/Tech-website/Tech-website/tests/Novaforge.Tests/bin/Release/net10.0/Novaforge.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Novaforge.Tests.StripeWebhookVerifierTests" name="Rejects_tampered_payload" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="8bab0067-74fc-adc4-1a55-cd7e89e135cc" executionId="4b632fbb-6a4a-49e9-b9dd-e64cd2738dc1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4cae5803-c842-451d-c009-84aa5be672ab" executionId="27eda661-de2f-45fa-8c79-a39a47232551" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7ad81513-acb0-edc1-e647-0f2def2caa89" executionId="64ccd671-c599-46e1-a094-62c83c3bc91a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4f39c335-64dd-2c3b-060f-abe2a5632955" executionId="f7c6712e-1910-4535-bb03-ff15f650d402" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b7433c33-1ff9-6c36-0895-82cf0210dcf9" executionId="7f2b0fa7-fdbb-434f-9aa4-a5421ed7caf0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a3b053ae-357e-3474-342f-bdc3f39d9cae" executionId="d2ff4b30-4c4a-42e4-bf14-661fb317755e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ddb23f5d-2546-7e68-088e-ebc4600d0ce2" executionId="eb80b6f8-bc2d-4713-86e1-42b58e06ac35" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d94205f6-1075-4583-33f6-910b1ce971d8" executionId="68fe4607-09be-480c-8e0a-5e4685f5b715" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a4510551-eb05-778e-6d97-c07156f8de0c" executionId="8e23a33a-9df1-4a1b-b269-ee6fff54139b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8d78ea25-a2a3-d8a7-d8db-8dcbce2f73cd" executionId="301b7232-8638-4c53-9629-424e91c3288f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3ec3a2df-abdf-c5e1-0597-3c4ec1e212f0" executionId="4174a69f-3268-432f-868c-e3c659a01032" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4e271144-ed48-e4d7-228d-2fefa2fb3c05" executionId="72e80f30-8717-49fd-9af5-66dc5f83914a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cd2c409b-de25-b4b7-f4ea-92bf6bb5011c" executionId="190b4f51-ac37-4eb9-9246-db9f4fc450eb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="43e309d1-eb25-2977-f8fc-a27a730ec5f3" executionId="b817c399-d4f8-4468-8f7a-3e4eece6cd47" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="aaed100a-6b6a-cebe-c6f9-14b8ed4ecdf4" executionId="49f7902f-ad02-486e-b49d-a16cae28a52f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8455ac1a-174a-b7d8-79c6-dfccf81e6dd0" executionId="1f7f7221-401d-4a9d-b867-771b401c0bb5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9589880c-73bc-dc91-243a-60de24042fe6" executionId="9ab21ac2-4196-4eb5-95d9-89e99fdbf6b5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2ffd97e4-3633-f241-ed54-5f6c5c067cb1" executionId="e3a15df0-837c-4a51-9914-38393f766839" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bdf15a79-a2ba-4be4-100c-ce0e11c97e37" executionId="050f9458-bb28-4956-92a7-78dd3f081e22" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="50f97404-9bb5-9afe-4ae1-e8e9c5da5d8d" executionId="3926793b-1557-4506-8a86-5635f109fe3f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1c7a8535-88f7-93dd-3e35-6d0925ade387" executionId="8dd40098-82b0-4735-867f-2a97cc6c2c91" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d212c873-c241-a920-b7c0-c50422027275" executionId="8ec45d7f-2064-494a-9238-0a494c0384e2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cf0ef24f-f535-75fa-4d65-7a604d21111d" executionId="9b9dfcbf-4372-4d9e-ba88-5835e2b0951e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5da518d0-b79a-eea0-683f-5236e515744a" executionId="454f97bf-f1ac-4793-940c-13a2b6abca8c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6bccf511-6794-cae4-e285-3860decb3653" executionId="49c56beb-c294-499e-b059-59f3d1a020cc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ec392857-8cc7-8564-0c05-069d8564e8a8" executionId="928f6d3f-bc82-422b-8a7d-1759bf6cb351" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ef13dea3-c9d4-8147-d45f-05fccf30b7f0" executionId="442cf046-b9ff-4aa5-95dc-d9b935243b77" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6e7e32ea-8833-0cf8-461e-1c595fb05edb" executionId="2ea3b471-f1b4-4641-a36e-973166a19d69" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="51258278-13ee-7425-ef86-c6e578deef6b" executionId="39cb0ea7-6abf-48ca-8612-1391a61921e7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1014a720-9802-3e89-44e7-54d1eff005a9" executionId="2e2960b0-edb8-4fa7-ae73-dc134342c0df" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="794eb58e-8918-91eb-0828-f045daff0f68" executionId="686d6398-8dd0-4bf5-aa33-3ef0fdbc2407" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3258618b-7fe2-c1a7-3cef-90729c76e806" executionId="03cbe559-76eb-4029-9473-fec73b80fc8a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bdf8c5b4-cf50-a46f-9dcd-e41209115598" executionId="4d594dfb-2b4c-4749-ae8e-2d08daf44907" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f3c84ac0-e4a9-c372-8fc5-aba17fceeae5" executionId="50a054f6-aa79-4f64-bd2b-8018a9e766b7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="af439fb3-fdf7-2630-1101-5ce59cc84b59" executionId="f79eca50-c770-4c5f-9c3e-3bcaa790f998" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4ddc0293-cbf6-0f12-f91c-dcf5cf86fd61" executionId="087e5fc1-3974-4a6d-9b69-d0c8f7d7133c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bcd46a47-e2d5-fea2-74b5-5b78d9f393e2" executionId="96ff6831-4672-4dd6-ab7c-d7103316fc93" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d0d42197-f82e-02d3-5b4f-560c67d3d06d" executionId="967ea705-7294-41d9-a757-f59b8764c4b0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="41e5cb50-5077-02ad-29dc-70290c5d85a9" executionId="a5b3c93b-0fe8-4ee6-9a09-4899b8de262b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1e3023d9-1513-7828-4ede-9c3812c3350f" executionId="10b0e79f-7e05-4c75-9cb2-4416fb546edd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="04861ccb-3432-106b-ebb2-35f252613f1a" executionId="96e7ebf8-bbb3-44cf-90a1-66835830fbf0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2f2b6766-a0a2-f80e-12f1-ff928dd4d49e" executionId="b9c7ad6a-b04e-458c-9415-ccf4a502231e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ac0d69ad-707c-1303-30f5-b463c471faa9" executionId="2681ba48-032f-4a58-aaaa-0bd48995e87e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ae5ceac2-830f-3255-d2b2-cc7c8bd4967e" executionId="f742cddd-03dc-4bc4-b89d-5b53ecb77388" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="be9b2363-54c0-7497-2b82-e5fe3d3fc3eb" executionId="89d027c7-73b9-4623-ae55-685f1cce538e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e4a7ca3f-faa0-2b12-1603-6286dffe6ec7" executionId="c9e1dff6-9845-452c-a4ec-fbd1dfa0498f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="46" executed="46" passed="46" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v3.1.5+1b188a7b0a (64-bit .NET 10.0.14)
+[xUnit.net 00:00:00.12]   Discovering: Novaforge.Tests
+[xUnit.net 00:00:00.18]   Discovered:  Novaforge.Tests
+[xUnit.net 00:00:00.21]   Starting:    Novaforge.Tests
+info: Novaforge.Web[0]
+      Seeded admin account admin@test.local
+warn: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[35]
+      No XML encryptor configured. Key {a2b0a8f9-05fe-4311-ac9c-68536ffe8bf2} may be persisted to storage in unencrypted form.
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Testing
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /home/runner/work/Tech-website/Tech-website/src/Novaforge.Web
+warn: Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware[3]
+      Failed to determine the https port for redirect.
+warn: Novaforge.Web.Services.StripeOptions[0]
+      Rejected Stripe webhook with invalid signature
+info: Novaforge.Web.Services.LeadService[0]
+      Dropped lead from honeypot submission
+info: Microsoft.Hosting.Lifetime[0]
+      Application is shutting down...
+[xUnit.net 00:00:06.67]   Finished:    Novaforge.Tests
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

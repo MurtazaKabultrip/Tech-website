@@ -68,12 +68,19 @@
   }
 
   // Mouse-following light on .spot cards.
+  var spotEvt = null, spotQueued = false;
   document.addEventListener("pointermove", function (e) {
-    var card = e.target.closest && e.target.closest(".spot");
-    if (!card) return;
-    var r = card.getBoundingClientRect();
-    card.style.setProperty("--mx", (e.clientX - r.left) + "px");
-    card.style.setProperty("--my", (e.clientY - r.top) + "px");
+    spotEvt = e;
+    if (spotQueued) return;
+    spotQueued = true;
+    requestAnimationFrame(function () {
+      spotQueued = false;
+      var ev = spotEvt, card = ev.target.closest && ev.target.closest(".spot");
+      if (!card) return;
+      var r = card.getBoundingClientRect();
+      card.style.setProperty("--mx", (ev.clientX - r.left) + "px");
+      card.style.setProperty("--my", (ev.clientY - r.top) + "px");
+    });
   }, { passive: true });
 
   // Header turns to glass once the page scrolls.
@@ -194,14 +201,21 @@
       w = r.width; h = r.height;
       canvas.width = w * dpr; canvas.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      var count = Math.min(110, Math.floor(w * h / 11000));
+      var count = Math.min(70, Math.floor(w * h / 16000));
       pts = [];
       for (var i = 0; i < count; i++) {
         pts.push({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25, r: Math.random() * 1.6 + 0.4 });
       }
     }
-    function frame() {
+    var visible = true, lastDraw = 0;
+    function frame(t) {
       if (!running) return;
+      // Skip work while the hero is off-screen or the page is scrolling; cap drawing at ~40 fps.
+      if (!visible || root.classList.contains("is-scrolling") || (t && t - lastDraw < 24)) {
+        if (!reduceMotion) raf = requestAnimationFrame(frame);
+        return;
+      }
+      lastDraw = t || 0;
       ctx.clearRect(0, 0, w, h);
       for (var i = 0; i < pts.length; i++) {
         var p = pts[i];
@@ -233,12 +247,15 @@
     }
     resize(); frame();
     var host = canvas.parentElement;
+    var vio = "IntersectionObserver" in window ? new IntersectionObserver(function (e) { visible = e[0].isIntersecting; }) : null;
+    if (vio) vio.observe(host);
     window.addEventListener("resize", resize);
     host.addEventListener("pointermove", onMove);
     host.addEventListener("pointerleave", onLeave);
     document.addEventListener("visibilitychange", onVisibility);
     cleanups.push(function () {
       running = false; cancelAnimationFrame(raf);
+      if (vio) vio.disconnect();
       window.removeEventListener("resize", resize);
       host.removeEventListener("pointermove", onMove);
       host.removeEventListener("pointerleave", onLeave);
@@ -323,7 +340,7 @@
   window.addEventListener("load", revealCheck);
   // Safety net: if the DOM is patched without an event we hear about, re-check shortly after.
   if ("MutationObserver" in window) {
-    new MutationObserver(scheduleReveal).observe(document.documentElement, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+    new MutationObserver(scheduleReveal).observe(document.body || document.documentElement, { subtree: true, childList: true });
   }
   // Blazor enhanced navigation swaps page content without a reload.
   window.addEventListener("load", function () {

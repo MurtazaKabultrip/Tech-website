@@ -46,6 +46,23 @@ with sync_playwright() as p:
                 shoot(page, f"{theme}-{label}-{slug}")
             ctx.close()
 
+    # Scroll smoothness probe: wheel-scroll the home page and record frame times (informational).
+    ctx = browser.new_context(viewport={"width": 1440, "height": 900}, color_scheme="dark")
+    page = ctx.new_page()
+    page.goto(BASE + "/", wait_until="networkidle")
+    page.evaluate("""() => { window.__f = []; let last = performance.now();
+        (function tick(t) { window.__f.push(t - last); last = t; if (window.__f.length < 400) requestAnimationFrame(tick); })(last); }""")
+    for _ in range(60):
+        page.mouse.wheel(0, 120)
+        page.wait_for_timeout(16)
+    page.wait_for_timeout(500)
+    frames = sorted(page.evaluate("window.__f.slice(5)"))
+    if frames:
+        p95 = frames[int(len(frames) * 0.95) - 1]
+        slow = sum(1 for f in frames if f > 34)
+        (OUT / "scroll-perf.txt").write_text(f"frames={len(frames)} median={frames[len(frames)//2]:.1f}ms p95={p95:.1f}ms over34ms={slow}\n")
+    ctx.close()
+
     # Portal flow: sign in, submit a request, send a message.
     ctx = browser.new_context(viewport={"width": 1440, "height": 900}, color_scheme="dark")
     page = ctx.new_page()

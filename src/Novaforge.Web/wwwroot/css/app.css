@@ -1148,3 +1148,61 @@ html:not(.js) .x-tablist button[aria-selected="true"] { background: var(--brand-
   .tile-art { display: none; }          /* the big services tile keeps its text; mock hidden on short screens */
   .tile--xl { grid-row: span 1; }
 }
+
+/* ---- Fit tuning: every Home/About section fits laptop screens at 100% ---- */
+@media (min-width: 1024px) {
+  /* Section headings: title left, intro right — one compact row. */
+  .fs-section .x-head { max-width: none; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); align-items: end; column-gap: clamp(24px, 4vw, 64px); }
+  .fs-section .x-head > p { padding-bottom: 0.4em; }
+  .fs-section .about-story .x-head, .fs-section .about-who .x-head, .fs-section .x-faq-grid .x-head, .fs-section .about-exp .x-head { grid-template-columns: 1fr; }
+
+  /* Hero */
+  .x-title { font-size: min(var(--step-5), 8.6vh); }
+  .x-lede { max-width: 46ch; font-size: clamp(1.02rem, 0.9rem + 0.9vh, 1.25rem); }
+  .x-trust { flex-wrap: nowrap; gap: 18px; font-size: 0.9rem; }
+  .x-trust li { white-space: nowrap; }
+  .x-hero > .x-marquee { margin-top: clamp(8px, 2vh, 28px); padding: clamp(10px, 1.6vh, 20px) 0; }
+
+  /* Services bento: compact rows */
+  .fs-section .bento:not(.bento--even) { grid-auto-rows: minmax(min(190px, 16vh), auto); }
+  .fs-section .tile { padding: clamp(14px, 2vh, 26px); gap: 6px; }
+  .fs-section .tile p { font-size: 0.93rem; }
+  .fs-section .tile-icon { width: 40px; height: 40px; border-radius: 12px; }
+  .fs-section .tile h3 { margin-top: 2px; font-size: 1.15rem; }
+
+  /* Showcase panel */
+  .x-panel-art .mock { font-size: min(13px, 1.3vh); }
+  .x-panel-art .mock .m-hero strong { font-size: min(22px, 2.3vh); }
+  .x-tabs { gap: clamp(14px, 2.4vh, 28px); }
+}
+@media (min-width: 1024px) and (max-height: 1000px) {
+  .tile-phones { display: none; }
+}
+@media (min-width: 1024px) {
+  /* The big services tile's mock-up floats in the corner instead of stretching the rows. */
+  .fs-section .tile--xl { position: relative; overflow: hidden; }
+  .fs-section .tile--xl .tile-art { position: absolute; right: -40px; bottom: -40px; width: 72%; margin: 0; }
+  .fs-section .tile--xl > p { max-width: 34ch; }
+  .fs-section .x-center { margin-top: clamp(10px, 1.6vh, 24px); }
+  /* About: experience benefits in two columns. */
+  .about-exp-list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 28px; }
+}
+@media (min-width: 1024px) and (max-height: 1000px) { .tile-art { display: block; } .tile--xl { grid-row: span 2; } }
+/* Short laptop screens (e.g. 1366×768). */
+@media (min-width: 1024px) and (max-height: 820px) {
+  .fs-section { padding-top: calc(var(--header-h) + 6px); padding-bottom: 12px; }
+  .fs-section .x-head { margin-bottom: 2vh; }
+  .fs-section .tile { padding: 12px 16px; }
+  .fs-section .tile p { font-size: 0.86rem; line-height: 1.42; }
+  .fs-section .tile-icon { width: 34px; height: 34px; }
+  .fs-section .tile-icon .icon { width: 18px; height: 18px; }
+  .x-panel { padding: 18px 28px; }
+  .x-panel-art .mock { font-size: 1.12vh; }
+  .x-panel h3 { font-size: 1.6rem; }
+  .x-panel .x-checks { gap: 6px; margin-bottom: 16px; }
+}
+@media (min-width: 1024px) {
+  .fs-section .tile--xl .tile-art { width: 56%; right: -70px; bottom: -56px; }
+  .fs-section .tile--xl > p { max-width: 24ch; }
+  .x-panel-art .mock { font-size: min(12.5px, 1.2vh); }
+}

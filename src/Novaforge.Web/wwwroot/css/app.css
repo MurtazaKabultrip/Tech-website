@@ -537,9 +537,9 @@ html.scrolled .site-header, .site-header--app {
 
 .x-title { font-size: var(--step-5); font-weight: 600; letter-spacing: -0.055em; line-height: 0.98; margin: 0 0 28px; }
 .x-title-line { display: block; }
-.x-rotator { position: relative; display: grid; height: 1.08em; overflow: hidden; }
+.x-rotator { position: relative; display: grid; height: 1.08em; overflow: hidden; align-items: end; }
 .x-rotator-word {
-  grid-area: 1 / 1; white-space: nowrap;
+  grid-area: 1 / 1; white-space: nowrap; justify-self: start; line-height: 1.05;
   background: var(--brand-grad); -webkit-background-clip: text; background-clip: text; color: transparent;
   opacity: 0; transform: translateY(70%); filter: blur(6px);
   transition: opacity 0.6s ease, transform 0.6s cubic-bezier(.2,.8,.2,1), filter 0.6s ease;

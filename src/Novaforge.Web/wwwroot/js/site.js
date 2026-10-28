@@ -84,9 +84,26 @@
   var cleanups = [];
   function cleanup() { cleanups.forEach(function (fn) { try { fn(); } catch (e) { } }); cleanups = []; }
 
+  // Shrink any rotating word that is wider than its line, so long words never get cut off.
+  function fitRotator(el) {
+    var words = el.querySelectorAll(".x-rotator-word");
+    var avail = el.clientWidth;
+    words.forEach(function (w) {
+      w.style.fontSize = "";
+      var natural = w.scrollWidth;
+      if (natural > avail && avail > 0) w.style.fontSize = (Math.floor(avail / natural * 1000) / 1000) + "em";
+    });
+  }
+
   function initRotator() {
     var el = document.querySelector("[data-rotator]");
-    if (!el || reduceMotion) return;
+    if (!el) return;
+    fitRotator(el);
+    var refit = function () { fitRotator(el); };
+    window.addEventListener("resize", refit);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(refit);
+    cleanups.push(function () { window.removeEventListener("resize", refit); });
+    if (reduceMotion) return;
     var words = el.querySelectorAll(".x-rotator-word");
     if (words.length < 2) return;
     var i = 0;

@@ -1361,3 +1361,18 @@ html:not(.js) .x-tablist button[aria-selected="true"] { background: var(--brand-
   .x-trust li { white-space: normal; align-items: flex-start; line-height: 1.3; }
   .x-trust li:last-child { justify-self: center; }
 }
+
+/* Phones: the full three-layer stack, sized to its box (overrides the single-mock rule above). */
+@media (max-width: 700px) {
+  .x-stage { position: relative; height: clamp(300px, 92vw, 420px); margin: 24px 0 0; perspective: 1200px; }
+  .x-float--back, .x-float--front, .x-chip { display: block; }
+  .x-chip { display: inline-flex; }
+  .x-float { position: absolute; animation: none; }
+  .x-float .mock { font-size: clamp(7.5px, 2.25vw, 10px); }
+  .x-float--back  { inset: 0 0 auto 30%; width: 70%; opacity: 0.8; transform: rotateY(-12deg) rotateX(5deg) translateZ(-60px); }
+  .x-float--main  { inset: 9% 3% auto 8%; width: auto; transform: rotateY(-12deg) rotateX(5deg); }
+  .x-float--front { inset: auto auto 0 0; width: 56%; transform: rotateY(-12deg) rotateX(5deg) translateZ(40px); }
+  .x-chip--a { top: 1%; left: 2%; }
+  .x-chip--b { right: 0; bottom: 14%; }
+}
+@media (max-width: 700px) { .x-stage { height: clamp(350px, 104vw, 470px); margin-bottom: 8px; } }

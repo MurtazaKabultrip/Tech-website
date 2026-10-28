@@ -1259,3 +1259,4 @@ html:not(.js) .x-tablist button[aria-selected="true"] { background: var(--brand-
 }
 /* Room for descenders (g, p, y) in the rotating hero word. */
 .x-rotator { height: 1.16em; }
+@media (min-width: 1024px) and (max-height: 820px) { .x-tablist button { min-height: 38px; } .x-tabs { gap: 12px; } }

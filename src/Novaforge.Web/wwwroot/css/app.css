@@ -973,3 +973,13 @@ body::before { will-change: transform; transform: translateZ(0); }
 
 /* While actively scrolling, also pause the bobbing and marquee motion. */
 html.is-scrolling .x-float, html.is-scrolling .x-chip, html.is-scrolling .x-marquee-track { animation-play-state: paused; }
+
+/* Header pinned with position: fixed instead of sticky. Safari jitters/drags a sticky header that has a
+   backdrop blur while scrolling; a fixed header on its own layer stays perfectly still. The body
+   reserves the header height; the home hero already slides up underneath it (negative margin). */
+.site-header {
+  position: fixed; top: 0; left: 0; right: 0;
+  transform: translate3d(0, 0, 0); -webkit-transform: translate3d(0, 0, 0);
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+body { padding-top: var(--header-h); }

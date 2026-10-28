@@ -1036,3 +1036,50 @@ html:not(.js) .x-tablist button[aria-selected="true"] { background: var(--brand-
 .about-exp-list h3 { font-size: 1.15rem; margin: 2px 0 4px; }
 .about-exp-list p { margin: 0; color: var(--muted); }
 @media (max-width: 900px) { .about-exp { grid-template-columns: 1fr; } }
+
+/* ==========================================================================
+   Futuristic scroll entrances (enabled only when motion is allowed: html.reveal-on)
+   ========================================================================== */
+.reveal-on [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 56px, 0) scale(0.97);
+  filter: blur(8px);
+  transition:
+    opacity 0.9s cubic-bezier(.16,1,.3,1),
+    transform 1.1s cubic-bezier(.16,1,.3,1),
+    filter 0.9s cubic-bezier(.16,1,.3,1),
+    clip-path 1.2s cubic-bezier(.16,1,.3,1);
+}
+.reveal-on [data-reveal="left"]  { transform: perspective(1200px) translate3d(-90px, 20px, 0) rotateY(14deg); }
+.reveal-on [data-reveal="right"] { transform: perspective(1200px) translate3d(90px, 20px, 0) rotateY(-14deg); }
+.reveal-on [data-reveal="up"]    { transform: translate3d(0, 64px, 0); }
+.reveal-on [data-reveal="blur"]  { transform: translate3d(0, 28px, 0); filter: blur(16px); letter-spacing: 0.02em; transition-property: opacity, transform, filter, letter-spacing; }
+.reveal-on [data-reveal="zoom"]  { transform: scale(0.82) translate3d(0, 30px, 0); filter: blur(10px) saturate(1.6); }
+.reveal-on [data-reveal="pop"]   { transform: scale(0.6) translate3d(0, 16px, 0); filter: blur(4px); transition-duration: 0.6s, 0.7s, 0.6s; }
+.reveal-on [data-reveal="flip"]  { transform: perspective(1400px) rotateX(28deg) translate3d(0, 80px, 0) scale(0.94); transform-origin: 50% 100%; }
+
+/* Day panels open from the centre like an iris, with a light beam sweeping down once. */
+.reveal-on [data-reveal="iris"] {
+  opacity: 1; filter: none;
+  transform: translate3d(0, 40px, 0) scale(0.96);
+  clip-path: inset(10% 8% 10% 8% round 60px);
+}
+.reveal-on [data-reveal="iris"].is-in { clip-path: inset(0 0 0 0 round clamp(28px, 4vw, 48px)); }
+.tone-alt::after {
+  content: ""; position: absolute; left: 0; right: 0; top: -20%; height: 18%; z-index: 0; pointer-events: none;
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--brand-b) 22%, transparent) 45%, color-mix(in srgb, var(--brand-a) 30%, transparent) 50%, transparent);
+  opacity: 0;
+}
+.reveal-on .tone-alt.is-in::after { animation: beam 1.6s 0.15s cubic-bezier(.4,0,.2,1) forwards; }
+@keyframes beam { 0% { top: -20%; opacity: 0; } 15% { opacity: 1; } 100% { top: 110%; opacity: 0; } }
+
+.reveal-on [data-reveal].is-in {
+  opacity: 1; transform: none; filter: none; letter-spacing: normal;
+}
+/* Headings keep their own tight tracking once revealed. */
+.reveal-on .x-head[data-reveal].is-in, .reveal-on [data-reveal="blur"].is-in { letter-spacing: inherit; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on [data-reveal] { opacity: 1 !important; transform: none !important; filter: none !important; clip-path: none !important; }
+  .tone-alt::after { display: none; }
+}

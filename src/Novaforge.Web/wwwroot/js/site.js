@@ -122,12 +122,40 @@
   // every pass: Blazor may patch/replace page elements after load, and content a visitor skips past
   // (fast scroll, anchor links, End key) must never stay invisible.
   var revealTicking = false;
+  // Auto-tag section parts with an entrance style, so each one arrives differently:
+  // day panels open like an iris, headings sharpen from a blur, grid items fly in from the side
+  // they sit on, small items zoom in one after another.
+  var AUTO_REVEAL = [
+    [".tone-alt", "iris"],
+    [".x-head, .section-head, .page-head .container > *:not(.about-hero-grid), .about-hero-grid > *", "blur"],
+    [".x-panel-art, .x-term, .about-exp-num", "zoom"],
+    [".x-tablist, .x-faq details, .about-story-text p, .about-exp-list li", "up"],
+    [".stack-chips .chip, .x-marquee li, .x-trust li", "pop"],
+    [".x-cta", "flip"]
+  ];
+  function autoTag() {
+    AUTO_REVEAL.forEach(function (rule) {
+      document.querySelectorAll(rule[0]).forEach(function (el) {
+        if (!el.hasAttribute("data-reveal") && !el.closest(".x-hero")) el.setAttribute("data-reveal", rule[1]);
+      });
+    });
+    // Untyped grid items (cards, tiles, stats, packages): direction from their column.
+    document.querySelectorAll("[data-reveal='']").forEach(function (el) {
+      var parent = el.parentElement, pr = parent.getBoundingClientRect(), r = el.getBoundingClientRect();
+      var c = (r.left + r.width / 2 - pr.left) / (pr.width || 1);
+      el.setAttribute("data-reveal", c < 0.4 ? "left" : c > 0.6 ? "right" : "up");
+    });
+  }
   function revealCheck() {
     revealTicking = false;
-    var limit = window.innerHeight * 0.92;
-    document.querySelectorAll("[data-reveal]:not(.is-in)").forEach(function (el, idx) {
+    autoTag();
+    var limit = window.innerHeight * 0.9;
+    document.querySelectorAll("[data-reveal]:not(.is-in)").forEach(function (el) {
       if (el.getBoundingClientRect().top < limit) {
-        el.style.transitionDelay = (idx % 4) * 70 + "ms";
+        // Stagger siblings that enter together.
+        var i = 0, sib = el;
+        while ((sib = sib.previousElementSibling)) { if (sib.hasAttribute("data-reveal")) i++; }
+        el.style.transitionDelay = Math.min(i, 8) * (el.getAttribute("data-reveal") === "pop" ? 35 : 90) + "ms";
         el.classList.add("is-in");
       }
     });

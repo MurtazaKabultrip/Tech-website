@@ -79,12 +79,16 @@ with sync_playwright() as p:
     page.goto(BASE + "/", wait_until="networkidle")
     page.evaluate("window.scrollTo({top: document.body.scrollHeight, behavior: 'instant'})")
     page.wait_for_timeout(400)
-    page.click("footer a[href='/terms']")
-    page.wait_for_url("**/terms")
-    page.wait_for_timeout(800)
-    y = page.evaluate("scrollY")
-    if y > 5:
-        errors.append(f"after clicking Terms from the footer the page opened scrolled down (scrollY={y})")
+    try:
+        page.click("footer a[href='/terms']")
+        # Blazor switches pages with history.pushState (no full load), so wait on the URL itself.
+        page.wait_for_function("location.pathname === '/terms'", timeout=15000)
+        page.wait_for_timeout(800)
+        y = page.evaluate("scrollY")
+        if y > 5:
+            errors.append(f"after clicking Terms from the footer the page opened scrolled down (scrollY={y})")
+    except Exception as ex:
+        errors.append(f"scroll-to-top check failed: {ex}")
     ctx.close()
 
     # Portal flow: sign in, submit a request, send a message.

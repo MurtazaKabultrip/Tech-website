@@ -15,8 +15,9 @@
     if (explicit) return explicit;
     return window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
   }
+  // Always set data-theme (saved choice, else the system setting) so night/day sections can key off it.
   var saved = readTheme();
-  if (saved === "light" || saved === "dark") root.setAttribute("data-theme", saved);
+  root.setAttribute("data-theme", saved === "light" || saved === "dark" ? saved : currentTheme());
 
   // ---------- Global delegated handlers ----------
   document.addEventListener("click", function (e) {

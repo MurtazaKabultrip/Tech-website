@@ -930,3 +930,54 @@ html:not(.js) .x-tablist button[aria-selected="true"] { background: var(--brand-
 }
 /* The glass button clipped its own outer edge; let the beam sit outside. */
 .btn--glass { overflow: visible; }
+
+/* ==========================================================================
+   Night / day sections. "tone-alt" sections use the opposite palette of the
+   page theme, so the home page alternates night → day → night…
+   (theme toggle swaps the order). Colour tokens are re-declared locally, so
+   every component inside simply follows.
+   ========================================================================== */
+:root[data-theme="dark"] .tone-alt, :root:not([data-theme]) .tone-alt {
+  --night: #f5f6fc; --night-2: #eceefa; --text: #0d0f2b; --muted: #555b85;
+  --ion: #5b45ff; --ion-strong: #4330e6; --signal: #a86200; --ok: #0f8a5f; --danger: #c0392b;
+  --brand-a: #6a4bff; --brand-b: #0ab3d4; --brand-c: #e8399f;
+  --pane: rgba(255, 255, 255, 0.7); --pane-strong: rgba(255, 255, 255, 0.92);
+  --edge: rgba(13, 15, 43, 0.08); --edge-strong: rgba(13, 15, 43, 0.16); --grid: rgba(91, 69, 255, 0.07);
+  --shadow: 0 40px 80px -40px rgba(40, 30, 120, 0.35);
+  --mock-bg: #ffffff; --mock-ink: #12153a; --mock-muted: #7a80a6; --mock-line: rgba(13, 15, 43, 0.08);
+  --tone-bg: #f5f6fc; --tone-glow-a: rgba(124, 92, 255, 0.16); --tone-glow-b: rgba(34, 211, 238, 0.14);
+  color-scheme: light;
+}
+:root[data-theme="light"] .tone-alt {
+  --night: #05060f; --night-2: #0b0d1f; --text: #f1f2ff; --muted: #9ba1c4;
+  --ion: #8b7bff; --ion-strong: #b3a8ff; --signal: #ffb547; --ok: #4ee6b0; --danger: #ff8a8a;
+  --brand-a: #7c5cff; --brand-b: #22d3ee; --brand-c: #ff5fd2;
+  --pane: rgba(255, 255, 255, 0.045); --pane-strong: rgba(255, 255, 255, 0.08);
+  --edge: rgba(255, 255, 255, 0.09); --edge-strong: rgba(255, 255, 255, 0.18); --grid: rgba(140, 150, 255, 0.07);
+  --shadow: 0 40px 100px -40px rgba(0, 0, 0, 0.9);
+  --mock-bg: #0f1226; --mock-ink: #e9ebff; --mock-muted: #7d84ab; --mock-line: rgba(255, 255, 255, 0.08);
+  --tone-bg: #05060f; --tone-glow-a: rgba(124, 92, 255, 0.35); --tone-glow-b: rgba(34, 211, 238, 0.18);
+  color-scheme: dark;
+}
+.tone-alt {
+  --brand-grad: linear-gradient(110deg, var(--brand-a) 0%, var(--brand-b) 55%, var(--brand-c) 100%);
+  position: relative; isolation: isolate; color: var(--text);
+  margin-inline: clamp(8px, 1.4vw, 20px);
+  border-radius: clamp(28px, 4vw, 48px);
+  background:
+    radial-gradient(60% 50% at 85% 0%, var(--tone-glow-a), transparent 70%),
+    radial-gradient(50% 45% at 0% 100%, var(--tone-glow-b), transparent 70%),
+    var(--tone-bg);
+  box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+/* Fine grid inside the alternate sections too. */
+.tone-alt::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 20%, transparent 85%);
+}
+.tone-alt + .tone-alt { margin-top: 0; }
+/* Breathing room between bands. */
+.tone-alt { margin-block: clamp(12px, 2vw, 24px); }

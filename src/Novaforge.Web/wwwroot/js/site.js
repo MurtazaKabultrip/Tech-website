@@ -273,11 +273,43 @@
     });
   }
 
+  // Same gliding pill for the showcase tab bar: follows hover, rests on the selected tab.
+  function initTabGlide() {
+    var list = document.querySelector(".x-tablist");
+    var ind = list && list.querySelector(".glide-ind");
+    if (!ind) return;
+    function place(btn) {
+      list.querySelectorAll("button.is-lit").forEach(function (b) { if (b !== btn) b.classList.remove("is-lit"); });
+      if (!btn) { list.style.setProperty("--ind-o", "0"); return; }
+      btn.classList.add("is-lit");
+      list.style.setProperty("--ind-x", btn.offsetLeft + "px");
+      list.style.setProperty("--ind-y", btn.offsetTop + "px");
+      list.style.setProperty("--ind-w", btn.offsetWidth + "px");
+      list.style.setProperty("--ind-h", btn.offsetHeight + "px");
+      list.style.setProperty("--ind-o", "1");
+    }
+    function rest() { place(list.querySelector("[aria-selected=true]")); }
+    function over(e) { var b = e.target.closest("button"); if (b && list.contains(b)) place(b); }
+    function onClick() { requestAnimationFrame(rest); }
+    list.addEventListener("pointerover", over);
+    list.addEventListener("pointerleave", rest);
+    list.addEventListener("focusin", over);
+    list.addEventListener("click", onClick);
+    window.addEventListener("resize", rest);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(rest);
+    rest();
+    cleanups.push(function () {
+      list.removeEventListener("pointerover", over); list.removeEventListener("pointerleave", rest);
+      list.removeEventListener("focusin", over); list.removeEventListener("click", onClick);
+      window.removeEventListener("resize", rest);
+    });
+  }
+
   function initPage() {
     cleanup();
     root.classList.remove("nav-open");
     onScroll();
-    initNavIndicator(); initRotator(); initReveal(); initCounters(); initTilt(); initParticles(); scrollThreads();
+    initNavIndicator(); initTabGlide(); initRotator(); initReveal(); initCounters(); initTilt(); initParticles(); scrollThreads();
   }
 
   document.addEventListener("DOMContentLoaded", initPage);

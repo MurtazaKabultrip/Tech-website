@@ -125,6 +125,7 @@
 
         <div class="x-tabs" data-tabs>
             <div class="x-tablist" role="tablist" aria-label="Website types">
+                <span class="glide-ind" aria-hidden="true"></span>
                 @foreach (var (tab, i) in Showcase.Select((t, i) => (t, i)))
                 {
                     <button type="button" role="tab" id="tab-@tab.Kind" aria-controls="panel-@tab.Kind"

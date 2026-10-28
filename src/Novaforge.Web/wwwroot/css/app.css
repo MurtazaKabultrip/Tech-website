@@ -845,3 +845,62 @@ html.scrolled .site-header, .site-header--app {
 @media (prefers-reduced-motion: reduce) {
   .nav::before, .nav-ind { animation: none !important; }
 }
+
+
+/* ---------- Shared "living light" treatment for buttons and the showcase tabs ---------- */
+/* Rotating light edge (same look as the nav). Uses the --nav-ang property registered above. */
+.btn--glass, .btn--glow, .x-tablist { position: relative; isolation: isolate; }
+.btn--glass::before, .x-tablist::before, .btn--glow::before {
+  content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; z-index: -1; pointer-events: none;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  animation: nav-spin 6s linear infinite;
+}
+.btn--glass::before, .x-tablist::before {
+  background: conic-gradient(from var(--nav-ang), transparent 0deg, var(--brand-a) 60deg, var(--brand-b) 120deg, transparent 180deg, transparent 220deg, var(--brand-c) 290deg, transparent 360deg), var(--edge-strong);
+}
+.btn--glow::before {
+  inset: 0; padding: 1.5px;
+  background: conic-gradient(from var(--nav-ang), transparent 0deg, rgba(255,255,255,.95) 40deg, transparent 100deg, transparent 360deg);
+}
+.btn--glass { border-color: transparent; }
+.x-tablist { border-color: transparent; }
+
+/* Glass buttons light up from inside on hover. */
+.btn--glass { overflow: hidden; }
+.btn--glass > * { position: relative; }
+.btn--glass:hover {
+  background: color-mix(in srgb, var(--brand-a) 14%, var(--pane-strong));
+  box-shadow: 0 0 28px -6px color-mix(in srgb, var(--brand-b) 55%, transparent), inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+/* Glow buttons: a light sweep crosses the button on hover. */
+.btn--glow { overflow: hidden; }
+.btn--glow::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 45%; pointer-events: none; z-index: 1;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.45), transparent);
+  transform: skewX(-20deg); transition: left 0.7s ease;
+}
+.btn--glow:hover::after { left: 120%; }
+
+/* Showcase tabs: gliding glow pill instead of a per-tab background. */
+.x-tablist { background: color-mix(in srgb, var(--night-2) 55%, transparent); }
+.x-tablist button { position: relative; z-index: 1; }
+.x-tablist button[aria-selected="true"] { background: transparent; box-shadow: none; color: var(--text); }
+.x-tablist button.is-lit, .x-tablist button.is-lit:hover { color: #fff; }
+.glide-ind {
+  position: absolute; z-index: 0; top: var(--ind-y, 6px); left: var(--ind-x, 0);
+  width: var(--ind-w, 0); height: var(--ind-h, 0); opacity: var(--ind-o, 0);
+  border-radius: var(--radius-pill);
+  background: var(--brand-grad); background-size: 200% 100%;
+  box-shadow: 0 0 24px -2px color-mix(in srgb, var(--brand-a) 75%, transparent), 0 0 48px -8px color-mix(in srgb, var(--brand-b) 60%, transparent), inset 0 1px 0 rgba(255,255,255,.35);
+  transition: left 0.45s cubic-bezier(.2,.9,.2,1.15), top 0.45s cubic-bezier(.2,.9,.2,1.15), width 0.45s cubic-bezier(.2,.9,.2,1.15), height 0.3s ease, opacity 0.3s ease;
+  animation: grad-shift 6s ease-in-out infinite alternate;
+}
+/* Without JS the selected tab still shows its own highlight. */
+html:not(.js) .x-tablist button[aria-selected="true"] { background: var(--brand-grad); color: #fff; }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn--glass::before, .btn--glow::before, .x-tablist::before, .glide-ind { animation: none !important; }
+  .btn--glow::after { display: none; }
+}

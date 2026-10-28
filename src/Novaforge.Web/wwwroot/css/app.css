@@ -904,3 +904,29 @@ html:not(.js) .x-tablist button[aria-selected="true"] { background: var(--brand-
   .btn--glass::before, .btn--glow::before, .x-tablist::before, .glide-ind { animation: none !important; }
   .btn--glow::after { display: none; }
 }
+
+/* Stronger, clearly visible light edge (v2): thicker beam, wider coloured arc, soft outer glow. */
+.btn--glass::before, .x-tablist::before {
+  inset: -2px; padding: 2px;
+  background: conic-gradient(from var(--nav-ang),
+      var(--brand-a) 0deg, var(--brand-b) 70deg, transparent 130deg, transparent 200deg,
+      var(--brand-c) 260deg, var(--brand-a) 360deg);
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--brand-b) 70%, transparent));
+}
+.btn--glow::before {
+  inset: 0; padding: 2px;
+  background: conic-gradient(from var(--nav-ang), transparent 0deg, #fff 30deg, rgba(255,255,255,.9) 70deg, transparent 120deg, transparent 360deg);
+  filter: drop-shadow(0 0 4px rgba(255,255,255,.9));
+}
+.btn--glass { box-shadow: 0 0 22px -8px color-mix(in srgb, var(--brand-a) 60%, transparent); }
+/* Light theme: deeper colours so the beam reads on pale backgrounds. */
+:root[data-theme="light"] .btn--glass::before, :root[data-theme="light"] .x-tablist::before {
+  background: conic-gradient(from var(--nav-ang), #5b45ff 0deg, #00a8cc 70deg, transparent 130deg, transparent 200deg, #e0168f 260deg, #5b45ff 360deg);
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .btn--glass::before, :root:not([data-theme="dark"]) .x-tablist::before {
+    background: conic-gradient(from var(--nav-ang), #5b45ff 0deg, #00a8cc 70deg, transparent 130deg, transparent 200deg, #e0168f 260deg, #5b45ff 360deg);
+  }
+}
+/* The glass button clipped its own outer edge; let the beam sit outside. */
+.btn--glass { overflow: visible; }

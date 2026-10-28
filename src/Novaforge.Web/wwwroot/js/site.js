@@ -467,9 +467,14 @@
   function scrollForNewPage() {
     if (!linkNav) return;
     linkNav = false;
-    var target = location.hash && document.getElementById(location.hash.slice(1));
-    if (target) target.scrollIntoView({ behavior: "auto" });
-    else window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    // "instant" overrides the page's CSS smooth scrolling; re-apply after Blazor finishes patching.
+    function go() {
+      var target = location.hash && document.getElementById(location.hash.slice(1));
+      if (target) target.scrollIntoView({ behavior: "instant" });
+      else window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }
+    go();
+    requestAnimationFrame(go);
   }
 
   document.addEventListener("DOMContentLoaded", initPage);

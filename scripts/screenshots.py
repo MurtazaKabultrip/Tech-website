@@ -54,6 +54,8 @@ with sync_playwright() as p:
         for path in ("/", "/about"):
             page.goto(BASE + path, wait_until="networkidle")
             page.wait_for_timeout(600)
+            if (vw, vh) == (1440, 900):
+                (OUT / f"page{path.replace('/', '_') or '_home'}.html").write_text(page.content())
             res = page.evaluate("""() => [...document.querySelectorAll('.fs-section')].map((s, i) => {
                 const z = s.firstElementChild ? (s.firstElementChild.style.zoom || '1') : '1';
                 return { i, h: Math.round(s.getBoundingClientRect().height), zoom: z };

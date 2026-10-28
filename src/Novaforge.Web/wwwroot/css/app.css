@@ -930,3 +930,19 @@ html:not(.js) .x-tablist button[aria-selected="true"] { background: var(--brand-
 }
 /* The glass button clipped its own outer edge; let the beam sit outside. */
 .btn--glass { overflow: visible; }
+
+/* ---------- Scroll smoothness ---------- */
+/* The sticky header gets its own compositing layer, and the nav no longer stacks a second
+   backdrop blur inside the header's blur (that double re-sampling made it jitter while scrolling). */
+.site-header { transform: translateZ(0); will-change: transform; }
+@media (min-width: 961px) {
+  .nav { backdrop-filter: none; -webkit-backdrop-filter: none; background: color-mix(in srgb, var(--night-2) 78%, transparent); }
+  .nav::before { will-change: transform; }
+}
+/* Pause the decorative light animations while the page is actively scrolling. */
+html.is-scrolling .nav::before,
+html.is-scrolling .btn--glass::before,
+html.is-scrolling .btn--glow::before,
+html.is-scrolling .x-tablist::before,
+html.is-scrolling .nav-ind,
+html.is-scrolling .glide-ind { animation-play-state: paused; }

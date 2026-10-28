@@ -77,7 +77,14 @@
   }, { passive: true });
 
   // Header turns to glass once the page scrolls.
-  function onScroll() { root.classList.toggle("scrolled", window.scrollY > 8); }
+  var scrollIdle = 0;
+  function onScroll() {
+    root.classList.toggle("scrolled", window.scrollY > 8);
+    // Flag active scrolling so CSS can pause decorative animations (prevents header jitter).
+    if (!root.classList.contains("is-scrolling")) root.classList.add("is-scrolling");
+    clearTimeout(scrollIdle);
+    scrollIdle = setTimeout(function () { root.classList.remove("is-scrolling"); }, 160);
+  }
   window.addEventListener("scroll", onScroll, { passive: true });
 
   // ---------- Per-page effects ----------

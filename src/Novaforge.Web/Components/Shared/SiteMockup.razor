@@ -1,5 +1,5 @@
 @* Live-HTML mini websites (no images): an online shop, an analytics app, a restaurant site and a booking system.
-   Brands are fictional and only illustrate the kind of site. *@
+   Placeholder names ("yourwebsite.com") show the kind of site, not real clients. *@
 <div class="mock @Class" aria-hidden="true">
     <div class="mock-bar">
         <span class="mock-dots"><i></i><i></i><i></i></span>
@@ -9,7 +9,7 @@
         @switch (Kind)
         {
             case "shop":
-                <div class="m-nav"><b>LUMEN</b><span>Shop</span><span>New</span><span>Sale</span><em>Cart 2</em></div>
+                <div class="m-nav"><b>YOUR SHOP</b><span>Shop</span><span>New</span><span>Sale</span><em>Cart 2</em></div>
                 <div class="m-hero m-hero--shop">
                     <div>
                         <small>Autumn collection</small>
@@ -32,7 +32,7 @@
 
             case "dashboard":
                 <div class="m-app">
-                    <div class="m-side"><b>Pulse</b><span class="on">Overview</span><span>Orders</span><span>Customers</span><span>Reports</span></div>
+                    <div class="m-side"><b>Your App</b><span class="on">Overview</span><span>Orders</span><span>Customers</span><span>Reports</span></div>
                     <div class="m-main">
                         <div class="m-tiles">
                             <div><small>Revenue</small><b>€48.2k</b><em>+12%</em></div>
@@ -55,7 +55,7 @@
                 break;
 
             case "restaurant":
-                <div class="m-nav m-nav--light"><b>Nordlys</b><span>Menu</span><span>About</span><em>Book a table</em></div>
+                <div class="m-nav m-nav--light"><b>Your Restaurant</b><span>Menu</span><span>About</span><em>Book a table</em></div>
                 <div class="m-hero m-hero--food">
                     <small>Seasonal Nordic kitchen</small>
                     <strong>Taste the season</strong>
@@ -69,7 +69,7 @@
                 break;
 
             case "booking":
-                <div class="m-nav"><b>Fjord Clinic</b><span>Treatments</span><em>Book</em></div>
+                <div class="m-nav"><b>Your Clinic</b><span>Treatments</span><em>Book</em></div>
                 <div class="m-booking">
                     <div class="m-cal">
                         <small>November</small>
@@ -99,10 +99,10 @@
 
     private string Url => Kind switch
     {
-        "shop" => "lumen-store.com",
-        "dashboard" => "app.pulse.io/overview",
-        "restaurant" => "nordlys-bistro.dk",
-        "booking" => "fjordclinic.no/book",
+        "shop" => "yourwebsite.com/shop",
+        "dashboard" => "app.yourwebsite.com",
+        "restaurant" => "yourwebsite.com",
+        "booking" => "yourwebsite.com/book",
         _ => "yourbrand.com"
     };
 

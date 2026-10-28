@@ -946,30 +946,3 @@ html.is-scrolling .btn--glow::before,
 html.is-scrolling .x-tablist::before,
 html.is-scrolling .nav-ind,
 html.is-scrolling .glide-ind { animation-play-state: paused; }
-
-/* ==========================================================================
-   Performance pass: keep scrolling at 60/120 fps.
-   Everything that moves now moves with transform/opacity only (GPU-composited),
-   and nothing large is re-blurred or repainted per frame.
-   ========================================================================== */
-/* Background glow: no blur filter (the radial gradients are already soft), own GPU layer. */
-body::after { filter: none; will-change: transform; transform: translateZ(0); }
-body::before { will-change: transform; transform: translateZ(0); }
-
-/* Cards: drop the per-card backdrop blur (it re-samples the page on every scroll frame).
-   A slightly denser fill keeps the same glass look. */
-.glass, .tile, .x-panel, .x-pkg, .x-stat, .x-faq details, .x-marquee li, .x-pill, .x-chip {
-  backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
-}
-.glass { background: linear-gradient(160deg, color-mix(in srgb, var(--pane-strong) 120%, transparent), var(--pane)); }
-.x-chip { background: color-mix(in srgb, var(--night-2) 92%, transparent); }
-
-/* Gradient text: static gradient instead of an endlessly animated one (big repaints). */
-.x-grad, .nav-ind, .glide-ind { animation: none !important; }
-
-/* Floating mock-ups: promote to their own layers so their big shadows aren't repainted. */
-.x-float, .x-chip, .tile-art, .x-marquee-track { will-change: transform; }
-.mock { contain: layout paint; }
-
-/* While actively scrolling, also pause the bobbing and marquee motion. */
-html.is-scrolling .x-float, html.is-scrolling .x-chip, html.is-scrolling .x-marquee-track { animation-play-state: paused; }

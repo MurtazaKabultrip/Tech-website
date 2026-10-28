@@ -804,3 +804,44 @@ html.scrolled .site-header, .site-header--app {
 /* Gradient text only paints inside the element box; tight letter-spacing makes the box narrower than
    the last glyph, which clipped its right edge. A little end padding gives the gradient room. */
 .x-grad, .x-rotator-word, .x-stat b { padding-right: 0.1em; margin-right: -0.1em; }
+
+
+/* ---------- Futuristic desktop nav: rotating light edge + gliding glow indicator ---------- */
+@property --nav-ang { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+.nav-ind { display: none; }
+@media (min-width: 961px) {
+  .nav {
+    position: relative; isolation: isolate;
+    padding: 6px; gap: 0;
+    background: color-mix(in srgb, var(--night-2) 55%, transparent);
+    border: 1px solid transparent;
+    box-shadow: 0 10px 40px -16px color-mix(in srgb, var(--brand-a) 55%, transparent), inset 0 1px 0 rgba(255,255,255,.06);
+  }
+  /* Animated gradient border drawn with a masked conic gradient. */
+  .nav::before {
+    content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; z-index: -1; pointer-events: none;
+    background: conic-gradient(from var(--nav-ang), transparent 0deg, var(--brand-a) 60deg, var(--brand-b) 120deg, transparent 180deg, transparent 220deg, var(--brand-c) 290deg, transparent 360deg), var(--edge-strong);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    animation: nav-spin 7s linear infinite;
+  }
+  @keyframes nav-spin { to { --nav-ang: 360deg; } }
+
+  .nav a { position: relative; z-index: 1; padding: 9px 20px; letter-spacing: 0.01em; transition: color 0.25s ease; }
+  .nav a:hover, .nav a.active { background: transparent; color: var(--text); }
+  /* Only the link sitting under the glowing indicator turns white. */
+  .nav a.is-lit, .nav a.is-lit:hover { color: #fff; }
+
+  .nav-ind {
+    display: block; position: absolute; z-index: 0; top: 6px; bottom: 6px;
+    left: var(--ind-x, 0); width: var(--ind-w, 0); opacity: var(--ind-o, 0);
+    border-radius: var(--radius-pill);
+    background: var(--brand-grad); background-size: 200% 100%;
+    box-shadow: 0 0 24px -2px color-mix(in srgb, var(--brand-a) 75%, transparent), 0 0 48px -8px color-mix(in srgb, var(--brand-b) 60%, transparent), inset 0 1px 0 rgba(255,255,255,.35);
+    transition: left 0.45s cubic-bezier(.2,.9,.2,1.15), width 0.45s cubic-bezier(.2,.9,.2,1.15), opacity 0.3s ease;
+    animation: grad-shift 6s ease-in-out infinite alternate;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav::before, .nav-ind { animation: none !important; }
+}

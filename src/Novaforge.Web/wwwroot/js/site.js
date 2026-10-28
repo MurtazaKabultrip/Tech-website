@@ -244,11 +244,40 @@
   }
   window.novaforge = { scrollThreads: scrollThreads };
 
+  // Gliding indicator in the desktop nav: follows the hovered link, rests on the current page.
+  function initNavIndicator() {
+    var nav = document.querySelector(".nav");
+    var ind = nav && nav.querySelector(".nav-ind");
+    if (!ind) return;
+    function place(link) {
+      nav.querySelectorAll("a.is-lit").forEach(function (a) { if (a !== link) a.classList.remove("is-lit"); });
+      if (!link || getComputedStyle(ind).display === "none") { nav.style.setProperty("--ind-o", "0"); return; }
+      link.classList.add("is-lit");
+      nav.style.setProperty("--ind-x", link.offsetLeft + "px");
+      nav.style.setProperty("--ind-w", link.offsetWidth + "px");
+      nav.style.setProperty("--ind-o", "1");
+    }
+    function rest() { place(nav.querySelector("a.active:not(.nav-cta)")); }
+    function over(e) { var a = e.target.closest("a:not(.nav-cta)"); if (a && nav.contains(a)) place(a); }
+    nav.addEventListener("pointerover", over);
+    nav.addEventListener("focusin", over);
+    nav.addEventListener("pointerleave", rest);
+    nav.addEventListener("focusout", rest);
+    window.addEventListener("resize", rest);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(rest);
+    rest();
+    cleanups.push(function () {
+      nav.removeEventListener("pointerover", over); nav.removeEventListener("focusin", over);
+      nav.removeEventListener("pointerleave", rest); nav.removeEventListener("focusout", rest);
+      window.removeEventListener("resize", rest);
+    });
+  }
+
   function initPage() {
     cleanup();
     root.classList.remove("nav-open");
     onScroll();
-    initRotator(); initReveal(); initCounters(); initTilt(); initParticles(); scrollThreads();
+    initNavIndicator(); initRotator(); initReveal(); initCounters(); initTilt(); initParticles(); scrollThreads();
   }
 
   document.addEventListener("DOMContentLoaded", initPage);

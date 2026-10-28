@@ -13,7 +13,7 @@ BASE = sys.argv[1].rstrip("/") if len(sys.argv) > 1 else "http://localhost:5180"
 OUT = Path(sys.argv[2] if len(sys.argv) > 2 else "screenshots")
 OUT.mkdir(parents=True, exist_ok=True)
 
-PUBLIC = ["/", "/about", "/services", "/services/payments", "/process", "/contact", "/not-a-page"]
+PUBLIC = ["/", "/about", "/services", "/services/payments", "/process", "/contact", "/privacy", "/not-a-page"]
 errors: list[str] = []
 
 
@@ -42,6 +42,8 @@ with sync_playwright() as p:
             page.on("pageerror", lambda e: errors.append(f"pageerror: {e}"))
             for path in PUBLIC:
                 page.goto(BASE + path, wait_until="networkidle")
+                if theme == "dark" and label == "mobile":
+                    (OUT / ("src" + (path.replace("/", "_").replace("?", "_") or "_home") + ".html")).write_text(page.content())
                 slug = path.strip("/").replace("/", "_").replace("?", "_").replace("=", "-") or "home"
                 shoot(page, f"{theme}-{label}-{slug}")
             ctx.close()
@@ -77,6 +79,7 @@ with sync_playwright() as p:
     page.on("pageerror", lambda e: errors.append(f"pageerror: {e}"))
     try:
         page.goto(BASE + "/account/login")
+        (OUT / "src_account_login.html").write_text(page.content())
         page.fill("#email", "admin@novaforge.local")
         page.fill("#password", "ChangeMe-Dev-123")
         page.click("button[type=submit]")

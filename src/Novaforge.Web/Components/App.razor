@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+@inject SiteSettingsService SiteSettings
+<html lang="en" data-theme="@SiteSettings.Current.Theme">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="dark light" />
+    <meta name="color-scheme" content="@(SiteSettings.Current.IsDark ? "dark" : "light")" />
     <base href="/" />
     <script src="@Assets["js/site.js"]"></script>
     <link rel="preload" href="@Assets["fonts/InterDisplay-Light.woff"]" as="font" type="font/woff" crossorigin />

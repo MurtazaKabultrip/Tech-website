@@ -111,6 +111,7 @@ if (!string.IsNullOrWhiteSpace(keysPath))
 
 // ---------- App services ----------
 builder.Services.AddSingleton<ProjectNotifier>();
+builder.Services.AddSingleton<SiteSettingsService>();
 builder.Services.AddSingleton<INotificationSender, EmailNotificationSender>();
 builder.Services.AddScoped<ProjectService>();
 builder.Services.AddScoped<InvoiceService>();

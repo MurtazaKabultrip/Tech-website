@@ -33,6 +33,7 @@ services:
       DataProtection__KeysPath: /app/data/keys
     volumes:
       - app-keys:/app/data/keys
+      - app-data:/app/app_data
 
   db:
     image: postgres:17-alpine
@@ -52,3 +53,4 @@ services:
 volumes:
   db-data:
   app-keys:
+  app-data:

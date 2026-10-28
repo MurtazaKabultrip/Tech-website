@@ -28,6 +28,8 @@ public sealed class SiteTests(AppFactory app)
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.Contains("that people remember.", html);
         Assert.DoesNotContain("/account/login", html); // no sign-in links for visitors
+        Assert.Contains("data-theme=\"dark\"", html); // night is the site-wide default
+        Assert.DoesNotContain("data-theme-toggle", html); // visitors can't switch theme
         Assert.Contains("<meta name=\"description\"", html);
         Assert.True(response.Headers.Contains("Content-Security-Policy"));
         Assert.Equal("nosniff", response.Headers.GetValues("X-Content-Type-Options").Single());

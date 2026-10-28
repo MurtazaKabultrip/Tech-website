@@ -1,0 +1,61 @@
+@page "/admin/settings"
+@inherits PortalPageBase
+@inject SiteSettingsService SiteSettings
+@inject NavigationManager Navigation
+
+<Seo Title="Site settings" NoIndex="true" />
+
+<div class="portal-head">
+    <div>
+        <h1>Site settings</h1>
+        <p class="muted" style="margin:0">Changes apply to every visitor straight away.</p>
+    </div>
+</div>
+
+<section class="panel glass" aria-labelledby="theme-h">
+    <div class="panel-head"><h2 id="theme-h">Website colour theme</h2></div>
+    <p class="muted">Night is the default. The home and About pages alternate night and day sections; the theme decides which comes first.</p>
+    <div class="theme-choice" role="radiogroup" aria-labelledby="theme-h">
+        <button type="button" role="radio" aria-checked="@(theme == "dark" ? "true" : "false")"
+                class="theme-card theme-card--dark @(theme == "dark" ? "is-on" : null)" @onclick='() => SetAsync("dark")'>
+            <span class="theme-swatch" aria-hidden="true"></span>
+            <span><strong>Night</strong><br /><span class="muted small">Black background, neon accents</span></span>
+        </button>
+        <button type="button" role="radio" aria-checked="@(theme == "light" ? "true" : "false")"
+                class="theme-card theme-card--light @(theme == "light" ? "is-on" : null)" @onclick='() => SetAsync("light")'>
+            <span class="theme-swatch" aria-hidden="true"></span>
+            <span><strong>Day</strong><br /><span class="muted small">Light background, same accents</span></span>
+        </button>
+    </div>
+    @if (saved)
+    {
+        <p class="alert alert--ok" role="status" style="margin-top:16px">Saved. The website now uses the @(theme == "dark" ? "night" : "day") theme.</p>
+    }
+    @if (ErrorMessage is not null)
+    {
+        <p class="alert alert--error" role="alert" style="margin-top:16px">@ErrorMessage</p>
+    }
+</section>
+
+@code {
+    private string theme = "dark";
+    private bool saved;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetUserAsync();
+        theme = SiteSettings.Current.Theme;
+    }
+
+    private async Task SetAsync(string value)
+    {
+        saved = false;
+        if (await TryAsync(() => { SiteSettings.SetTheme(value); return Task.CompletedTask; }))
+        {
+            theme = value;
+            saved = true;
+            // Reload so this admin page itself picks up the new theme.
+            Navigation.NavigateTo("/admin/settings", forceLoad: true);
+        }
+    }
+}

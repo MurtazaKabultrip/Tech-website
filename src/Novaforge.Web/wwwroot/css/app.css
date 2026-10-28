@@ -1223,3 +1223,39 @@ html:not(.js) .x-tablist button[aria-selected="true"] { background: var(--brand-
 .theme-swatch { width: 56px; height: 40px; border-radius: 10px; flex: none; border: 1px solid var(--edge-strong); }
 .theme-card--dark .theme-swatch { background: linear-gradient(135deg, #05060f 55%, #7c5cff); }
 .theme-card--light .theme-swatch { background: linear-gradient(135deg, #f5f6fc 55%, #6a4bff); }
+
+/* ==========================================================================
+   Mobile polish (audited at 320, 360, 390, 414 and 768 px)
+   ========================================================================== */
+.btn--sm, .header-actions .btn, .nav .btn { white-space: nowrap; }
+.aside-pane .btn { white-space: normal; text-align: center; height: auto; padding-block: 12px; line-height: 1.3; }
+.btn--sm { min-height: 40px; }
+.icon-btn { width: 44px; height: 44px; }
+.x-tablist button { min-height: 44px; }
+.checkbox input { width: 22px; height: 22px; }
+@media (max-width: 700px) {
+  /* Phones: natural section heights for an even rhythm (full-screen sections are a desktop feature). */
+  .fs-section { min-height: 0; padding-top: calc(var(--header-h) + 8px); padding-bottom: 40px; }
+  .fs-section.tone-alt { min-height: 0; padding-top: 48px; }
+  .x-hero.fs-section { min-height: 100svh; }
+  .section { padding-block: 48px; }
+}
+@media (max-width: 560px) {
+  .x-actions .btn { flex: 1 1 100%; }
+  .x-cta .x-actions .btn { flex: 1 1 100%; }
+  .x-stage { margin-inline: 6px; }
+  .x-float--front { left: 3%; }
+  .x-float--main { left: 10%; right: 2%; }
+  .x-title { font-size: clamp(2.5rem, 1.4rem + 6.4vw, 3.4rem); }
+  .page-head h1, .about-hero h1 { font-size: clamp(2.4rem, 1.4rem + 6vw, 3.2rem); }
+  .x-head h2, .x-cta h2 { font-size: clamp(2rem, 1.3rem + 4.4vw, 2.6rem); }
+  .x-tablist button { flex: 1 1 calc(50% - 8px); justify-content: center; padding-inline: 10px; }
+  .x-panel { padding: 20px; }
+  .x-pkg, .x-stat { padding: 22px; }
+}
+@media (max-width: 359px) {
+  .header-cta { display: none; }           /* the menu holds "Start a project" */
+  .brand { font-size: 1.1rem; }
+}
+/* Room for descenders (g, p, y) in the rotating hero word. */
+.x-rotator { height: 1.16em; }

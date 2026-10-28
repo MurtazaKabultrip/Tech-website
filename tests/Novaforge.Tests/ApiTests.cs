@@ -37,6 +37,7 @@ public sealed class SiteTests(AppFactory app)
     [Theory]
     [InlineData("/services")]
     [InlineData("/services/bug-fixing")]
+    [InlineData("/about")]
     [InlineData("/process")]
     [InlineData("/contact")]
     [InlineData("/contact?type=BugFix")]

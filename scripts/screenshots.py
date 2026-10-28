@@ -13,7 +13,7 @@ BASE = sys.argv[1].rstrip("/") if len(sys.argv) > 1 else "http://localhost:5180"
 OUT = Path(sys.argv[2] if len(sys.argv) > 2 else "screenshots")
 OUT.mkdir(parents=True, exist_ok=True)
 
-PUBLIC = ["/", "/services", "/services/payments", "/process", "/contact", "/not-a-page"]
+PUBLIC = ["/", "/about", "/services", "/services/payments", "/process", "/contact", "/not-a-page"]
 errors: list[str] = []
 
 

@@ -19,7 +19,7 @@ public static class SeoEndpoints
         {
             XNamespace ns = "http://www.sitemaps.org/schemas/sitemap/0.9";
             var baseUrl = site.Value.BaseUrl.TrimEnd('/');
-            var paths = new[] { "/", "/services", "/process", "/contact", "/privacy", "/terms" }
+            var paths = new[] { "/", "/services", "/about", "/process", "/contact", "/privacy", "/terms" }
                 .Concat(ServiceCatalog.All.Select(s => $"/services/{s.Slug}"));
             var doc = new XDocument(new XDeclaration("1.0", "utf-8", null), new XElement(ns + "urlset",
                 paths.Select(p => new XElement(ns + "url", new XElement(ns + "loc", baseUrl + p)))));

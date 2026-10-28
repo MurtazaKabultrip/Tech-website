@@ -1,39 +1,121 @@
 @page "/privacy"
 @inject IOptions<SiteOptions> Site
 
-<Seo Title="Privacy policy" Description="How we collect, use and protect your personal data." />
+<Seo Title="Privacy policy" Description="How we collect, use, protect and delete personal data — in plain language, in line with the GDPR." />
 
-<section class="page-head">
-    <div class="container">
-        <h1>Privacy policy</h1>
-        <p class="lede">Plain-language summary of how we handle your data.</p>
-    </div>
-</section>
+<LegalShell Title="Privacy" Accent="policy" ReadingMinutes="7"
+            Intro="We collect as little as possible, use it only to help you, and never sell it. Here is exactly what we do with personal data and the rights you have."
+            Toc="toc" CtaTitle="Questions about" CtaAccent="your data?" OtherHref="/terms" OtherLabel="Terms of service">
+    <Summary>
+        <div class="legal-card glass"><Icon Name="shield" /><div><strong>No selling, no tracking</strong><span>No advertising cookies, no third-party trackers, no data brokers.</span></div></div>
+        <div class="legal-card glass"><Icon Name="check" /><div><strong>Only what we need</strong><span>We collect what's required to reply, deliver your project and get paid.</span></div></div>
+        <div class="legal-card glass"><Icon Name="wrench" /><div><strong>You stay in control</strong><span>See, correct, export or delete your data — just send us an e-mail.</span></div></div>
+    </Summary>
+    <ChildContent>
+        <section id="who" class="legal-sec">
+            <h2><span>01</span> Who we are</h2>
+            <p><strong>@Legal</strong> ("we", "us") is the data controller for personal data collected through this website and in connection with our services.</p>
+            <dl class="legal-facts">
+                <dt>Company</dt><dd>@Legal</dd>
+                @if (!string.IsNullOrWhiteSpace(Site.Value.RegistrationNumber))
+                {
+                    <dt>Registration no.</dt><dd>@Site.Value.RegistrationNumber</dd>
+                }
+                @if (!string.IsNullOrWhiteSpace(Site.Value.Address))
+                {
+                    <dt>Address</dt><dd>@Site.Value.Address</dd>
+                }
+                <dt>E-mail</dt><dd><a href="mailto:@Site.Value.ContactEmail">@Site.Value.ContactEmail</a></dd>
+            </dl>
+        </section>
 
-<section class="section section--tight">
-    <div class="container prose">
-        <div class="alert alert--warn" role="note">
-            Template text — have it reviewed for your company and jurisdiction (GDPR) before launch.
-        </div>
+        <section id="collect" class="legal-sec">
+            <h2><span>02</span> What we collect</h2>
+            <div class="legal-table">
+                <div class="legal-row legal-row--head"><span>Situation</span><span>Data</span></div>
+                <div class="legal-row"><span>You send an enquiry</span><span>Name, e-mail, company (optional), the type of project, budget range and your message.</span></div>
+                <div class="legal-row"><span>You become a client</span><span>Contact details, project descriptions, messages, files and links you share, invoices and payment status.</span></div>
+                <div class="legal-row"><span>You pay online</span><span>Payments are handled by Stripe. We receive the payment result and the last four digits of the card — never the full card number.</span></div>
+                <div class="legal-row"><span>You visit the website</span><span>Technical data in server logs: IP address, browser type, pages requested and time. Used only for security and fixing errors.</span></div>
+            </div>
+            <p>We never ask for sensitive data (such as health information). Please don't send it to us.</p>
+        </section>
 
-        <h2>Who we are</h2>
-        <p>@Site.Value.Name is the data controller for personal data collected on this website. Contact: <a href="mailto:@Site.Value.ContactEmail">@Site.Value.ContactEmail</a>.</p>
+        <section id="why" class="legal-sec">
+            <h2><span>03</span> Why we use it — and our legal basis</h2>
+            <ul class="legal-list">
+                <li><strong>To reply to you and prepare a quote</strong> — steps at your request before a contract (GDPR art. 6(1)(b)).</li>
+                <li><strong>To deliver and support your project</strong>, including the 1-year service guarantee — performance of our contract (art. 6(1)(b)).</li>
+                <li><strong>To invoice and keep accounts</strong> — legal obligation under bookkeeping law (art. 6(1)(c)).</li>
+                <li><strong>To keep the website secure and working</strong> — our legitimate interest in protecting our systems and our clients (art. 6(1)(f)).</li>
+            </ul>
+            <p>We do not use your data for automated decisions or profiling, and we don't send newsletters unless you explicitly ask for them.</p>
+        </section>
 
-        <h2>What we collect</h2>
-        <ul>
-            <li><strong>Enquiries:</strong> name, e-mail, company and your message — to reply to you.</li>
-            <li><strong>Client accounts:</strong> name, e-mail, project details, messages and invoices — to deliver our services.</li>
-            <li><strong>Payments:</strong> processed by Stripe. We never see or store your card number.</li>
-            <li><strong>Technical data:</strong> server logs (IP address, browser) kept for security for up to 30 days.</li>
-        </ul>
+        <section id="share" class="legal-sec">
+            <h2><span>04</span> Who we share it with</h2>
+            <p>We only use trusted providers that process data on our behalf under a data processing agreement, and only as much as they need:</p>
+            <ul class="legal-list">
+                <li><strong>Hosting provider</strong> — runs the website and stores the database, within the EU/EEA where possible.</li>
+                <li><strong>Stripe</strong> — processes card payments securely (PCI DSS certified).</li>
+                <li><strong>E-mail provider</strong> — delivers the e-mails we send you.</li>
+                <li><strong>Anthropic (Claude)</strong> — only if you use the optional AI brief in the client portal; the project description you enter is processed to write the brief.</li>
+            </ul>
+            <p>If a provider processes data outside the EU/EEA, we rely on an adequacy decision or the EU Standard Contractual Clauses. We never sell or rent personal data. We share data with authorities only when the law requires it.</p>
+        </section>
 
-        <h2>Cookies</h2>
-        <p>We use only strictly necessary cookies: one to keep you signed in and one to protect forms against forgery. No tracking or advertising cookies. Your theme choice is stored in your own browser.</p>
+        <section id="cookies" class="legal-sec">
+            <h2><span>05</span> Cookies</h2>
+            <p>We use only cookies that are strictly necessary for the website to work, so no consent banner is needed:</p>
+            <div class="legal-table">
+                <div class="legal-row legal-row--head"><span>Cookie</span><span>Purpose and duration</span></div>
+                <div class="legal-row"><span><code>nf.auth</code></span><span>Keeps you signed in to the client portal. Up to 14 days, or until you sign out.</span></div>
+                <div class="legal-row"><span><code>.AspNetCore.Antiforgery</code></span><span>Protects forms against forgery attacks. Deleted when you close the browser.</span></div>
+            </div>
+            <p>We use no analytics, advertising or social media cookies. Fonts and scripts are served from our own server, so your browser doesn't contact third parties when you browse the site.</p>
+        </section>
 
-        <h2>Fonts and third parties</h2>
-        <p>All fonts and scripts are served from our own server. Your browser does not contact third parties when you visit this site, except Stripe when you choose to pay.</p>
+        <section id="keep" class="legal-sec">
+            <h2><span>06</span> How long we keep it</h2>
+            <ul class="legal-list">
+                <li><strong>Enquiries</strong> that don't become a project — deleted after 24 months.</li>
+                <li><strong>Client and project data</strong> — for the duration of our collaboration and the service guarantee, then up to 3 years so we can support you.</li>
+                <li><strong>Invoices and accounting records</strong> — 5 years from the end of the financial year, as required by bookkeeping law.</li>
+                <li><strong>Server logs</strong> — 30 days.</li>
+            </ul>
+        </section>
 
-        <h2>Your rights</h2>
-        <p>You can ask for access to, correction of, or deletion of your data, and you can complain to your national data protection authority (in Denmark: Datatilsynet).</p>
-    </div>
-</section>
+        <section id="security" class="legal-sec">
+            <h2><span>07</span> How we protect it</h2>
+            <p>All traffic is encrypted (HTTPS). Passwords are stored as strong one-way hashes, accounts lock after repeated failed sign-ins, and only authorised staff can access client data. Card data never reaches our servers. We keep our systems updated, use strict browser security headers, and back up data regularly. If a breach ever puts your data at risk, we will tell you and the authorities as the law requires.</p>
+        </section>
+
+        <section id="rights" class="legal-sec">
+            <h2><span>08</span> Your rights</h2>
+            <div class="legal-rights">
+                <div><strong>Access</strong><span>Get a copy of the data we hold about you.</span></div>
+                <div><strong>Correction</strong><span>Have inaccurate data corrected.</span></div>
+                <div><strong>Deletion</strong><span>Ask us to delete your data, unless the law requires us to keep it.</span></div>
+                <div><strong>Restriction</strong><span>Ask us to pause the use of your data.</span></div>
+                <div><strong>Portability</strong><span>Receive your data in a machine-readable format.</span></div>
+                <div><strong>Objection</strong><span>Object to use based on our legitimate interest.</span></div>
+            </div>
+            <p>To use a right, e-mail <a href="mailto:@Site.Value.ContactEmail">@Site.Value.ContactEmail</a>. We reply within one month. You can also complain to @Site.Value.DataAuthority.</p>
+        </section>
+
+        <section id="changes" class="legal-sec">
+            <h2><span>09</span> Changes to this policy</h2>
+            <p>We may update this policy when our services or the law change. The date at the top shows the latest version. If a change matters to you as a client, we'll tell you by e-mail.</p>
+        </section>
+    </ChildContent>
+</LegalShell>
+
+@code {
+    private string Legal => string.IsNullOrWhiteSpace(Site.Value.LegalName) ? Site.Value.Name : Site.Value.LegalName;
+
+    private static readonly (string, string)[] toc =
+    [
+        ("who", "Who we are"), ("collect", "What we collect"), ("why", "Why we use it"), ("share", "Who we share it with"),
+        ("cookies", "Cookies"), ("keep", "How long we keep it"), ("security", "How we protect it"), ("rights", "Your rights"), ("changes", "Changes")
+    ];
+}

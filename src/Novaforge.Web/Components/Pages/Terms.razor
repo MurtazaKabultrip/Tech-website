@@ -1,30 +1,99 @@
 @page "/terms"
 @inject IOptions<SiteOptions> Site
 
-<Seo Title="Terms" Description="Terms of service for our projects." />
+<Seo Title="Terms of service" Description="Clear, fair terms for every project: proposals, pricing, payment, ownership, our 1-year service guarantee, support and liability." />
 
-<section class="page-head">
-    <div class="container">
-        <h1>Terms of service</h1>
-    </div>
-</section>
+<LegalShell Title="Terms of" Accent="service" ReadingMinutes="8"
+            Intro="Fair, plain-language terms for every project we take on — so you always know what you get, what it costs and what happens after launch."
+            Toc="toc" CtaTitle="Ready to" CtaAccent="start?" OtherHref="/privacy" OtherLabel="Privacy policy">
+    <Summary>
+        <div class="legal-card glass"><Icon Name="file" /><div><strong>Fixed price per phase</strong><span>A written proposal and price before any work begins.</span></div></div>
+        <div class="legal-card glass"><Icon Name="check" /><div><strong>You own it all</strong><span>Code, design and accounts are yours once a phase is paid.</span></div></div>
+        <div class="legal-card glass"><Icon Name="shield" /><div><strong>1-year guarantee</strong><span>Free fixes for bugs in our work for 12 months after launch.</span></div></div>
+    </Summary>
+    <ChildContent>
+        <section id="scope" class="legal-sec">
+            <h2><span>01</span> About these terms</h2>
+            <p>These terms apply to all services that <strong>@Legal</strong> ("we", "us") provides to you ("the client"): design, development, bug fixing, upgrades, integrations, hosting and support. A signed proposal or accepted quote together with these terms forms our agreement. If the two differ, the proposal wins.</p>
+        </section>
 
-<section class="section section--tight">
-    <div class="container prose">
-        <div class="alert alert--warn" role="note">
-            Template text — replace with terms reviewed by a lawyer before launch.
-        </div>
+        <section id="proposal" class="legal-sec">
+            <h2><span>02</span> Proposals and quotes</h2>
+            <p>After a free first conversation we send a written proposal describing the scope, deliverables, phases, timeline and price. A proposal is valid for 30 days. Work starts when you accept it in writing (e-mail is fine) and, where agreed, the first invoice is paid.</p>
+        </section>
 
-        <h2>Proposals and scope</h2>
-        <p>Each project starts with a written proposal. Work outside the agreed scope is quoted separately before it starts.</p>
+        <section id="changes" class="legal-sec">
+            <h2><span>03</span> Changes to the scope</h2>
+            <p>Ideas grow during a project — that's normal. If you ask for something outside the agreed scope, we tell you the price and the effect on the timeline before doing it. Nothing extra is billed without your approval.</p>
+        </section>
 
-        <h2>Payment</h2>
-        <p>Invoices are payable within the period stated on the invoice, by card or by bank transfer.</p>
+        <section id="client" class="legal-sec">
+            <h2><span>04</span> Working together</h2>
+            <ul class="legal-list">
+                <li>We share progress regularly and give you a working demo during the build.</li>
+                <li>You provide texts, images, logins and feedback on time, and confirm you have the right to use the material you give us.</li>
+                <li>Timelines assume timely feedback; delays in material or approval move the timeline accordingly.</li>
+                <li>Each phase is approved by you before we move on. Approval is also given if a delivered phase is used live.</li>
+            </ul>
+        </section>
 
-        <h2>Ownership</h2>
-        <p>When an invoice for a phase is paid in full, you own the source code and deliverables produced in that phase.</p>
+        <section id="payment" class="legal-sec">
+            <h2><span>05</span> Prices and payment</h2>
+            <ul class="legal-list">
+                <li>Prices are per phase as stated in the proposal, excluding VAT unless stated otherwise.</li>
+                <li>Invoices are payable within 14 days, by card through our secure payment page or by bank transfer.</li>
+                <li>Late payments may incur statutory interest and reminder fees, and we may pause work until the invoice is paid.</li>
+                <li>Third-party costs — such as domains, hosting plans, paid plugins, app-store fees or API subscriptions — are paid by you, directly or through us at cost.</li>
+            </ul>
+        </section>
 
-        <h2>Contact</h2>
-        <p><a href="mailto:@Site.Value.ContactEmail">@Site.Value.ContactEmail</a></p>
-    </div>
-</section>
+        <section id="ownership" class="legal-sec">
+            <h2><span>06</span> Ownership</h2>
+            <p>When a phase is paid in full, you own the design, source code and content created for you in that phase, and all accounts are registered in your name. Open-source components and third-party services remain under their own licences. Unless you tell us otherwise, we may show the finished project in our portfolio — you can say no at any time.</p>
+        </section>
+
+        <section id="guarantee" class="legal-sec">
+            <h2><span>07</span> Our 1-year service guarantee</h2>
+            <div class="legal-callout">
+                <p><strong>For 12 months after launch, we fix any bug in the work we delivered — free of charge.</strong> A bug is something that doesn't work as agreed in the proposal.</p>
+            </div>
+            <p>The guarantee does not cover new features, changes made by others, problems caused by third-party services, browsers or plugins outside our control, or content updates. Those are welcome as separate tasks or through a care plan, always quoted in advance.</p>
+        </section>
+
+        <section id="hosting" class="legal-sec">
+            <h2><span>08</span> Hosting, care and support</h2>
+            <p>If we host or maintain your website, the plan, price and response times are described in the proposal. Plans run month to month or yearly and can be cancelled with one month's notice. We take regular backups and apply security updates, and we'll help you move to another provider if you choose to leave.</p>
+        </section>
+
+        <section id="liability" class="legal-sec">
+            <h2><span>09</span> Responsibility and liability</h2>
+            <p>We do our work with professional care and test it before delivery. No software is ever completely free of faults, so our total liability is limited to the amount you paid for the affected phase in the last 12 months. We are not liable for indirect losses such as lost profit, lost data or business interruption, except where the law does not allow this to be limited — for example in cases of gross negligence or intent.</p>
+        </section>
+
+        <section id="confidential" class="legal-sec">
+            <h2><span>10</span> Confidentiality and data</h2>
+            <p>We keep your business information, logins and data confidential, during and after our collaboration. Where we process personal data on your behalf (for example your customers' orders), we do so under a data processing agreement and only according to your instructions. Our <a href="/privacy">privacy policy</a> explains how we handle your own data.</p>
+        </section>
+
+        <section id="ending" class="legal-sec">
+            <h2><span>11</span> Ending the agreement</h2>
+            <p>Either of us can end the agreement in writing. You pay for work done up to that point, and you receive everything delivered and paid for. Either party may end the agreement immediately if the other seriously breaches these terms and doesn't fix it within 14 days of being asked to.</p>
+        </section>
+
+        <section id="law" class="legal-sec">
+            <h2><span>12</span> Governing law</h2>
+            <p>These terms are governed by the laws of @Site.Value.Jurisdiction. We will always try to solve any disagreement through dialogue first. If that is not possible, the dispute is settled by the ordinary courts of @Site.Value.Jurisdiction.</p>
+        </section>
+    </ChildContent>
+</LegalShell>
+
+@code {
+    private string Legal => string.IsNullOrWhiteSpace(Site.Value.LegalName) ? Site.Value.Name : Site.Value.LegalName;
+
+    private static readonly (string, string)[] toc =
+    [
+        ("scope", "About these terms"), ("proposal", "Proposals and quotes"), ("changes", "Changes to the scope"), ("client", "Working together"),
+        ("payment", "Prices and payment"), ("ownership", "Ownership"), ("guarantee", "1-year guarantee"), ("hosting", "Hosting and support"),
+        ("liability", "Liability"), ("confidential", "Confidentiality"), ("ending", "Ending the agreement"), ("law", "Governing law")
+    ];
+}

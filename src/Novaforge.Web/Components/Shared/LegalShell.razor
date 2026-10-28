@@ -1,0 +1,63 @@
+@* Shared layout for legal pages: night intro, day reading panel with sticky contents, closing CTA. *@
+@inject IOptions<SiteOptions> Site
+
+<section class="page-head legal-hero">
+    <div class="container">
+        <p class="x-pill"><span class="x-pulse" aria-hidden="true"></span> Legal</p>
+        <h1>@Title <span class="x-grad">@Accent</span></h1>
+        <p class="lede">@Intro</p>
+        <ul class="legal-meta" aria-label="Document details">
+            <li><Icon Name="file" /> Last updated @Site.Value.LegalUpdated</li>
+            <li><Icon Name="gauge" /> About @ReadingMinutes min read</li>
+            <li><Icon Name="shield" /> @(string.IsNullOrWhiteSpace(Site.Value.LegalName) ? Site.Value.Name : Site.Value.LegalName)</li>
+        </ul>
+    </div>
+</section>
+
+<section class="section tone-alt legal-band" aria-label="@Title @Accent">
+    <div class="container legal-grid">
+        <nav class="legal-toc" aria-label="On this page">
+            <p class="legal-toc-title">On this page</p>
+            <ol>
+                @foreach (var (id, label) in Toc)
+                {
+                    <li><a href="#@id">@label</a></li>
+                }
+            </ol>
+        </nav>
+        <article class="legal-article">
+            @if (Summary is not null)
+            {
+                <div class="legal-summary">@Summary</div>
+            }
+            @ChildContent
+        </article>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="x-cta spot">
+            <h2>@CtaTitle <span class="x-grad">@CtaAccent</span></h2>
+            <p>Write to <a href="mailto:@Site.Value.ContactEmail">@Site.Value.ContactEmail</a> — a real person replies within one business day.</p>
+            <div class="x-actions" style="justify-content:center">
+                <a class="btn btn--glow btn--lg" href="/contact">Contact us</a>
+                <a class="btn btn--glass btn--lg" href="@OtherHref">@OtherLabel</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    [Parameter, EditorRequired] public string Title { get; set; } = "";
+    [Parameter, EditorRequired] public string Accent { get; set; } = "";
+    [Parameter, EditorRequired] public string Intro { get; set; } = "";
+    [Parameter] public int ReadingMinutes { get; set; } = 6;
+    [Parameter, EditorRequired] public IReadOnlyList<(string Id, string Label)> Toc { get; set; } = [];
+    [Parameter] public RenderFragment? Summary { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public string CtaTitle { get; set; } = "Questions?";
+    [Parameter] public string CtaAccent { get; set; } = "Just ask.";
+    [Parameter] public string OtherHref { get; set; } = "/";
+    [Parameter] public string OtherLabel { get; set; } = "Back to home";
+}

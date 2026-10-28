@@ -428,11 +428,24 @@
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleFit);
   window.addEventListener("load", function () { scheduleFit(); setTimeout(scheduleFit, 1500); });
 
+  function initLegalToc() {
+    var links = Array.prototype.slice.call(document.querySelectorAll(".legal-toc a"));
+    if (!links.length || !("IntersectionObserver" in window)) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        links.forEach(function (a) { a.classList.toggle("is-current", a.getAttribute("href") === "#" + en.target.id); });
+      });
+    }, { rootMargin: "-30% 0px -60% 0px" });
+    document.querySelectorAll(".legal-sec[id]").forEach(function (sec) { io.observe(sec); });
+    cleanups.push(function () { io.disconnect(); });
+  }
+
   function initPage() {
     cleanup();
     root.classList.remove("nav-open");
     onScroll();
-    fitSections(); initNavIndicator(); initTabGlide(); initRotator(); initReveal(); initCounters(); initTilt(); initParticles(); scrollThreads();
+    fitSections(); initLegalToc(); initNavIndicator(); initTabGlide(); initRotator(); initReveal(); initCounters(); initTilt(); initParticles(); scrollThreads();
   }
 
   document.addEventListener("DOMContentLoaded", initPage);

@@ -11,6 +11,20 @@ public sealed class SiteOptions
     public string ContactEmail { get; set; } = "hello@example.com";
     /// <summary>Where new-lead and new-project notifications are sent.</summary>
     public string NotificationEmail { get; set; } = "hello@example.com";
+
+    // ---- Legal details shown on the privacy policy and terms of service ----
+    /// <summary>Registered company name, e.g. "Novaforge ApS". Defaults to <see cref="Name"/>.</summary>
+    public string? LegalName { get; set; }
+    /// <summary>Registered address (optional).</summary>
+    public string? Address { get; set; }
+    /// <summary>Company registration number, e.g. a Danish CVR number (optional).</summary>
+    public string? RegistrationNumber { get; set; }
+    /// <summary>Country whose law governs the terms.</summary>
+    public string Jurisdiction { get; set; } = "Denmark";
+    /// <summary>The data protection authority visitors can complain to.</summary>
+    public string DataAuthority { get; set; } = "Datatilsynet (the Danish Data Protection Agency), www.datatilsynet.dk";
+    /// <summary>Date the legal texts were last updated (shown on the pages).</summary>
+    public string LegalUpdated { get; set; } = "28 October 2026";
 }
 
 public sealed class StripeOptions

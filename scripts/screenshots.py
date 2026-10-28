@@ -73,6 +73,20 @@ with sync_playwright() as p:
         ctx.close()
     (OUT / "fit-report.txt").write_text("\n".join(fit_report) + "\n")
 
+    # Link navigation must open the new page at the top (Blazor enhanced navigation).
+    ctx = browser.new_context(viewport={"width": 390, "height": 844}, color_scheme="dark")
+    page = ctx.new_page()
+    page.goto(BASE + "/", wait_until="networkidle")
+    page.evaluate("window.scrollTo({top: document.body.scrollHeight, behavior: 'instant'})")
+    page.wait_for_timeout(400)
+    page.click("footer a[href='/terms']")
+    page.wait_for_url("**/terms")
+    page.wait_for_timeout(800)
+    y = page.evaluate("scrollY")
+    if y > 5:
+        errors.append(f"after clicking Terms from the footer the page opened scrolled down (scrollY={y})")
+    ctx.close()
+
     # Portal flow: sign in, submit a request, send a message.
     ctx = browser.new_context(viewport={"width": 1440, "height": 900}, color_scheme="dark")
     page = ctx.new_page()

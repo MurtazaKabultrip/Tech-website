@@ -1083,3 +1083,6 @@ html:not(.js) .x-tablist button[aria-selected="true"] { background: var(--brand-
   .reveal-on [data-reveal] { opacity: 1 !important; transform: none !important; filter: none !important; clip-path: none !important; }
   .tone-alt::after { display: none; }
 }
+
+/* Light-beam sweep on day panels removed. */
+.tone-alt::after { content: none; display: none; }

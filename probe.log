@@ -1,0 +1,3 @@
+--- API probe: invalid lead (expect 400)
+{"type":"https://tools.ietf.org/html/rfc9110#section-15.5.1","title":"One or more validation errors occurred.","status":400,"errors":{"Name":["The Name field is required."],"Email":["The Email field is not a valid e-mail address."],"Message":["Tell us a little more (at least 10 characters)."]},"traceId":"00-672dd6d8e683e4b6d5ef4fbb026279e1-caccb59f89972b3d-00"}
+HTTP 400

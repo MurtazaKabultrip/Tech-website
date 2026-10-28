@@ -1260,3 +1260,52 @@ html:not(.js) .x-tablist button[aria-selected="true"] { background: var(--brand-
 /* Room for descenders (g, p, y) in the rotating hero word. */
 .x-rotator { height: 1.16em; }
 @media (min-width: 1024px) and (max-height: 820px) { .x-tablist button { min-height: 38px; } .x-tabs { gap: 12px; } }
+
+/* ==========================================================================
+   Mobile design pass: proportionate type, compact header, normal-size buttons.
+   Overrides earlier mobile rules.
+   ========================================================================== */
+@media (max-width: 700px) {
+  :root { --header-h: 64px; }
+  body { font-size: 1rem; }
+
+  /* Header: logo + menu only; "Start a project" lives in the menu. */
+  .header-cta { display: none; }
+  .brand { font-size: 1.12rem; gap: 8px; }
+  .brand-mark { width: 28px; height: 28px; }
+  .icon-btn { width: 42px; height: 42px; }
+
+  /* Hero */
+  .x-hero.fs-section { min-height: 0; padding-top: calc(var(--header-h) + 20px); padding-bottom: 8px; }
+  .x-pill { font-size: 0.8rem; padding: 5px 12px 5px 10px; margin-bottom: 16px; gap: 8px; }
+  .x-title { font-size: clamp(2.2rem, 1.5rem + 3.4vw, 2.75rem); line-height: 1.02; letter-spacing: -0.045em; margin-bottom: 16px; }
+  .x-lede { font-size: 1rem; line-height: 1.55; margin-bottom: 22px; }
+  .x-actions { gap: 10px; flex-wrap: nowrap; }
+  .x-actions .btn, .x-cta .x-actions .btn { flex: 1 1 0; min-width: 0; }
+  .btn--lg { min-height: 50px; padding: 0 16px; font-size: 0.95rem; }
+  .x-trust { margin-top: 18px; gap: 6px 16px; font-size: 0.85rem; }
+  .x-trust .icon { width: 16px; height: 16px; }
+  .x-stage { height: 300px; margin: 28px 0 0; }
+  .x-chip { padding: 7px 12px; font-size: 0.75rem; }
+  .x-hero > .x-marquee { margin-top: 20px; padding: 12px 0; }
+  .x-marquee li { padding: 6px 14px; font-size: 0.88rem; }
+
+  /* Section headings and pages */
+  .page-head { padding: calc(var(--header-h) + 8px) 0 16px; }
+  .page-head h1, .about-hero h1 { font-size: clamp(2.1rem, 1.5rem + 3vw, 2.6rem); line-height: 1.04; letter-spacing: -0.045em; }
+  .lede { font-size: 1.05rem; }
+  .x-head h2, .x-cta h2 { font-size: clamp(1.75rem, 1.3rem + 2.4vw, 2.2rem); letter-spacing: -0.04em; line-height: 1.05; }
+  .x-head p, .x-cta p { font-size: 1rem; }
+  .x-head { margin-bottom: 24px; gap: 10px; }
+  .section { padding-block: 40px; }
+  .tone-alt { border-radius: 28px; margin-inline: 8px; }
+  .tile h3, .x-pkg h3 { font-size: 1.15rem; }
+  .x-panel h3 { font-size: 1.4rem; }
+  .x-stat b { font-size: 2.2rem; }
+  .about-exp-num b { font-size: 7rem; }
+  .x-cta { padding: 36px 20px; border-radius: 28px; }
+}
+@media (max-width: 359px) {
+  .x-actions { flex-wrap: wrap; }
+  .x-actions .btn { flex: 1 1 100%; }
+}

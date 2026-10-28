@@ -52,6 +52,13 @@
     }
     if (e.target.closest(".nav a")) root.classList.remove("nav-open");
 
+    // Tap outside the open menu closes it.
+    if (root.classList.contains("nav-open") && !e.target.closest(".nav")) {
+      root.classList.remove("nav-open");
+      var tg = document.querySelector("[data-menu-toggle]");
+      if (tg) tg.setAttribute("aria-expanded", "false");
+    }
+
     var tab = e.target.closest("[data-tabs] [role=tab]");
     if (tab) selectTab(tab);
   });

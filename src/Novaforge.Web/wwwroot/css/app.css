@@ -1529,3 +1529,29 @@ html.nav-open .menu-toggle .icon-close { display: block; }
   .legal-row { grid-template-columns: 1fr; gap: 4px; }
   .legal-hero h1 { font-size: clamp(2.2rem, 1.5rem + 3.4vw, 2.75rem); }
 }
+
+/* Touch devices (iPhone Safari can't animate the @property-based light): the travelling light is a
+   rotating conic layer behind an inner fill — plain transform animation, works everywhere. */
+@media (max-width: 700px), (pointer: coarse) {
+  .btn--glow, .btn--glass { position: relative; isolation: isolate; overflow: hidden; }
+  .btn--glow::before, .btn--glass::before {
+    content: ""; position: absolute; z-index: -2; inset: auto; padding: 0;
+    left: 50%; top: 50%; width: 220%; aspect-ratio: 1; height: auto;
+    -webkit-mask: none; mask: none; filter: none; border-radius: 0;
+    transform: translate(-50%, -50%) rotate(0deg);
+    animation: ring-rotate 4s linear infinite !important;
+  }
+  .btn--glow::before { background: conic-gradient(from 0deg, transparent 0deg, rgba(255,255,255,.95) 40deg, transparent 95deg, transparent 360deg); }
+  .btn--glass::before { background: conic-gradient(from 0deg, var(--brand-a) 0deg, var(--brand-b) 70deg, transparent 130deg, transparent 200deg, var(--brand-c) 260deg, var(--brand-a) 360deg); }
+  /* Inner fill leaves a 2px ring where the light shows through. */
+  .btn--glow::after, .btn--glass::after {
+    content: ""; position: absolute; z-index: -1; inset: 2px; left: 2px; top: 2px; right: 2px; bottom: 2px;
+    width: auto; height: auto; border-radius: inherit; transform: none; transition: none; pointer-events: none;
+  }
+  .btn--glow::after { background: var(--brand-grad); }
+  .btn--glass::after { background: color-mix(in srgb, var(--night-2) 96%, transparent); }
+  .btn--glass { border-color: transparent; background: transparent; }
+  html.is-scrolling .btn--glow::before, html.is-scrolling .btn--glass::before { animation-play-state: paused !important; }
+}
+@keyframes ring-rotate { to { transform: translate(-50%, -50%) rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .btn--glow::before, .btn--glass::before { animation: none !important; } }

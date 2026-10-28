@@ -1454,3 +1454,9 @@ html:not(.js) .x-tablist button[aria-selected="true"] { background: var(--brand-
 .menu-toggle .icon-close { display: none; }
 html.nav-open .menu-toggle .icon-open { display: none; }
 html.nav-open .menu-toggle .icon-close { display: block; }
+
+/* Phones: keep the travelling light on buttons (cheap: a few small elements), pause it while scrolling. */
+@media (max-width: 700px), (pointer: coarse) {
+  .btn--glow::before, .btn--glass::before, .x-tablist::before { animation: nav-spin 6s linear infinite !important; }
+  html.is-scrolling .btn--glow::before, html.is-scrolling .btn--glass::before, html.is-scrolling .x-tablist::before { animation-play-state: paused !important; }
+}

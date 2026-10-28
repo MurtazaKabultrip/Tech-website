@@ -36,6 +36,20 @@
       return;
     }
     if (e.target.closest("[data-print]")) { window.print(); return; }
+
+    // Logo: always does something — on the home page it scrolls back to the top.
+    var brand = e.target.closest(".brand");
+    if (brand) {
+      root.classList.remove("nav-open");
+      var mt = document.querySelector("[data-menu-toggle]");
+      if (mt) mt.setAttribute("aria-expanded", "false");
+      if (location.pathname === "/" || location.pathname === "") {
+        e.preventDefault();
+        if (location.hash) history.replaceState(null, "", "/");
+        window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+      }
+      return;
+    }
     if (e.target.closest(".nav a")) root.classList.remove("nav-open");
 
     var tab = e.target.closest("[data-tabs] [role=tab]");
@@ -79,7 +93,14 @@
   }, { passive: true });
 
   // Header turns to glass once the page scrolls.
-  function onScroll() { root.classList.toggle("scrolled", window.scrollY > 8); }
+  var scrollIdle = 0;
+  function onScroll() {
+    root.classList.toggle("scrolled", window.scrollY > 8);
+    // While the page is moving, CSS pauses decorative animations so scrolling stays smooth.
+    if (!root.classList.contains("is-scrolling")) root.classList.add("is-scrolling");
+    clearTimeout(scrollIdle);
+    scrollIdle = setTimeout(function () { root.classList.remove("is-scrolling"); }, 180);
+  }
   window.addEventListener("scroll", onScroll, { passive: true });
 
   // ---------- Per-page effects ----------

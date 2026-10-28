@@ -455,6 +455,23 @@
     fitSections(); initLegalToc(); initNavIndicator(); initTabGlide(); initRotator(); initReveal(); initCounters(); initTilt(); initParticles(); scrollThreads();
   }
 
+  // New page opened from a link: start at the top (or at the #section the link points to).
+  // Back/forward navigation keeps the browser's own scroll restore.
+  var linkNav = false;
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a[href]");
+    if (!a || a.target === "_blank" || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    var url = new URL(a.href, location.href);
+    if (url.origin === location.origin && (url.pathname !== location.pathname || url.search !== location.search)) linkNav = true;
+  }, true);
+  function scrollForNewPage() {
+    if (!linkNav) return;
+    linkNav = false;
+    var target = location.hash && document.getElementById(location.hash.slice(1));
+    if (target) target.scrollIntoView({ behavior: "auto" });
+    else window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }
+
   document.addEventListener("DOMContentLoaded", initPage);
   window.addEventListener("load", revealCheck);
   // Safety net: if the DOM is patched without an event we hear about, re-check shortly after.
@@ -463,6 +480,6 @@
   }
   // Blazor enhanced navigation swaps page content without a reload.
   window.addEventListener("load", function () {
-    if (window.Blazor && window.Blazor.addEventListener) window.Blazor.addEventListener("enhancedload", initPage);
+    if (window.Blazor && window.Blazor.addEventListener) window.Blazor.addEventListener("enhancedload", function () { scrollForNewPage(); initPage(); });
   });
 })();

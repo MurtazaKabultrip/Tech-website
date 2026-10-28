@@ -800,3 +800,7 @@ html.scrolled .site-header, .site-header--app {
   .tile-phones { margin-top: 18px; margin-bottom: -60px; }
   .tile-phones span { width: 72px; height: 120px; }
 }
+
+/* Gradient text only paints inside the element box; tight letter-spacing makes the box narrower than
+   the last glyph, which clipped its right edge. A little end padding gives the gradient room. */
+.x-grad, .x-rotator-word, .x-stat b { padding-right: 0.1em; margin-right: -0.1em; }

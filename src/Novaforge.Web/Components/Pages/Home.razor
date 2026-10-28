@@ -42,22 +42,23 @@
             <div class="x-chip x-chip--b" aria-hidden="true"><Icon Name="card" /> Payment received</div>
         </div>
     </div>
-</section>
-
-@* ============ MARQUEE ============ *@
-<section class="x-marquee" aria-label="Kinds of websites we build">
-    <div class="x-marquee-track">
-        @for (var copy = 0; copy < 2; copy++)
-        {
-            <ul aria-hidden="@(copy == 1 ? "true" : null)">
-                @foreach (var kind in Kinds)
-                {
-                    <li>@kind</li>
-                }
-            </ul>
-        }
+    @* ============ MARQUEE ============ *@
+    <div class="x-marquee" aria-label="Kinds of websites we build">
+        <div class="x-marquee-track">
+            @for (var copy = 0; copy < 2; copy++)
+            {
+                <ul aria-hidden="@(copy == 1 ? "true" : null)">
+                    @foreach (var kind in Kinds)
+                    {
+                        <li>@kind</li>
+                    }
+                </ul>
+            }
+        </div>
     </div>
 </section>
+
+
 
 @* ============ SERVICES (BENTO) ============ *@
 <section class="section tone-alt" aria-labelledby="svc-h">

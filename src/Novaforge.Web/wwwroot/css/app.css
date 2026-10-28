@@ -1086,3 +1086,32 @@ html:not(.js) .x-tablist button[aria-selected="true"] { background: var(--brand-
 
 /* Light-beam sweep on day panels removed. */
 .tone-alt::after { content: none; display: none; }
+
+/* ==========================================================================
+   Full-screen sections on desktop (Home and About): each night/day section fills
+   at least one screen, adapts to its height and centres its content. Taller
+   content still grows. Phones keep natural heights.
+   ========================================================================== */
+@media (min-width: 1024px) and (min-height: 640px) {
+  main:has(> .x-hero) > section,
+  main:has(> .x-hero) > .tone-alt,
+  main:has(.about-hero) > section {
+    min-height: 100svh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding-block: clamp(72px, 9vh, 120px);
+  }
+  /* Day panels sit inside the screen with a small margin, so they fill it minus that frame. */
+  main:has(> .x-hero) > .tone-alt,
+  main:has(.about-hero) > section.tone-alt { min-height: calc(100svh - 2 * clamp(12px, 2vw, 24px)); }
+  /* Sections grouped inside one day panel share it. */
+  main:has(> .x-hero) > .tone-alt > section { min-height: 0; padding-block: clamp(40px, 6vh, 72px); }
+
+  /* Hero: the screen minus nothing (it slides under the header); website-type strip pinned at the bottom. */
+  .x-hero { min-height: 100svh; padding-bottom: 0; }
+  .x-hero > .container { flex: 1; display: grid; align-content: center; }
+  .x-hero > .x-marquee { margin-top: clamp(24px, 4vh, 48px); }
+
+  .about-hero { padding-top: 0; }
+}
+/* The strip now lives inside the hero on every screen size. */
+.x-hero > .x-marquee { margin-top: clamp(32px, 6vw, 64px); }

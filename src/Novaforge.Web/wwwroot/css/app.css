@@ -1088,30 +1088,31 @@ html:not(.js) .x-tablist button[aria-selected="true"] { background: var(--brand-
 .tone-alt::after { content: none; display: none; }
 
 /* ==========================================================================
-   Full-screen sections on desktop (Home and About): each night/day section fills
-   at least one screen, adapts to its height and centres its content. Taller
-   content still grows. Phones keep natural heights.
+   One section = one screen (Home and About), on every screen size.
+   Each section is exactly the window height; site.js scales the content down
+   (CSS zoom) when it is taller than the screen, so nothing needs scrolling
+   inside a section. Scrolling snaps to whole sections.
    ========================================================================== */
-@media (min-width: 1024px) and (min-height: 640px) {
-  main:has(> .x-hero) > section,
-  main:has(> .x-hero) > .tone-alt,
-  main:has(.about-hero) > section {
-    min-height: 100svh;
-    display: flex; flex-direction: column; justify-content: center;
-    padding-block: clamp(72px, 9vh, 120px);
-  }
-  /* Day panels sit inside the screen with a small margin, so they fill it minus that frame. */
-  main:has(> .x-hero) > .tone-alt,
-  main:has(.about-hero) > section.tone-alt { min-height: calc(100svh - 2 * clamp(12px, 2vw, 24px)); }
-  /* Sections grouped inside one day panel share it. */
-  main:has(> .x-hero) > .tone-alt > section { min-height: 0; padding-block: clamp(40px, 6vh, 72px); }
-
-  /* Hero: the screen minus nothing (it slides under the header); website-type strip pinned at the bottom. */
-  .x-hero { min-height: 100svh; padding-bottom: 0; }
-  .x-hero > .container { flex: 1; display: grid; align-content: center; }
-  .x-hero > .x-marquee { margin-top: clamp(24px, 4vh, 48px); }
-
-  .about-hero { padding-top: 0; }
+html:has(main .x-hero), html:has(main .about-hero) { scroll-snap-type: y proximity; scroll-padding-top: 0; }
+.fs-section {
+  min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding-top: calc(var(--header-h) + clamp(12px, 3vh, 40px));
+  padding-bottom: clamp(16px, 4vh, 48px);
+  scroll-snap-align: start;
+  box-sizing: border-box;
 }
+.fs-section.tone-alt {
+  min-height: calc(100svh - 2 * clamp(12px, 2vw, 24px));
+  scroll-margin-top: clamp(12px, 2vw, 24px);
+  padding-top: calc(var(--header-h) + clamp(8px, 2vh, 28px));
+}
+.fs-section > section { min-height: 0; padding-block: clamp(10px, 2.5vh, 40px); }
+.x-hero.fs-section { margin-top: calc(-1 * var(--header-h)); padding-bottom: clamp(12px, 3vh, 32px); }
+.x-hero.fs-section > .container { flex: 1; display: grid; align-content: center; }
+.about-hero.fs-section { margin-top: calc(-1 * var(--header-h)); }
+/* Content wrappers are what gets zoomed to fit. */
+.fs-section > * { flex: none; }
+
 /* The strip now lives inside the hero on every screen size. */
 .x-hero > .x-marquee { margin-top: clamp(32px, 6vw, 64px); }

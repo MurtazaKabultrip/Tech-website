@@ -334,11 +334,43 @@
     });
   }
 
+  // One section = one screen. Marks the top-level sections of Home/About and, when a section's
+  // content is taller than the window, zooms its content down to fit (never below a readable size).
+  function fitSections() {
+    var main = document.querySelector("main");
+    if (!main || !main.querySelector(".x-hero, .about-hero")) return;
+    var units = Array.prototype.filter.call(main.children, function (el) {
+      return el.matches("section, .tone-alt");
+    });
+    var minZoom = window.innerWidth < 700 ? 0.82 : 0.6;
+    units.forEach(function (sec) {
+      sec.classList.add("fs-section");
+      var kids = Array.prototype.slice.call(sec.children);
+      kids.forEach(function (k) { k.style.zoom = ""; });
+      var cs = getComputedStyle(sec);
+      var avail = window.innerHeight - (sec.classList.contains("tone-alt") ? 2 * parseFloat(cs.scrollMarginTop || 0) : 0)
+        - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+      var content = kids.reduce(function (sum, k) {
+        var m = getComputedStyle(k);
+        return sum + k.getBoundingClientRect().height + parseFloat(m.marginTop) + parseFloat(m.marginBottom);
+      }, 0);
+      if (content > avail && avail > 0) {
+        var z = Math.max(minZoom, Math.floor(avail / content * 1000) / 1000);
+        kids.forEach(function (k) { k.style.zoom = z; });
+      }
+    });
+  }
+  var fitQueued = false;
+  function scheduleFit() { if (!fitQueued) { fitQueued = true; requestAnimationFrame(function () { fitQueued = false; fitSections(); }); } }
+  window.addEventListener("resize", scheduleFit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleFit);
+  window.addEventListener("load", scheduleFit);
+
   function initPage() {
     cleanup();
     root.classList.remove("nav-open");
     onScroll();
-    initNavIndicator(); initTabGlide(); initRotator(); initReveal(); initCounters(); initTilt(); initParticles(); scrollThreads();
+    fitSections(); initNavIndicator(); initTabGlide(); initRotator(); initReveal(); initCounters(); initTilt(); initParticles(); scrollThreads();
   }
 
   document.addEventListener("DOMContentLoaded", initPage);

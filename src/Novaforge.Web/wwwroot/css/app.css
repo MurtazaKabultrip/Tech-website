@@ -1206,3 +1206,10 @@ html:not(.js) .x-tablist button[aria-selected="true"] { background: var(--brand-
   .fs-section .tile--xl > p { max-width: 24ch; }
   .x-panel-art .mock { font-size: min(12.5px, 1.2vh); }
 }
+
+/* Even rhythm between sections: short closing call-to-action sections keep their natural height
+   instead of being centred in a full screen (which left a large empty band above them). */
+.fs-section:has(.x-cta) { min-height: 0; padding-block: clamp(40px, 7vh, 88px); }
+.x-hero.fs-section:has(.x-cta) { min-height: 100svh; }
+/* Packages: features list is the longest part; keep it compact. */
+.x-pkg .x-checks { gap: 8px; margin-bottom: 20px; }

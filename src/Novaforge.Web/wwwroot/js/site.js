@@ -4,6 +4,7 @@
 (function () {
   var root = document.documentElement;
   root.classList.add("js");
+  var isTouch = window.matchMedia && window.matchMedia("(pointer: coarse), (max-width: 700px)").matches;
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!reduceMotion) root.classList.add("reveal-on");
 
@@ -188,7 +189,7 @@
   // Tilt the floating mock-up stack toward the pointer.
   function initTilt() {
     var stage = document.querySelector("[data-tilt-group]");
-    if (!stage || reduceMotion) return;
+    if (!stage || reduceMotion || isTouch) return;
     function move(e) {
       var r = stage.getBoundingClientRect();
       var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
@@ -204,7 +205,7 @@
   // Constellation particle field that reacts to the pointer.
   function initParticles() {
     var canvas = document.querySelector("[data-particles]");
-    if (!canvas || !canvas.getContext) return;
+    if (!canvas || !canvas.getContext || isTouch) return;
     var ctx = canvas.getContext("2d");
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
     var w = 0, h = 0, pts = [], mouse = { x: -9999, y: -9999 }, raf = 0, running = true;
@@ -350,7 +351,12 @@
   }
   var fitQueued = false;
   function scheduleFit() { if (!fitQueued) { fitQueued = true; requestAnimationFrame(function () { fitQueued = false; fitSections(); }); } }
-  window.addEventListener("resize", scheduleFit);
+  var lastW = window.innerWidth;
+  window.addEventListener("resize", function () {
+    if (isTouch && window.innerWidth === lastW) return; // address bar moved: nothing to refit
+    lastW = window.innerWidth;
+    scheduleFit();
+  });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleFit);
   window.addEventListener("load", function () { scheduleFit(); setTimeout(scheduleFit, 1500); });
 

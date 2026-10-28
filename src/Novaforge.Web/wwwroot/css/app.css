@@ -1309,3 +1309,42 @@ html:not(.js) .x-tablist button[aria-selected="true"] { background: var(--brand-
   .x-actions { flex-wrap: wrap; }
   .x-actions .btn { flex: 1 1 100%; }
 }
+
+/* ==========================================================================
+   Phones & touch devices: smooth scrolling and a clean hero.
+   ========================================================================== */
+@media (max-width: 700px) {
+  /* Header: logo left; "Get a quote" + menu on the right. */
+  .header-actions, .nav + .header-actions { margin-left: auto; gap: 8px; }
+  .header-cta { display: inline-flex; }
+
+  /* Hero: one clean example that fits its box (no overlap with the strip below). */
+  .x-stage { height: auto; perspective: none; margin: 28px 0 0; transform: none !important; }
+  .x-float--back, .x-float--front, .x-chip { display: none; }
+  .x-float--main { position: relative; inset: auto; transform: none; animation: none; }
+  .x-float--main .mock { font-size: 10px; }
+}
+@media (max-width: 359px) { .header-cta { display: none; } }
+
+/* Touch devices: drop effects that make mobile browsers repaint on every scroll frame. */
+@media (max-width: 700px), (pointer: coarse) {
+  body::after { filter: none; animation: none; }
+  body::before { mask-image: none; -webkit-mask-image: none; opacity: 0.6; }
+  .x-hero-canvas { display: none; }
+  .glass, .tile, .x-panel, .x-pkg, .x-stat, .x-faq details, .x-marquee li, .x-pill, .nav, .btn--glass {
+    backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+  }
+  .site-header, html.scrolled .site-header { backdrop-filter: none; -webkit-backdrop-filter: none; background: color-mix(in srgb, var(--night) 94%, transparent); }
+  .nav::before, .btn--glass::before, .btn--glow::before, .x-tablist::before,
+  .x-grad, .nav-ind, .glide-ind, .x-float, .x-chip, .x-pulse, .m-line { animation: none !important; }
+  .spot::after { display: none; }
+  /* Simple, cheap scroll entrances: fade + short rise, no blur or 3D. */
+  .reveal-on [data-reveal], .reveal-on [data-reveal="left"], .reveal-on [data-reveal="right"],
+  .reveal-on [data-reveal="zoom"], .reveal-on [data-reveal="pop"], .reveal-on [data-reveal="flip"], .reveal-on [data-reveal="blur"] {
+    filter: none; transform: translate3d(0, 24px, 0); letter-spacing: normal;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal-on [data-reveal="iris"] { clip-path: none; transform: none; transition: none; }
+  .reveal-on [data-reveal].is-in { transform: none; }
+}
+@media (max-width: 400px) { .x-actions .btn { font-size: 0.86rem; padding: 0 10px; white-space: nowrap; } }
